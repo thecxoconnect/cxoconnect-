@@ -125,4 +125,54 @@ export const imagekitService = {
   getAuthParams: () => api.get('/imagekit/auth')
 };
 
+// 12. Full Administrative Hub Service
+export const adminService = {
+  // Module 1: Overview & Analytics
+  getStats: () => api.get('/admin/stats'),
+  exportReport: (status = 'accepted') =>
+    api.get(`/admin/export?status=${status}`, { responseType: 'blob' }),
+
+  // Module 2: Members & Secondary Admins
+  getMembers: (params) => api.get('/admin/members', { params }),
+  updateMemberStatus: (id, status) => api.put(`/admin/members/${id}/status`, { status }),
+  toggleMemberRole: (id, role) => api.put(`/admin/members/${id}/role`, { role }),
+  deleteMember: (id) => api.delete(`/admin/members/${id}`),
+
+  // Module 3: Mentors & Committee
+  getMentors: () => api.get('/admin/mentors'),
+  createMentor: (formData) => api.post('/admin/mentors', formData),
+  updateMentor: (id, formData) => api.put(`/admin/mentors/${id}`, formData),
+  deleteMentor: (id) => api.delete(`/admin/mentors/${id}`),
+  getCommittee: () => api.get('/admin/committee'),
+  createCommittee: (formData) => api.post('/admin/committee', formData),
+  deleteCommittee: (id) => api.delete(`/admin/committee/${id}`),
+
+  // Module 4: Sponsors & Partners
+  getSponsors: () => api.get('/admin/sponsors'),
+  createSponsor: (formData) => api.post('/admin/sponsors', formData),
+  updateSponsor: (id, formData) => api.put(`/admin/sponsors/${id}`, formData),
+  deleteSponsor: (id) => api.delete(`/admin/sponsors/${id}`),
+
+  // Module 5: Testimonials Engine
+  getTestimonials: () => api.get('/admin/testimonials'),
+  createTestimonial: (formData) => api.post('/admin/testimonials', formData),
+  updateTestimonial: (id, formData) => api.put(`/admin/testimonials/${id}`, formData),
+  deleteTestimonial: (id) => api.delete(`/admin/testimonials/${id}`),
+
+  // Module 6: Events & Conclaves
+  getEvents: (params) => api.get('/admin/events', { params }),
+  createEvent: (formData) => api.post('/admin/events', formData),
+  updateEvent: (id, formData) => api.put(`/admin/events/${id}`, formData),
+  deleteEvent: (id) => api.delete(`/admin/events/${id}`),
+
+  // Module 7: Quiz Management
+  getQuestions: () => api.get('/admin/quiz/questions'),
+  createQuestion: (data) => api.post('/admin/quiz/questions', data),
+  updateQuestion: (id, data) => api.put(`/admin/quiz/questions/${id}`, data),
+  deleteQuestion: (id) => api.delete(`/admin/quiz/questions/${id}`),
+
+  // Module 8: Mass Mailer / Broadcast
+  sendMassMail: (data) => api.post('/admin/mass-mail', data)
+};
+
 export default api;

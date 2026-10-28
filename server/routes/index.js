@@ -10,10 +10,12 @@ import quizRoutes from './quizRoutes.js';
 import contactRoutes from './contactRoutes.js';
 import imagekitRoutes from './imagekitRoutes.js';
 import chapterRoutes from './chapterRoutes.js';
+import adminRoutes from './adminRoutes.js';
 
 const router = express.Router();
 
 // Mount all API domain routes
+router.use('/admin', adminRoutes);
 router.use('/auth', authRoutes);
 router.use('/members', memberRoutes);
 router.use('/events', eventRoutes);

@@ -9,20 +9,36 @@ const sponsorSchema = new mongoose.Schema(
     },
     tier: {
       type: String,
-      enum: ['Strategic Partner', 'Platinum Sponsor', 'Gold Sponsor', 'Silver Sponsor', 'Knowledge Partner'],
-      default: 'Gold Sponsor'
+      default: 'partner'
     },
-    logo: {
+    logoUrl: {
       type: String,
       default: ''
     },
-    website: {
+    imageKitFileId: {
+      type: String,
+      default: ''
+    },
+    websiteUrl: {
       type: String,
       default: ''
     },
     description: {
       type: String,
       default: ''
+    },
+    // Compatibility fields
+    logo: {
+      type: String,
+      default: function () {
+        return this.logoUrl;
+      }
+    },
+    website: {
+      type: String,
+      default: function () {
+        return this.websiteUrl;
+      }
     },
     order: {
       type: Number,
@@ -31,5 +47,13 @@ const sponsorSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+sponsorSchema.pre('save', function (next) {
+  if (this.logoUrl && !this.logo) this.logo = this.logoUrl;
+  if (this.logo && !this.logoUrl) this.logoUrl = this.logo;
+  if (this.websiteUrl && !this.website) this.website = this.websiteUrl;
+  if (this.website && !this.websiteUrl) this.websiteUrl = this.website;
+  next();
+});
 
 export default mongoose.model('Sponsor', sponsorSchema);

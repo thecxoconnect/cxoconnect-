@@ -4,19 +4,22 @@ const questionSchema = new mongoose.Schema(
   {
     questionText: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     category: {
       type: String,
       default: 'Strategic Leadership'
     },
-    options: [
-      {
-        text: { type: String, required: true },
-        trait: { type: String, required: true }, // e.g. 'Visionary Strategist', 'Agile Disruptor', 'Empathetic Leader', 'Operational Maestro'
-        points: { type: Number, default: 10 }
-      }
-    ],
+    options: {
+      type: [mongoose.Schema.Types.Mixed],
+      required: true,
+      default: []
+    },
+    correctAnswerIndex: {
+      type: Number,
+      default: 0
+    },
     order: {
       type: Number,
       default: 0
