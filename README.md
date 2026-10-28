@@ -1,115 +1,167 @@
-# CXO Connect / HRSG Backend
+# CXO Connect - Premier Executive Community Platform
 
-High-security Express.js (ES Module) backend with MongoDB (Mongoose) for the **CXO Connect** Executive Platform by **HRSG (Human Resource Solutions Group)**.
-
----
-
-## 🌟 Specification Implementation Overview
-
-### 1. Data Model (`models/User.js`)
-* **Core Metadata Fields**: `name`, `email` (unique, lowercase), `linkedinId` (unique, sparse), `googleId` (unique, sparse), `phone`, `company`, `linkedin`, `city`, `pincode`, `position`, `profileImage`.
-* **Role Hierarchy**: `role` (`'member'` | `'admin'`, default `'member'`), `isMainAdmin` (Boolean, default `false`).
-* **Account Statuses**: `status` (`'pending'` | `'accepted'` | `'rejected'`, default `'pending'`), `profileComplete` (Boolean, default `false`), `isEmailVerified` (Boolean, default `false`).
-* **One-Time Passwords (OTP)**: `otp` (String), `otpExpires` (Date).
-* **Sanitization**: Automatic exclusion of `otp` and `otpExpires` in JSON serialization and responses via `toSafeJSON()`.
-
-### 2. Middleware Guards (`middleware/auth.js`)
-* Reads JSON Web Token from `Authorization: Bearer <token>`.
-* `isAuth`: Cryptographically verifies token signature, fetches active user from MongoDB, attaches to `req.user`.
-* `isAdmin`: Enforces `role === 'admin' AND status === 'accepted'`.
-* `isMainAdmin`: Enforces `role === 'admin' AND isMainAdmin === true`.
-* `upload`: File upload middleware leveraging `multer.memoryStorage()`, strictly restricted to image mimetypes under 5MB.
-
-### 3. Authentication Controllers (`controllers/authController.js`)
-* `manualAuth`: Accepts `{ email, role }`.
-  * Super Admin Whitelist Check: If email is in the hardcoded super admin list, forces `role = 'admin'`, `status = 'accepted'`, and `isMainAdmin = true`.
-  * Generates 6-digit numeric OTP (expires in 10 minutes).
-  * Dispatches responsive HTML email via Nodemailer branded with HRSG and the requested navigation links.
-  * Issues 15-minute verification JWT (`purpose: 'otp_verification'`).
-* `googleCallback` & `linkedinCallback`: Passport OAuth 2.0 flow using profile details (`req.googleProfile` / `req.linkedinProfile`), role consistency checks, OTP generation, and redirect to `${CLIENT_URL}/verify-otp?token=${tempToken}`.
-* `verifyOTP`: Validates 6-digit OTP against user record and verification token. Clears OTP, sets `isEmailVerified = true`, and issues 30-day session JWT with full user payload.
-* `resendOTP`: Re-issues fresh 6-digit numeric OTP and resets expiration time to 10 minutes.
-* `completeProfile`: Protected endpoint (`isAuth`) to update metadata (`name`, `city`, `company`, `position`, `phone`, `pincode`, `linkedin`) and processes 5MB image uploads into base64 data URIs, setting `profileComplete = true`.
-* `getMe`: Protected endpoint returning authenticated executive user payload.
-
-### 4. Server Entry (`server.js`) & Navigation Bar
-* Modern Express 5 ES Module architecture (`"type": "module"`).
-* Loads `.env`, enables `cors()`, `express.json({ limit: '10mb' })`, Passport initialization, Morgan request logging, mounts `/api`, and handles errors globally.
-* Serves a state-of-the-art interactive test console at `/` featuring the exact navigation bar:
-  * [Home](https://www.myhrsg.org/)
-  * [About Us](https://www.myhrsg.org/about)
-  * [HR Events](https://www.myhrsg.org/events)
-  * [Knowledge Hub](https://www.myhrsg.org/knowledge-hub)
-  * [Membership](https://www.myhrsg.org/membership)
-  * [Partners & Sponsors](https://www.myhrsg.org/partners)
-  * [Contact Us](https://www.myhrsg.org/contact)
-  * [Dashboard](https://www.myhrsg.org/profile)
+A full-stack monorepo platform tailored exclusively for C-Suite Executives, VPs, and Founders. CXO Connect enables confidential peer advisory, boardroom governance, curated conclaves, and strategic business alliances.
 
 ---
 
-## 🚀 Getting Started
+## 🏛️ Monorepo Architecture
 
-### Prerequisites
-* Node.js v18+ (tested on v22.17.1)
-* MongoDB (running on `mongodb://127.0.0.1:27017/cxo_connect`)
-
-### Installation
-```bash
-# Clone and enter workspace
-npm install
+```
+cxo-connect/
+├── client/                     # React 18 + Vite + Tailwind CSS Frontend
+│   ├── src/
+│   │   ├── components/         # Navbar, Hero, DomeGallery, ChromaGrid, StarBorder, etc.
+│   │   ├── context/            # AuthContext (JWT session state & role guards)
+│   │   ├── features/           # Admin Dashboard (approvals, metrics, faculty)
+│   │   ├── pages/              # Home, About, Events, KnowledgeHub, Membership, Contact,
+│   │   │                       # Login, VerifyOTP, CompleteProfile, Profile, CXOQuiz
+│   │   ├── services/           # Axios API modules with Bearer token interceptor
+│   │   ├── App.jsx             # React Router DOM mapping
+│   │   ├── main.jsx            # Application entry
+│   │   └── index.css           # Tailwind + glassmorphism + executive buttons
+│   ├── index.html              # HTML shell with Google Fonts (Playfair Display & Inter)
+│   ├── tailwind.config.js      # Executive dark-navy palette & typography tokens
+│   ├── vite.config.js          # Vite config with API proxy to :5000
+│   └── package.json
+│
+├── server/                     # Node.js + Express ES Modules + MongoDB Backend
+│   ├── config/                 # db.js (MongoDB), email.js (Nodemailer), passport.js (OAuth)
+│   ├── controllers/            # auth, member, event, comment, committee, mentor,
+│   │                           # sponsor, quiz, contact, imagekit, chapter
+│   ├── middleware/             # authMiddleware (isAuth, isAdmin, isMainAdmin), uploadMiddleware
+│   ├── models/                 # User, Event, Comment, Committee, Mentor, Sponsor, Question, Chapter
+│   ├── routes/                 # Express routers mounted under /api
+│   ├── scripts/                # seed.js (pre-populated C-suite records & admin accounts)
+│   ├── server.js               # Express application entry & global error handler
+│   └── package.json
+│
+├── .env.example                # Canonical environment template
+├── .gitignore                  # Git tracking rules
+├── package.json                # Root monorepo orchestrator (npm workspaces + concurrently)
+└── README.md                   # System documentation
 ```
 
-### Configuration (`.env`)
-Create a `.env` file from `.env.example`:
-```env
-PORT=5000
-NODE_ENV=development
-CLIENT_URL=http://localhost:5000
-MONGO_URI=mongodb://127.0.0.1:27017/cxo_connect
-JWT_SECRET=cxo_connect_super_secret_jwt_key_2026_modern_backend
-SUPER_ADMIN_EMAILS=theanvisharma@gmail.com,admin@myhrsg.org,superadmin@cxoconnect.com
-FROM_EMAIL="CXO Connect / HRSG" <no-reply@myhrsg.org>
+---
+
+## 🔐 Core Security & Authentication
+
+1. **Passwordless Email OTP**:
+   - Dispatches a 6-digit numeric OTP valid for 10 minutes via branded HTML email template.
+   - Issues a 15-minute temporary verification token.
+   - Upon verification, issues a 30-day session JWT Bearer token.
+2. **Role-Based Access Control**:
+   - `isAuth`: Validates JWT Bearer token and attaches user to `req.user`.
+   - `isAdmin`: Requires JWT validation + `role === 'admin'` + `status === 'accepted'`.
+   - `isMainAdmin`: Requires JWT validation + `role === 'admin'` + `isMainAdmin === true`.
+3. **Admissions Workflow**:
+   - Accounts are created with `status: 'pending'`.
+   - Members complete their executive profile (Name, Title, Company, City, Phone, LinkedIn).
+   - Platform Administrators review and approve (`accepted`) or reject (`rejected`) applicants via the Admin Control Console.
+
+---
+
+## 🚀 Quickstart & Local Development
+
+### 1. Prerequisites
+- **Node.js** v18+ installed
+- **MongoDB** running locally on `mongodb://127.0.0.1:27017/cxoconnect`
+
+### 2. Install Dependencies
+```bash
+# Install root, server, and client dependencies
+npm run install:all
 ```
 
-### Running the Server
+### 3. Configure Environment Variables
+Copy `.env.example` to `server/.env`:
 ```bash
-# Start production server
-npm start
+cp .env.example server/.env
+```
 
-# Or run with nodemon in development
+### 4. Seed Executive Database
+Populate the database with verified C-Suite mentors, committee members, upcoming conclaves, regional chapters, and default admin accounts:
+```bash
+npm run seed
+```
+
+**Default Seeded Admin Accounts:**
+- `theanvisharma@gmail.com` (Super Administrator / Founder)
+- `admin@cxoconnect.com` (Main Administrator)
+
+### 5. Launch Full-Stack Application
+Start both the Express backend (`:5000`) and the Vite React frontend (`:5173`) concurrently:
+```bash
 npm run dev
 ```
 
-Visit the interactive test harness and documentation at:
-**`http://localhost:5000`**
-
----
-
-## 🧪 Automated Test Suite
-Run the 15/15 unit & integration test suite:
-```bash
-npm test
-```
-Run upload and size limit tests:
-```bash
-node test/upload.test.js
-```
+Visit the application in your browser:
+- **Client Frontend**: `http://localhost:5173`
+- **REST API Backend**: `http://localhost:5000/api`
 
 ---
 
 ## 📡 API Reference
 
-| Method | Endpoint | Protection | Description |
+### Authentication (`/api/auth`)
+| Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `POST` | `/api/auth/manual` | Public | Send 6-digit OTP & 15m verification token |
-| `POST` | `/api/auth/verify-otp` | Temp Token | Validate OTP, clear OTP, issue 30d session JWT |
-| `POST` | `/api/auth/resend-otp` | Public / Token | Re-issue fresh 6-digit OTP |
-| `GET` | `/api/auth/me` | `isAuth` | Get current executive profile payload |
-| `POST` | `/api/auth/complete-profile` | `isAuth` | Update metadata & upload profile image (<5MB) |
-| `GET` | `/api/auth/google` | Public | Initiate Google OAuth 2.0 flow |
-| `GET` | `/api/auth/linkedin` | Public | Initiate LinkedIn OAuth 2.0 flow |
-| `GET` | `/api/users` | `isAuth, isAdmin` | Admin user directory with status filter |
-| `PATCH` | `/api/users/:id/status` | `isAuth, isAdmin` | Accept or reject membership |
-| `PATCH` | `/api/users/:id/role` | `isAuth, isMainAdmin` | Promote / demote roles |
-| `GET` | `/api/navbar` | Public | Returns official navbar configuration |
-| `GET` | `/api/health` | Public | Backend health and uptime metrics |
+| `POST` | `/api/auth/manual` | Initiates email OTP verification | Public |
+| `POST` | `/api/auth/verify-otp` | Validates 6-digit OTP, issues 30-day session JWT | Public |
+| `POST` | `/api/auth/resend-otp` | Re-dispatches a fresh 6-digit OTP | Public |
+| `POST` | `/api/auth/complete-profile` | Updates executive credentials | `isAuth` |
+| `GET` | `/api/auth/me` | Fetches active authenticated user payload | `isAuth` |
+| `GET` | `/api/auth/linkedin` | LinkedIn OAuth 2.0 flow | Public |
+
+### Members Directory & Governance (`/api/members`)
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `GET` | `/api/members/stats` | Executive platform metrics (pending, accepted, total) | `isAdmin` |
+| `GET` | `/api/members` | Filterable executive member directory | `isAdmin` |
+| `GET` | `/api/members/:id` | Member details | `isAdmin` |
+| `PUT` | `/api/members/:id/status` | Approve (`accepted`) or reject (`rejected`) account | `isAdmin` |
+| `PUT` | `/api/members/:id/role` | Promote/demote to admin | `isMainAdmin` |
+| `DELETE` | `/api/members/:id` | Remove account | `isAdmin` |
+
+### Executive Conclaves & Summits (`/api/events`)
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `GET` | `/api/events` | List all summits (optional `category` filter) | Public |
+| `GET` | `/api/events/:id` | Conclave details with attendees | Public |
+| `POST` | `/api/events` | Schedule a new executive conclave | `isAdmin` |
+| `PUT` | `/api/events/:id` | Update conclave details | `isAdmin` |
+| `DELETE` | `/api/events/:id` | Remove conclave | `isAdmin` |
+| `POST` | `/api/events/:id/rsvp` | Toggle seat reservation for event | `isAuth` |
+
+### Discussions & Insights (`/api/comments`)
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `GET` | `/api/comments` | Retrieve insights (filter by `eventId`) | Public |
+| `POST` | `/api/comments` | Share strategic perspective on an event | `isAuth` |
+| `POST` | `/api/comments/:id/like` | Endorse insight | `isAuth` |
+| `DELETE` | `/api/comments/:id` | Remove insight | Author / Admin |
+
+### Faculty & Advisory Board (`/api/mentors`, `/api/committee`)
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `GET` | `/api/mentors` | Retrieve C-Suite mentor directory | Public |
+| `POST` | `/api/mentors/request` | Request 1-on-1 strategic advisory session | `isAuth` |
+| `POST` | `/api/mentors` | Onboard new mentor | `isAdmin` |
+| `GET` | `/api/committee` | Retrieve advisory board & committee roster | Public |
+
+### Assessments & Inquiries (`/api/quiz`, `/api/contact`, `/api/partners`)
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `GET` | `/api/quiz/questions` | Retrieve leadership assessment scenarios | Public |
+| `POST` | `/api/quiz/submit` | Evaluate archetype & trait breakdown | Public |
+| `POST` | `/api/contact` | Submit inquiry to executive secretariat | Public |
+| `GET` | `/api/sponsors` | Retrieve corporate sponsors by tier | Public |
+| `POST` | `/api/sponsors/inquiry` | Submit corporate partnership inquiry | Public |
+
+---
+
+## 🎨 Design System & Executive Aesthetics
+
+- **Color Palette**: Tailored dark-navy (`#070B19`, `#0D1424`, `#111A2E`), royal blue accents (`#1D4ED8`, `#2563EB`), and platinum/gold touches.
+- **Typography**: Google Font **Playfair Display** (editorial, authoritative serif headings) paired with **Inter** (clean, crisp sans-serif body).
+- **Glassmorphism & Shadows**: Custom utilities (`.glass-card`, `.premium-card`, `.btn-executive-pill`) creating modern executive contrast.
+- **Internal Routing**: Built strictly with React Router DOM; no dead links or external redirects.
