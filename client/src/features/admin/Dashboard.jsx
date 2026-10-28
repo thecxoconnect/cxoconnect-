@@ -209,9 +209,9 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="w-full bg-slate-50 min-h-screen pb-20">
+    <div className="w-full bg-[#F7F7F4] min-h-screen pb-20">
       <PageHeader
-        title="Admin Control Console"
+        title="Admin Governance Console"
         subtitle="Manage member credentialing approvals, role permissions, and platform conclaves."
         badge="Platform Governance"
         breadcrumbs={[{ label: 'Admin Console' }]}
@@ -221,67 +221,67 @@ const AdminDashboard = () => {
         
         {/* KPI Metric Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Total Executives</span>
-              <Users className="w-4 h-4 text-blue-600" />
+          <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm">
+            <div className="flex items-center justify-between text-[#64748B] mb-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#D99B26]">Total Executives</span>
+              <Users className="w-4 h-4 text-[#D99B26]" />
             </div>
-            <p className="text-3xl font-bold font-serif text-slate-900">{stats.totalExecutives}</p>
+            <p className="text-3xl font-extrabold text-[#111315] tracking-tight">{stats.totalExecutives}</p>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Pending Review</span>
+          <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm">
+            <div className="flex items-center justify-between text-[#64748B] mb-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-amber-600">Pending Review</span>
               <Clock className="w-4 h-4 text-amber-500" />
             </div>
-            <p className="text-3xl font-bold font-serif text-amber-600">{stats.pendingApplications}</p>
+            <p className="text-3xl font-extrabold text-amber-600 tracking-tight">{stats.pendingApplications}</p>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Accepted Members</span>
+          <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm">
+            <div className="flex items-center justify-between text-[#64748B] mb-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Accepted Members</span>
               <CheckCircle className="w-4 h-4 text-emerald-500" />
             </div>
-            <p className="text-3xl font-bold font-serif text-emerald-600">{stats.acceptedMembers}</p>
+            <p className="text-3xl font-extrabold text-emerald-600 tracking-tight">{stats.acceptedMembers}</p>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md">
-            <div className="flex items-center justify-between text-slate-500 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider">Admins & Staff</span>
-              <Shield className="w-4 h-4 text-blue-600" />
+          <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm">
+            <div className="flex items-center justify-between text-[#64748B] mb-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#111315]">Administrators</span>
+              <Shield className="w-4 h-4 text-[#D99B26]" />
             </div>
-            <p className="text-3xl font-bold font-serif text-slate-900">{stats.administrators}</p>
+            <p className="text-3xl font-extrabold text-[#111315] tracking-tight">{stats.administrators}</p>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
+        <div className="flex items-center gap-2 mb-6 border-b border-[#E2E8F0] pb-3">
           <button
             onClick={() => setActiveTab('members')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
               activeTab === 'members'
-                ? 'bg-slate-900 text-white shadow'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                : 'bg-white text-[#64748B] hover:text-[#111315] border border-[#E2E8F0]'
             }`}
           >
             Member Directory & Approvals
           </button>
           <button
             onClick={() => setActiveTab('events')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
               activeTab === 'events'
-                ? 'bg-slate-900 text-white shadow'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                : 'bg-white text-[#64748B] hover:text-[#111315] border border-[#E2E8F0]'
             }`}
           >
             Create Conclave
           </button>
           <button
             onClick={() => setActiveTab('mentors')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
               activeTab === 'mentors'
-                ? 'bg-slate-900 text-white shadow'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                : 'bg-white text-[#64748B] hover:text-[#111315] border border-[#E2E8F0]'
             }`}
           >
             Onboard Faculty
@@ -447,17 +447,17 @@ const AdminDashboard = () => {
 
         {/* TAB 2: CREATE CONCLAVE / EVENT */}
         {activeTab === 'events' && (
-          <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xl max-w-3xl">
-            <h3 className="text-xl font-serif font-bold text-slate-900 mb-1">
+          <div className="bg-white rounded-3xl p-8 border border-[#E2E8F0] shadow-xl max-w-3xl">
+            <h3 className="text-xl font-extrabold text-[#111315] tracking-tight mb-1">
               Schedule New Executive Conclave
             </h3>
-            <p className="text-xs text-slate-500 mb-6">
+            <p className="text-xs text-[#64748B] mb-6">
               Create an upcoming summit, C-Suite roundtable, or executive masterclass.
             </p>
 
             <form onSubmit={handleCreateEvent} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                   Conclave Title *
                 </label>
                 <input
@@ -466,18 +466,18 @@ const AdminDashboard = () => {
                   onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
                   placeholder="e.g. CXO Connect Annual Leadership Conclave 2027"
                   required
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                   Category
                 </label>
                 <select
                   value={newEvent.category}
                   onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 >
                   <option value="Leadership Summit">Leadership Summit</option>
                   <option value="C-Suite Roundtable">C-Suite Roundtable</option>
@@ -488,7 +488,7 @@ const AdminDashboard = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Date *
                   </label>
                   <input
@@ -497,11 +497,11 @@ const AdminDashboard = () => {
                     onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
                     placeholder="e.g. November 24, 2026"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Time Schedule
                   </label>
                   <input
@@ -509,14 +509,14 @@ const AdminDashboard = () => {
                     value={newEvent.time}
                     onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
                     placeholder="09:30 AM - 04:30 PM IST"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Venue *
                   </label>
                   <input
@@ -525,11 +525,11 @@ const AdminDashboard = () => {
                     onChange={(e) => setNewEvent({ ...newEvent, venue: e.target.value })}
                     placeholder="e.g. The Taj Mahal Palace"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Location / City
                   </label>
                   <input
@@ -537,13 +537,13 @@ const AdminDashboard = () => {
                     value={newEvent.location}
                     onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
                     placeholder="Mumbai, India"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                   Executive Description *
                 </label>
                 <textarea
@@ -552,16 +552,16 @@ const AdminDashboard = () => {
                   onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
                   placeholder="Outline key discussion themes, keynote perspectives, and attendee criteria..."
                   required
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={creatingEvent}
-                className="px-8 py-3 rounded-full bg-slate-900 hover:bg-blue-600 text-white font-semibold text-xs transition-colors shadow-md flex items-center gap-2"
+                className="btn-charcoal text-xs py-3 px-8 rounded-full"
               >
-                <PlusCircle className="w-4 h-4" />
+                <PlusCircle className="w-4 h-4 text-[#D99B26]" />
                 <span>{creatingEvent ? 'Publishing Conclave...' : 'Publish Executive Conclave'}</span>
               </button>
             </form>
@@ -570,18 +570,18 @@ const AdminDashboard = () => {
 
         {/* TAB 3: ONBOARD FACULTY / MENTOR */}
         {activeTab === 'mentors' && (
-          <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xl max-w-3xl">
-            <h3 className="text-xl font-serif font-bold text-slate-900 mb-1">
+          <div className="bg-white rounded-3xl p-8 border border-[#E2E8F0] shadow-xl max-w-3xl">
+            <h3 className="text-xl font-extrabold text-[#111315] tracking-tight mb-1">
               Onboard C-Suite Faculty & Mentor
             </h3>
-            <p className="text-xs text-slate-500 mb-6">
+            <p className="text-xs text-[#64748B] mb-6">
               Add seasoned industry titans available for 1-on-1 executive advisory sessions.
             </p>
 
             <form onSubmit={handleCreateMentor} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Leader Name *
                   </label>
                   <input
@@ -590,11 +590,11 @@ const AdminDashboard = () => {
                     onChange={(e) => setNewMentor({ ...newMentor, name: e.target.value })}
                     placeholder="e.g. Arun M. Parameswaran"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Executive Title *
                   </label>
                   <input
@@ -603,14 +603,14 @@ const AdminDashboard = () => {
                     onChange={(e) => setNewMentor({ ...newMentor, designation: e.target.value })}
                     placeholder="e.g. Former President & MD"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Company / Organization *
                   </label>
                   <input
@@ -619,11 +619,11 @@ const AdminDashboard = () => {
                     onChange={(e) => setNewMentor({ ...newMentor, company: e.target.value })}
                     placeholder="e.g. Salesforce India"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                     Expertise Areas (Comma-separated)
                   </label>
                   <input
@@ -631,13 +631,13 @@ const AdminDashboard = () => {
                     value={newMentor.expertise}
                     onChange={(e) => setNewMentor({ ...newMentor, expertise: e.target.value })}
                     placeholder="Enterprise Scaling, M&A, AI Governance"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-[#111315] mb-1">
                   Executive Biography
                 </label>
                 <textarea
@@ -645,16 +645,16 @@ const AdminDashboard = () => {
                   value={newMentor.bio}
                   onChange={(e) => setNewMentor({ ...newMentor, bio: e.target.value })}
                   placeholder="Detail years of executive experience, board appointments, and key career milestones..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={creatingMentor}
-                className="px-8 py-3 rounded-full bg-slate-900 hover:bg-blue-600 text-white font-semibold text-xs transition-colors shadow-md flex items-center gap-2"
+                className="btn-charcoal text-xs py-3 px-8 rounded-full"
               >
-                <PlusCircle className="w-4 h-4" />
+                <PlusCircle className="w-4 h-4 text-[#D99B26]" />
                 <span>{creatingMentor ? 'Adding Faculty...' : 'Onboard C-Suite Mentor'}</span>
               </button>
             </form>

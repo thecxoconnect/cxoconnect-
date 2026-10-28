@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader';
 import CertificationCard from '../components/CertificationCard';
 import { useToast } from '../components/Toast';
 import { useAuth } from '../context/AuthContext';
-import { FileText, Download, ArrowRight, Eye, Sparkles, BookOpen, Lock } from 'lucide-react';
+import { FileText, Download, ArrowRight, Eye, Sparkles } from 'lucide-react';
 
 const frameworks = [
   {
@@ -90,7 +90,7 @@ const KnowledgeHub = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F7F7F4] min-h-screen pb-20">
       <PageHeader
         title="Executive Knowledge Hub"
         subtitle="Proprietary decision-making frameworks, peer-researched whitepapers, and board certification tracks."
@@ -100,23 +100,22 @@ const KnowledgeHub = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
-        {/* Assessment Banner */}
-        <div className="mb-16 p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-blue-500/30">
+        {/* Assessment Banner (Dark Navy #0E1622) */}
+        <div className="mb-16 p-8 rounded-3xl bg-[#0E1622] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-white/10">
           <div className="space-y-2 max-w-xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Interactive Assessment</span>
+            <span className="category-subtitle">
+              Interactive Assessment
             </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-heading">
               Discover Your CXO Decision-Making Archetype
             </h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               Take our 4-minute executive evaluation to benchmark your leadership tendencies against 2,500+ C-suite peers.
             </p>
           </div>
           <Link
             to="/quiz"
-            className="px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center gap-2 flex-shrink-0"
+            className="btn-ochre px-8 py-3.5 text-xs font-bold rounded-full flex-shrink-0"
           >
             <span>Launch CXO Quiz</span>
             <ArrowRight className="w-4 h-4" />
@@ -127,44 +126,44 @@ const KnowledgeHub = () => {
         <div className="mb-20">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+              <span className="category-subtitle">
                 Boardroom Briefings
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
                 Executive Frameworks & Research
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-2 sm:mt-0">
+            <p className="text-xs text-[#64748B] mt-2 sm:mt-0">
               Updated monthly by the CXO Connect Advisory Taskforces
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {frameworks.map((fw, idx) => (
-              <div key={idx} className="premium-card p-6 flex flex-col justify-between">
+              <div key={idx} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-[#D99B26]/50 transition-all flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between text-xs text-slate-500 mb-3">
-                    <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 font-semibold">
+                  <div className="flex items-center justify-between text-xs text-[#64748B] mb-3">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#F7F7F4] text-[#D99B26] font-bold text-[10px] uppercase tracking-wider border border-[#E2E8F0]">
                       {fw.category}
                     </span>
                     <span>{fw.readTime}</span>
                   </div>
 
-                  <h3 className="text-xl font-serif font-bold text-slate-900 mb-2 leading-snug">
+                  <h3 className="text-lg font-bold font-heading text-[#111315] mb-2 leading-snug">
                     {fw.title}
                   </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  <p className="text-xs text-[#64748B] leading-relaxed mb-4">
                     {fw.summary}
                   </p>
-                  <p className="text-[11px] font-semibold text-slate-400">
+                  <p className="text-[11px] font-semibold text-[#64748B]">
                     Curated by: {fw.author}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 mt-6 flex items-center justify-between">
+                <div className="pt-4 border-t border-[#E2E8F0] mt-6 flex items-center justify-between">
                   <button
                     onClick={() => setSelectedFramework(fw)}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-blue-600 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#111315] hover:text-[#D99B26] transition-colors"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>Executive Summary</span>
@@ -172,7 +171,7 @@ const KnowledgeHub = () => {
 
                   <button
                     onClick={() => handleDownload(fw.title)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white text-xs font-semibold transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#111315] text-white hover:bg-[#D99B26] text-xs font-semibold transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download PDF</span>
@@ -186,13 +185,13 @@ const KnowledgeHub = () => {
         {/* Certifications Section */}
         <div id="certifications">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+            <span className="category-subtitle">
               Executive Development
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-3 mb-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] mt-2 mb-2 font-heading tracking-tight">
               Board Governance & Leadership Certifications
             </h2>
-            <p className="text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-[#64748B]">
               Cohort-based programs led by veteran independent directors, former CEOs, and enterprise strategists.
             </p>
           </div>
@@ -212,30 +211,30 @@ const KnowledgeHub = () => {
 
       {/* Framework Preview Modal */}
       {selectedFramework && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
-            <div className="flex items-start justify-between pb-3 border-b border-slate-100 mb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#E2E8F0]">
+            <div className="flex items-start justify-between pb-3 border-b border-[#E2E8F0] mb-3">
               <div>
-                <span className="text-[10px] font-bold uppercase text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                <span className="category-subtitle">
                   {selectedFramework.category}
                 </span>
-                <h3 className="text-lg font-serif font-bold text-slate-900 mt-1">
+                <h3 className="text-lg font-bold font-heading text-[#111315] mt-1">
                   {selectedFramework.title}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedFramework(null)}
-                className="text-slate-400 hover:text-slate-600 p-1"
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-[#F7F7F4]"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-3 text-xs text-slate-600 leading-relaxed py-2">
-              <p><strong>Overview:</strong> {selectedFramework.summary}</p>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-                <p className="font-semibold text-slate-800">Included Playbooks:</p>
-                <ul className="list-disc pl-4 space-y-0.5 text-slate-600">
+            <div className="space-y-3 text-xs text-[#64748B] leading-relaxed py-2">
+              <p><strong className="text-[#111315]">Overview:</strong> {selectedFramework.summary}</p>
+              <div className="p-3 bg-[#F7F7F4] rounded-xl border border-[#E2E8F0] space-y-1">
+                <p className="font-bold text-[#111315]">Included Playbooks:</p>
+                <ul className="list-disc pl-4 space-y-0.5 text-[#64748B]">
                   <li>Executive Boardroom Briefing Slides (16:9)</li>
                   <li>Audit Committee Decision Rubric</li>
                   <li>Cross-functional KPI & Liability Matrix</li>
@@ -243,10 +242,10 @@ const KnowledgeHub = () => {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+            <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-end gap-2">
               <button
                 onClick={() => setSelectedFramework(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                className="px-4 py-2 rounded-full text-xs font-semibold text-[#64748B] hover:bg-[#F7F7F4]"
               >
                 Close
               </button>
@@ -255,7 +254,7 @@ const KnowledgeHub = () => {
                   handleDownload(selectedFramework.title);
                   setSelectedFramework(null);
                 }}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md"
+                className="btn-charcoal px-5 py-2 text-xs rounded-full"
               >
                 Download Complete PDF
               </button>

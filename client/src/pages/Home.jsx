@@ -34,45 +34,45 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full">
-      {/* 1. Hero Section (Strictly matching user screenshot layout) */}
+    <div className="w-full bg-[#F7F7F4]">
+      {/* 1. Executive Hero (2-Column Layout) */}
       <Hero />
 
-      {/* 2. Executive Metrics Band */}
-      <section className="bg-slate-900 text-white py-12 border-y border-slate-800">
+      {/* 2. Executive Stats Band */}
+      <section className="bg-[#111315] text-white py-12 border-y border-[#E2E8F0]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-serif font-extrabold text-blue-400">2,500+</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">C-Suite Leaders</p>
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">2,500+</p>
+              <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">C-Suite Leaders</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-serif font-extrabold text-blue-400">45+</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Annual Conclaves</p>
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">45+</p>
+              <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Annual Conclaves</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-serif font-extrabold text-blue-400">98%</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Boardroom Influence</p>
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">98%</p>
+              <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Boardroom Influence</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-serif font-extrabold text-blue-400">8</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Global Chapters</p>
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">8</p>
+              <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Global Chapters</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* 3. Core Strategic Pillars (ChromaGrid) */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#F7F7F4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3.5 py-1 rounded-full border border-blue-100">
+            <span className="category-subtitle">
               The CXO Connect Advantage
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-slate-900 mt-4 mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111315] mt-3 mb-4 tracking-tight font-heading">
               Designed for C-Suite Decision Makers
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg">
+            <p className="text-[#64748B] text-sm sm:text-base leading-relaxed">
               Through focused peer conversations and curated engagements, leaders exchange practical foresight and forge lasting strategic alliances.
             </p>
           </div>
@@ -82,20 +82,20 @@ const Home = () => {
       </section>
 
       {/* 4. Upcoming Conclaves & Summits */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
+      <section className="py-20 bg-white border-t border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100/70 px-3 py-1 rounded-full">
+              <span className="category-subtitle">
                 Curated Engagements
               </span>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
                 Upcoming Executive Conclaves
               </h2>
             </div>
             <Link
               to="/events"
-              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D99B26] hover:text-[#C2871E] transition-colors"
             >
               <span>View All Summits</span>
               <ArrowRight className="w-4 h-4" />
@@ -104,50 +104,53 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {events.map((evt) => (
-              <div key={evt._id} className="premium-card flex flex-col justify-between overflow-hidden">
+              <div
+                key={evt._id}
+                className="bg-[#F7F7F4] rounded-2xl border border-[#E2E8F0] hover:border-[#D99B26]/50 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
+              >
                 <div>
                   <div className="relative h-48 overflow-hidden bg-slate-200">
                     <img
                       src={evt.banner}
                       alt={evt.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-white text-[11px] font-semibold uppercase tracking-wider">
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#111315]/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider">
                       {evt.category}
                     </span>
                   </div>
 
                   <div className="p-6">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#D99B26] mb-2">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{evt.date} • {evt.time}</span>
                     </div>
 
-                    <h3 className="text-xl font-bold font-serif text-slate-900 mb-2 leading-snug">
+                    <h3 className="text-lg font-bold text-[#111315] mb-2 font-heading leading-snug">
                       {evt.title}
                     </h3>
 
-                    <p className="text-xs text-slate-600 line-clamp-3 mb-4 leading-relaxed">
+                    <p className="text-xs text-[#64748B] line-clamp-3 mb-4 leading-relaxed">
                       {evt.description}
                     </p>
 
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                    <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
+                      <MapPin className="w-3.5 h-3.5 text-[#D99B26]" />
                       <span>{evt.venue}, {evt.location}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-6 pt-0 border-t border-slate-100 mt-auto flex items-center justify-between pt-4">
-                  <span className="text-xs text-slate-500 font-medium">
+                <div className="p-6 pt-0 border-t border-[#E2E8F0] mt-auto flex items-center justify-between pt-4">
+                  <span className="text-xs text-[#64748B] font-medium">
                     {evt.attendees?.length || 0} Registered Leaders
                   </span>
                   <Link
                     to={`/events?highlight=${evt._id}`}
-                    className="inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-blue-600 transition-colors"
+                    className="btn-charcoal text-xs py-2 px-4 rounded-full"
                   >
                     <span>Reserve Seat</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#D99B26]" />
                   </Link>
                 </div>
               </div>
@@ -157,15 +160,15 @@ const Home = () => {
       </section>
 
       {/* 5. Interactive Dome Gallery */}
-      <section className="py-20 bg-slate-900 text-white">
+      <section className="py-20 bg-[#111315] text-white border-t border-[#E2E8F0]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-500/20">
+          <span className="category-subtitle">
             Executive Retrospectives
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mt-4 mb-4">
-            Highlights from Recent Conclaves
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-3 mb-4 font-heading tracking-tight">
+            Moments from Closed-Door Summits
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-base">
+          <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
             Explore moments of closed-door strategic dialogue and peer exchanges across our premier global venues.
           </p>
         </div>
@@ -174,20 +177,20 @@ const Home = () => {
       </section>
 
       {/* 6. C-Suite Mentors Preview */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#F7F7F4] border-t border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-                Boardroom Mentors
+              <span className="category-subtitle">
+                Boardroom Faculty
               </span>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">
-                Learn from Industry Titans
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
+                Learn from Proven Leaders
               </h2>
             </div>
             <Link
-              to="/about#mentors"
-              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+              to="/mentors"
+              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D99B26] hover:text-[#C2871E] transition-colors"
             >
               <span>View Full Faculty</span>
               <ArrowRight className="w-4 h-4" />
@@ -199,29 +202,29 @@ const Home = () => {
       </section>
 
       {/* 7. Call To Action Banner (StarBorder) */}
-      <section className="py-16 bg-slate-50 border-t border-slate-200">
+      <section className="py-16 bg-white border-t border-[#E2E8F0]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <StarBorder>
             <div className="text-center max-w-2xl mx-auto space-y-5">
-              <span className="inline-block px-3.5 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-widest">
+              <span className="category-subtitle">
                 By Invitation & Application Only
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight font-heading tracking-tight">
                 Step Into the Room Where Decisions Happen
               </h2>
-              <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                 Connect directly with peer CEOs, CFOs, CTOs, and Founders. Elevate your strategic perspective through peer advisory and collaborative executive power.
               </p>
               <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   to={isAuthenticated ? "/profile" : "/membership"}
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-lg shadow-blue-600/30"
+                  className="btn-ochre px-8 py-3.5 text-sm font-bold"
                 >
-                  Apply for CXO Membership
+                  Request an Invitation
                 </Link>
                 <Link
                   to="/quiz"
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-all border border-slate-700"
+                  className="btn-outline-executive px-8 py-3.5 text-sm font-bold text-white border-white/20 hover:border-[#D99B26] hover:text-[#D99B26]"
                 >
                   Take Leadership Assessment
                 </Link>

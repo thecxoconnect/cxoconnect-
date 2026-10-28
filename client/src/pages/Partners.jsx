@@ -70,7 +70,7 @@ const Partners = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F7F7F4] min-h-screen pb-20">
       <PageHeader
         title="Partners & Sponsors"
         subtitle="Collaborating with industry pioneers to deliver premier executive gatherings and strategic intelligence."
@@ -84,28 +84,28 @@ const Partners = () => {
         {grouped.strategicPartners?.length > 0 && (
           <div className="mb-16">
             <div className="text-center mb-8">
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+              <span className="category-subtitle">
                 Tier One Collaboration
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
                 Strategic Partners
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {grouped.strategicPartners.map((sp) => (
-                <div key={sp._id} className="premium-card p-8 flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-bold text-2xl font-serif flex-shrink-0">
+                <div key={sp._id} className="card-dark-navy p-8 flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-2xl bg-white/5 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26] font-bold text-2xl font-heading flex-shrink-0">
                     {sp.name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold font-serif text-slate-900">{sp.name}</h3>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">{sp.description}</p>
+                    <h3 className="text-xl font-bold font-heading text-white">{sp.name}</h3>
+                    <p className="text-xs text-slate-300 mt-1 leading-relaxed">{sp.description}</p>
                     {sp.website && (
                       <a
                         href={sp.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 mt-3 hover:underline"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#D99B26] mt-3 hover:underline"
                       >
                         <span>Visit Enterprise Portal</span>
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -121,10 +121,10 @@ const Partners = () => {
         {/* Platinum & Gold Sponsors */}
         <div className="mb-20">
           <div className="text-center mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-600 bg-slate-100 px-3 py-1 rounded-full">
+            <span className="category-subtitle">
               Ecosystem Collaborators
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
               Platinum & Knowledge Partners
             </h2>
           </div>
@@ -133,23 +133,23 @@ const Partners = () => {
             {sponsors
               .filter((s) => s.tier !== 'Strategic Partner')
               .map((sp) => (
-                <div key={sp._id} className="premium-card p-6 flex flex-col items-center text-center justify-between">
+                <div key={sp._id} className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-[#D99B26]/50 transition-all p-6 flex flex-col items-center text-center justify-between">
                   <div>
-                    <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-xl font-serif mb-3">
+                    <div className="w-16 h-16 rounded-2xl bg-[#F7F7F4] border border-[#E2E8F0] text-[#D99B26] flex items-center justify-center font-bold text-xl font-heading mb-3">
                       {sp.name.slice(0, 2).toUpperCase()}
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50/70 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#D99B26] bg-[#F7F7F4] px-2 py-0.5 rounded-full border border-[#E2E8F0]">
                       {sp.tier}
                     </span>
-                    <h4 className="text-base font-bold text-slate-900 mt-2 leading-tight">{sp.name}</h4>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{sp.description}</p>
+                    <h4 className="text-base font-bold text-[#111315] mt-2 leading-tight">{sp.name}</h4>
+                    <p className="text-xs text-[#64748B] mt-1 line-clamp-2">{sp.description}</p>
                   </div>
                   {sp.website && (
                     <a
                       href={sp.website}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-blue-600 mt-4"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#64748B] hover:text-[#D99B26] mt-4"
                     >
                       <span>Website</span>
                       <ExternalLink className="w-3 h-3" />
@@ -160,13 +160,13 @@ const Partners = () => {
           </div>
         </div>
 
-        {/* Partnership Inquiry Form */}
-        <div className="max-w-3xl mx-auto bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-800">
+        {/* Partnership Inquiry Form (Dark Navy #0E1622) */}
+        <div className="max-w-3xl mx-auto card-dark-navy p-8 sm:p-12 shadow-2xl">
           <div className="text-center max-w-xl mx-auto mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/20 px-3 py-1 rounded-full">
+            <span className="category-subtitle">
               Corporate Relations
             </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white mt-3">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-2 font-heading">
               Partner with CXO Connect
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -177,7 +177,7 @@ const Partners = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                   Company Name *
                 </label>
                 <input
@@ -187,12 +187,12 @@ const Partners = () => {
                   onChange={handleChange}
                   placeholder="e.g. Goldman Sachs Global"
                   required
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                   Executive Contact Person *
                 </label>
                 <input
@@ -202,12 +202,12 @@ const Partners = () => {
                   onChange={handleChange}
                   placeholder="e.g. Anvi Sharma, VP Partnerships"
                   required
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                   Corporate Email *
                 </label>
                 <input
@@ -217,12 +217,12 @@ const Partners = () => {
                   onChange={handleChange}
                   placeholder="name@company.com"
                   required
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                   Phone Number
                 </label>
                 <input
@@ -231,20 +231,20 @@ const Partners = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 98200 12345"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                 Partnership Tier of Interest
               </label>
               <select
                 name="tierInterest"
                 value={formData.tierInterest}
                 onChange={handleChange}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#0E1622] border border-white/10 text-white text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
               >
                 <option value="Strategic Partner">Strategic Partner</option>
                 <option value="Platinum Sponsor">Platinum Sponsor</option>
@@ -255,7 +255,7 @@ const Partners = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                 Strategic Objectives
               </label>
               <textarea
@@ -264,14 +264,14 @@ const Partners = () => {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Describe your brand goals, target industry vertical, and timeline..."
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
+              className="btn-ochre w-full py-3.5 rounded-full text-xs font-bold"
             >
               {submitting ? (
                 <span>Submitting Proposal...</span>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PageHeader from '../components/PageHeader';
 import { contactService } from '../services/api';
 import { useToast } from '../components/Toast';
-import { Mail, Phone, MapPin, Send, Clock, ShieldCheck, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, ShieldCheck } from 'lucide-react';
 
 const offices = [
   {
@@ -76,7 +76,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F7F7F4] min-h-screen pb-20">
       <PageHeader
         title="Executive Secretariat"
         subtitle="Connect with our membership admissions committee, corporate relations desk, or regional chapter leads."
@@ -88,15 +88,15 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
           {/* Inquiry Form */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-slate-200">
+          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-[#E2E8F0]">
             <div className="mb-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+              <span className="category-subtitle">
                 Confidential Inquiry
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
                 Send a Message to Leadership
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              <p className="text-xs sm:text-sm text-[#64748B] mt-1">
                 Our relationship team guarantees a response within 1 business day.
               </p>
             </div>
@@ -104,7 +104,7 @@ const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#111315] mb-1">
                     Your Name *
                   </label>
                   <input
@@ -114,12 +114,12 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="e.g. Vikramaditya Mehta"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#111315] mb-1">
                     Corporate Email *
                   </label>
                   <input
@@ -129,12 +129,12 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="v.mehta@enterprise.com"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#111315] mb-1">
                     Phone Number
                   </label>
                   <input
@@ -143,12 +143,12 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+91 98200 12345"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#111315] mb-1">
                     Company / Organization
                   </label>
                   <input
@@ -157,20 +157,20 @@ const Contact = () => {
                     value={formData.company}
                     onChange={handleChange}
                     placeholder="e.g. Vanguard Group"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#111315] mb-1">
                   Inquiry Topic
                 </label>
                 <select
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 >
                   <option value="Executive Membership Inquiry">Executive Membership Inquiry</option>
                   <option value="Conclave Speaking / Panel Moderation">Conclave Speaking / Panel Moderation</option>
@@ -181,7 +181,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#111315] mb-1">
                   Message / Brief *
                 </label>
                 <textarea
@@ -191,20 +191,20 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Outline your inquiry, chapter location, or strategic goals..."
                   required
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 rounded-full bg-[#0d1527] hover:bg-[#1a2642] text-white font-semibold text-sm transition-all shadow-lg shadow-slate-950/20 flex items-center justify-center gap-2"
+                className="btn-charcoal w-full py-3.5 text-xs rounded-full font-bold"
               >
                 {submitting ? (
                   <span>Dispatching...</span>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4 text-[#D99B26]" />
                     <span>Submit Executive Inquiry</span>
                   </>
                 )}
@@ -214,26 +214,26 @@ const Contact = () => {
 
           {/* Regional Secretariat Offices */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-800">
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/20 px-3 py-1 rounded-full">
+            <div className="card-dark-navy p-6 sm:p-8 space-y-6">
+              <span className="category-subtitle">
                 Global Operations
               </span>
-              <h3 className="text-xl font-serif font-bold text-white mt-3 mb-2">
+              <h3 className="text-xl font-bold font-heading text-white mt-1">
                 Secretariat Coordinates
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed mb-6">
+              <p className="text-xs text-slate-300 leading-relaxed">
                 Direct access to regional administrative officers for priority calendar alignment and private conclave bookings.
               </p>
 
-              <div className="space-y-4">
+              <div className="space-y-3.5">
                 {offices.map((off, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60 space-y-1">
-                    <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-blue-400" />
+                  <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                    <h4 className="text-sm font-bold text-white flex items-center gap-1.5 font-heading">
+                      <MapPin className="w-4 h-4 text-[#D99B26]" />
                       <span>{off.city}</span>
                     </h4>
                     <p className="text-xs text-slate-400 pl-5">{off.address}</p>
-                    <div className="pt-2 pl-5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-blue-300">
+                    <div className="pt-1.5 pl-5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#D99B26]">
                       <span>{off.phone}</span>
                       <span>•</span>
                       <span>{off.email}</span>
@@ -243,11 +243,11 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="p-6 rounded-3xl bg-blue-50/70 border border-blue-200/80 flex items-start gap-3">
-              <ShieldCheck className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-blue-950 leading-relaxed">
-                <strong className="font-bold">Strict Confidentiality Standard:</strong>
-                <p className="mt-0.5 text-blue-900">
+            <div className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm flex items-start gap-3">
+              <ShieldCheck className="w-6 h-6 text-[#D99B26] flex-shrink-0 mt-0.5" />
+              <div className="text-xs text-[#64748B] leading-relaxed">
+                <strong className="font-bold text-[#111315]">Strict Confidentiality Standard:</strong>
+                <p className="mt-0.5">
                   All correspondence submitted to CXO Connect is maintained under non-disclosure governance. Inquiries are never shared with third parties or external recruiters.
                 </p>
               </div>

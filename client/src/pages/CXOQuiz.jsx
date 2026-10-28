@@ -82,31 +82,31 @@ const CXOQuiz = () => {
   };
 
   return (
-    <div className="w-full bg-slate-50 min-h-screen pb-20">
+    <div className="w-full bg-[#F7F7F4] min-h-screen pb-20">
       <PageHeader
-        title="CXO Decision-Making Assessment"
-        subtitle="Evaluate your strategic governance approach across 4 executive scenarios to reveal your leadership archetype."
+        title="CXO Strategic Assessment"
+        subtitle="Evaluate your governance approach across four executive scenarios to benchmark your leadership archetype."
         badge="Executive Evaluation"
-        breadcrumbs={[{ label: 'Knowledge Hub', path: '/knowledge-hub' }, { label: 'CXO Quiz' }]}
+        breadcrumbs={[{ label: 'Knowledge Hub', path: '/knowledge-hub' }, { label: 'CXO Assessment' }]}
       />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
         {result ? (
           <QuizResult result={result} onRetake={handleRetake} />
         ) : (
-          <div className="bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200">
+          <div className="bg-white p-6 sm:p-12 rounded-3xl shadow-xl border border-[#E2E8F0]">
             
             {/* Progress Header */}
             <div className="mb-8">
-              <div className="flex items-center justify-between text-xs font-semibold text-slate-500 mb-2">
-                <span className="text-blue-600 font-bold uppercase tracking-wider">
+              <div className="flex items-center justify-between text-xs font-semibold text-[#64748B] mb-2">
+                <span className="text-[#D99B26] font-bold uppercase tracking-widest text-[10px]">
                   Scenario {currentIndex + 1} of {questions.length}
                 </span>
                 <span>{progressPercent}% Complete</span>
               </div>
-              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-[#F7F7F4] rounded-full h-2 overflow-hidden border border-[#E2E8F0]">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-[#D99B26] h-2 rounded-full transition-all duration-300"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -114,10 +114,10 @@ const CXOQuiz = () => {
 
             {/* Question Text */}
             <div className="mb-8">
-              <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px] font-bold uppercase tracking-wider">
-                {currentQ.category || 'Strategic Leadership'}
+              <span className="category-subtitle">
+                {currentQ.category || 'Strategic Governance'}
               </span>
-              <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mt-3 leading-snug">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#111315] tracking-tight mt-3 leading-snug">
                 {currentQ.questionText}
               </h2>
             </div>
@@ -133,16 +133,16 @@ const CXOQuiz = () => {
                     onClick={() => handleSelectOption(opt)}
                     className={`w-full text-left p-4 sm:p-5 rounded-2xl border transition-all flex items-start gap-4 ${
                       isSelected
-                        ? 'bg-blue-50/70 border-blue-500 shadow-md transform -translate-y-0.5'
-                        : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                        ? 'bg-[#F7F7F4] border-[#D99B26] shadow-md ring-1 ring-[#D99B26]'
+                        : 'bg-white border-[#E2E8F0] hover:border-[#D99B26]/50 hover:bg-[#F7F7F4]/50'
                     }`}
                   >
                     <div className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                      isSelected ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300'
+                      isSelected ? 'border-[#D99B26] bg-[#D99B26] text-white' : 'border-[#CBD5E1]'
                     }`}>
                       {isSelected && <CheckCircle2 className="w-4 h-4" />}
                     </div>
-                    <span className="text-sm sm:text-base font-medium text-slate-800 leading-relaxed">
+                    <span className="text-sm sm:text-base font-medium text-[#111315] leading-relaxed">
                       {opt.text}
                     </span>
                   </button>
@@ -151,12 +151,12 @@ const CXOQuiz = () => {
             </div>
 
             {/* Bottom Controls */}
-            <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+            <div className="flex items-center justify-between pt-6 border-t border-[#E2E8F0]">
               <button
                 type="button"
                 onClick={handlePrev}
                 disabled={currentIndex === 0}
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 disabled:opacity-30"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-[#64748B] hover:text-[#111315] disabled:opacity-30 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Previous</span>
@@ -166,17 +166,17 @@ const CXOQuiz = () => {
                 type="button"
                 onClick={handleNext}
                 disabled={submitting}
-                className="px-8 py-3 rounded-full bg-[#0d1527] hover:bg-[#1a2642] text-white font-semibold text-sm transition-all shadow-lg shadow-slate-950/20 flex items-center gap-2"
+                className="btn-charcoal text-xs sm:text-sm py-3 px-8 rounded-full"
               >
                 {submitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Analyzing Leadership Profile...</span>
+                    <Loader2 className="w-4 h-4 animate-spin text-[#D99B26]" />
+                    <span>Evaluating Archetype...</span>
                   </>
                 ) : (
                   <>
                     <span>{currentIndex === questions.length - 1 ? 'Reveal Archetype' : 'Next Scenario'}</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4 text-[#D99B26]" />
                   </>
                 )}
               </button>

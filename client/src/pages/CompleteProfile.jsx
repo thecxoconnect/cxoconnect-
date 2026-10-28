@@ -56,23 +56,23 @@ const CompleteProfile = () => {
   };
 
   return (
-    <div className="min-h-[85vh] py-16 px-4 sm:px-6 lg:px-8 bg-slate-50 flex items-center justify-center">
-      <div className="max-w-2xl w-full bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200">
+    <div className="min-h-[85vh] py-16 px-4 sm:px-6 lg:px-8 bg-[#F7F7F4] flex items-center justify-center">
+      <div className="max-w-2xl w-full bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-[#E2E8F0]">
         
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-2">
-            <ShieldCheck className="w-4 h-4 text-blue-600" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F7F7F4] border border-[#E2E8F0] text-[#D99B26] text-xs font-bold uppercase tracking-wider mb-2">
+            <ShieldCheck className="w-4 h-4 text-[#D99B26]" />
             <span>Executive Credentialing</span>
           </div>
-          <h2 className="text-3xl font-serif font-bold text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] font-heading tracking-tight">
             Complete Your Executive Profile
           </h2>
-          <p className="mt-2 text-sm text-slate-500 max-w-md mx-auto">
+          <p className="mt-1 text-xs sm:text-sm text-[#64748B] max-w-md mx-auto">
             Provide your leadership credentials to finalize your verification with the CXO Connect admissions committee.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           
           {/* Profile Image Upload */}
           <div className="flex justify-center pb-2">
@@ -83,14 +83,14 @@ const CompleteProfile = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Full Name */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
                 Full Name *
               </label>
               <div className="relative">
-                <User className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+                <User className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   name="name"
@@ -98,18 +98,18 @@ const CompleteProfile = () => {
                   onChange={handleChange}
                   placeholder="e.g. Vikramaditya Mehta"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 />
               </div>
             </div>
 
             {/* Title / Position */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
                 Executive Title / Position *
               </label>
               <div className="relative">
-                <Briefcase className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+                <Briefcase className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   name="position"
@@ -117,18 +117,18 @@ const CompleteProfile = () => {
                   onChange={handleChange}
                   placeholder="e.g. Chief Executive Officer / VP"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 />
               </div>
             </div>
 
             {/* Company */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
                 Organization / Company *
               </label>
               <div className="relative">
-                <Building2 className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+                <Building2 className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   name="company"
@@ -136,18 +136,18 @@ const CompleteProfile = () => {
                   onChange={handleChange}
                   placeholder="e.g. Apex Global Technologies"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 />
               </div>
             </div>
 
             {/* City */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
-                Metropolitan City / Chapter *
+              <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
+                Metropolitan Chapter *
               </label>
               <div className="relative">
-                <MapPin className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+                <MapPin className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   name="city"
@@ -155,14 +155,14 @@ const CompleteProfile = () => {
                   onChange={handleChange}
                   placeholder="e.g. Mumbai / Bengaluru / Delhi"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 />
               </div>
             </div>
 
             {/* Pincode */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
                 Postal / Pincode
               </label>
               <input
@@ -171,24 +171,24 @@ const CompleteProfile = () => {
                 value={formData.pincode}
                 onChange={handleChange}
                 placeholder="e.g. 400051"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
               />
             </div>
 
             {/* Phone */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
                 Contact Phone
               </label>
               <div className="relative">
-                <Phone className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+                <Phone className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 98200 00000"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
                 />
               </div>
             </div>
@@ -196,18 +196,18 @@ const CompleteProfile = () => {
 
           {/* LinkedIn Profile */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-1.5">
               LinkedIn Public Profile URL
             </label>
             <div className="relative">
-              <Linkedin className="absolute left-3.5 top-3.5 w-4 h-4 text-[#0077b5]" />
+              <Linkedin className="absolute left-3.5 top-3 w-4 h-4 text-[#0077b5]" />
               <input
                 type="url"
                 name="linkedin"
                 value={formData.linkedin}
                 onChange={handleChange}
                 placeholder="https://linkedin.com/in/your-executive-profile"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
               />
             </div>
           </div>
@@ -215,14 +215,14 @@ const CompleteProfile = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3.5 rounded-full bg-[#0d1527] hover:bg-[#1a2642] text-white font-semibold text-sm transition-all shadow-lg shadow-slate-950/20 flex items-center justify-center gap-2 transform active:scale-[0.98]"
+            className="btn-charcoal w-full py-3.5 rounded-full text-xs font-bold"
           >
             {submitting ? (
-              <span>Saving Executive Profile...</span>
+              <span>Saving Profile...</span>
             ) : (
               <>
                 <span>Save Credentials & Access Dashboard</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#D99B26]" />
               </>
             )}
           </button>

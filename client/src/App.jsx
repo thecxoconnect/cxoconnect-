@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 // Pages
 import Home from './pages/Home';
 import About from './pages/About';
+import CommitteePage from './pages/CommitteePage';
+import MentorsPage from './pages/MentorsPage';
 import Events from './pages/Events';
 import KnowledgeHub from './pages/KnowledgeHub';
 import Membership from './pages/Membership';
@@ -27,12 +29,14 @@ function App() {
       <AuthProvider>
         <ToastProvider>
           <ScrollToTop />
-          <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+          <div className="min-h-screen flex flex-col bg-[#F7F7F4] text-[#111315]">
             <Navbar />
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/committee" element={<CommitteePage />} />
+                <Route path="/mentors" element={<MentorsPage />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/knowledge-hub" element={<KnowledgeHub />} />
                 <Route path="/membership" element={<Membership />} />

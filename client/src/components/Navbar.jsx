@@ -1,276 +1,145 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown, LogIn, User, ShieldCheck, LogOut, Menu, X, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import {
+  Menu,
+  X,
+  ChevronDown,
+  User,
+  ShieldCheck,
+  LogOut,
+  ArrowRight,
+  LogIn
+} from 'lucide-react';
+
+const navItems = [
+  { label: 'Home', path: '/' },
+  { label: 'About Us', path: '/about' },
+  { label: 'Advisory Board', path: '/committee' },
+  { label: 'Mentors', path: '/mentors' },
+  { label: 'Conclaves', path: '/events' },
+  { label: 'Knowledge Hub', path: '/knowledge-hub' },
+  { label: 'Assessment', path: '/quiz' },
+  { label: 'Membership', path: '/membership' },
+  { label: 'Partners', path: '/partners' },
+  { label: 'Contact', path: '/contact' }
+];
 
 const Navbar = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [eventsOpen, setEventsOpen] = useState(false);
-  const [knowledgeOpen, setKnowledgeOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const aboutRef = useRef(null);
-  const eventsRef = useRef(null);
-  const knowledgeRef = useRef(null);
-  const userRef = useRef(null);
+  // Close menus on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setProfileDropdownOpen(false);
+  }, [location.pathname]);
 
-  // Close dropdowns on outside click
+  // Click outside to close profile dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (aboutRef.current && !aboutRef.current.contains(e.target)) setAboutOpen(false);
-      if (eventsRef.current && !eventsRef.current.contains(e.target)) setEventsOpen(false);
-      if (knowledgeRef.current && !knowledgeRef.current.contains(e.target)) setKnowledgeOpen(false);
-      if (userRef.current && !userRef.current.contains(e.target)) setUserDropdownOpen(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setProfileDropdownOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close menus on route change
-  useEffect(() => {
-    setAboutOpen(false);
-    setEventsOpen(false);
-    setKnowledgeOpen(false);
-    setUserDropdownOpen(false);
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200/80 shadow-sm transition-all">
+    <header className="sticky top-0 z-50 w-full bg-[#F7F7F4]/95 backdrop-blur-md border-b border-[#E2E8F0] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Brand Logo & Tagline (Replicating exact layout geometry from screenshot) */}
-          <Link to="/" className="flex items-center gap-3 group focus:outline-none">
-            {/* Swirl/Emblem Icon */}
-            <div className="relative w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-full bg-gradient-to-tr from-slate-900 via-blue-900 to-blue-600 shadow-md">
-              <div className="w-8 h-8 rounded-full border-2 border-white/80 flex items-center justify-center">
-                <span className="text-white font-serif font-black text-sm tracking-tighter">CXO</span>
+          {/* Brand Logo with Gold Ring Accent Icon */}
+          <Link to="/" className="flex items-center gap-3 group focus:outline-none flex-shrink-0">
+            {/* Geometric Gold Ring Emblem */}
+            <div className="relative w-10 h-10 rounded-full bg-[#111315] flex items-center justify-center shadow-sm">
+              <div className="w-7 h-7 rounded-full border-2 border-[#D99B26] flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-[#D99B26]" />
               </div>
             </div>
 
-            {/* Brand Text + Two-line Tagline */}
-            <div className="flex flex-col justify-center">
-              <span className="text-xs uppercase tracking-wider font-extrabold text-slate-700 leading-none">
-                Stronger Relationships
-              </span>
-              <span className="text-xs uppercase tracking-wider font-extrabold text-blue-600 leading-tight">
-                Stronger Leadership
-              </span>
-              <span className="text-base font-bold text-slate-900 tracking-tight leading-none mt-0.5">
-                CXO Connect
+            {/* Brand Title */}
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="text-lg sm:text-xl font-extrabold text-[#111315] tracking-tight leading-none">
+                  CXO Connect
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D99B26]" />
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#D99B26] mt-0.5">
+                Executive Network
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center space-x-7 text-[0.9375rem] font-medium text-slate-700">
-            {/* Home */}
-            <Link
-              to="/"
-              className={`transition-colors py-2 ${
-                isActive('/') ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'
-              }`}
-            >
-              Home
-            </Link>
-
-            {/* About Us ⌄ */}
-            <div className="relative" ref={aboutRef}>
-              <button
-                onClick={() => setAboutOpen(!aboutOpen)}
-                className={`inline-flex items-center gap-1 py-2 focus:outline-none transition-colors ${
-                  location.pathname.startsWith('/about') ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'
-                }`}
-              >
-                <span>About Us</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${aboutOpen ? 'rotate-180 text-blue-600' : 'text-slate-400'}`} />
-              </button>
-
-              {aboutOpen && (
-                <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2.5 z-50 animate-fade-in">
-                  <Link
-                    to="/about"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    About CXO Connect
-                  </Link>
-                  <Link
-                    to="/about#committee"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    Advisory Board & Committee
-                  </Link>
-                  <Link
-                    to="/about#mentors"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    C-Suite Mentors
-                  </Link>
-                  <Link
-                    to="/about#chapters"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    Regional Chapters
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Events ⌄ */}
-            <div className="relative" ref={eventsRef}>
-              <button
-                onClick={() => setEventsOpen(!eventsOpen)}
-                className={`inline-flex items-center gap-1 py-2 focus:outline-none transition-colors ${
-                  location.pathname.startsWith('/events') ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'
-                }`}
-              >
-                <span>Events</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${eventsOpen ? 'rotate-180 text-blue-600' : 'text-slate-400'}`} />
-              </button>
-
-              {eventsOpen && (
-                <div className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2.5 z-50 animate-fade-in">
-                  <Link
-                    to="/events"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    All Upcoming Summits
-                  </Link>
-                  <Link
-                    to="/events?cat=Leadership+Summit"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    Leadership Conclaves
-                  </Link>
-                  <Link
-                    to="/events?cat=C-Suite+Roundtable"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    C-Suite Roundtables
-                  </Link>
-                  <Link
-                    to="/events?cat=Executive+Masterclass"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    Executive Masterclasses
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Knowledge Hub ⌄ */}
-            <div className="relative" ref={knowledgeRef}>
-              <button
-                onClick={() => setKnowledgeOpen(!knowledgeOpen)}
-                className={`inline-flex items-center gap-1 py-2 focus:outline-none transition-colors ${
-                  location.pathname.startsWith('/knowledge-hub') || location.pathname.startsWith('/quiz')
-                    ? 'text-blue-600 font-semibold'
-                    : 'hover:text-blue-600'
-                }`}
-              >
-                <span>Knowledge Hub</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${knowledgeOpen ? 'rotate-180 text-blue-600' : 'text-slate-400'}`} />
-              </button>
-
-              {knowledgeOpen && (
-                <div className="absolute left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-100 py-2.5 z-50 animate-fade-in">
-                  <Link
-                    to="/knowledge-hub"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    Executive Frameworks & Research
-                  </Link>
-                  <Link
-                    to="/quiz"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors font-medium text-blue-600"
-                  >
-                    CXO Decision Assessment (Quiz)
-                  </Link>
-                  <Link
-                    to="/knowledge-hub#certifications"
-                    className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
-                  >
-                    Board Governance Certifications
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Membership */}
-            <Link
-              to="/membership"
-              className={`transition-colors py-2 ${
-                isActive('/membership') ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'
-              }`}
-            >
-              Membership
-            </Link>
-
-            {/* Partners & Sponsors */}
-            <Link
-              to="/partners"
-              className={`transition-colors py-2 ${
-                isActive('/partners') ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'
-              }`}
-            >
-              Partners & Sponsors
-            </Link>
-
-            {/* Contact Us */}
-            <Link
-              to="/contact"
-              className={`transition-colors py-2 ${
-                isActive('/contact') ? 'text-blue-600 font-semibold' : 'hover:text-blue-600'
-              }`}
-            >
-              Contact Us
-            </Link>
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2 text-[0.875rem] font-medium text-[#111315]">
+            {navItems.map((item) => {
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-3 py-2 rounded-lg transition-all duration-150 ${
+                    active
+                      ? 'text-[#D99B26] font-bold bg-white/70 shadow-sm border border-[#E2E8F0]'
+                      : 'text-[#111315] hover:text-[#D99B26] hover:bg-white/40'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Right Action: Exact Dark Rounded Pill Button from Screenshot */}
-          <div className="hidden xl:flex items-center gap-4">
+          {/* Right Action Button(s) */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             {isAuthenticated ? (
-              <div className="relative" ref={userRef}>
+              <div className="relative" ref={dropdownRef}>
                 <button
-                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-md focus:outline-none"
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                  className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-[#111315] text-white hover:bg-[#1e2227] transition-all shadow-sm focus:outline-none"
                 >
                   {user?.profileImage ? (
                     <img
                       src={user.profileImage}
                       alt={user.name}
-                      className="w-7 h-7 rounded-full object-cover border border-slate-700"
+                      className="w-6 h-6 rounded-full object-cover border border-[#D99B26]"
                     />
                   ) : (
-                    <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white">
+                    <div className="w-6 h-6 rounded-full bg-[#D99B26] flex items-center justify-center text-[11px] font-bold text-white">
                       {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}
                     </div>
                   )}
-                  <span className="text-sm font-semibold max-w-[120px] truncate">
+                  <span className="text-xs font-semibold max-w-[110px] truncate">
                     {user?.name || 'Executive'}
                   </span>
-                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                  <ChevronDown className="w-3.5 h-3.5 text-[#D99B26]" />
                 </button>
 
-                {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-100 py-2.5 z-50 animate-fade-in">
-                    <div className="px-4 py-2 border-b border-slate-100">
-                      <p className="text-xs text-slate-500 font-medium">Signed in as</p>
-                      <p className="text-sm font-bold text-slate-900 truncate">{user?.email}</p>
-                      <span className={`inline-block mt-1 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${
+                {/* Profile Dropdown */}
+                {profileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-[#E2E8F0] py-2 z-50 animate-fade-in">
+                    <div className="px-4 py-2.5 border-b border-[#E2E8F0]">
+                      <p className="text-[11px] text-[#64748B] font-medium">Logged in as</p>
+                      <p className="text-xs font-bold text-[#111315] truncate">{user?.email}</p>
+                      <span className={`inline-block mt-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                         user?.status === 'accepted'
-                          ? 'bg-emerald-50 text-emerald-700'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           : user?.status === 'pending'
-                          ? 'bg-amber-50 text-amber-700'
-                          : 'bg-rose-50 text-rose-700'
+                          ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                          : 'bg-rose-50 text-rose-700 border border-rose-200'
                       }`}>
                         Status: {user?.status}
                       </span>
@@ -278,25 +147,25 @@ const Navbar = () => {
 
                     <Link
                       to="/profile"
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#111315] hover:bg-[#F7F7F4] hover:text-[#D99B26] transition-colors"
                     >
-                      <User className="w-4 h-4 text-slate-400" />
+                      <User className="w-4 h-4 text-[#64748B]" />
                       <span>Executive Dashboard</span>
                     </Link>
 
                     {isAdmin && (
                       <Link
                         to="/admin"
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#D99B26] hover:bg-[#F7F7F4] transition-colors"
                       >
-                        <ShieldCheck className="w-4 h-4 text-blue-600" />
-                        <span className="font-semibold text-blue-700">Admin Console</span>
+                        <ShieldCheck className="w-4 h-4 text-[#D99B26]" />
+                        <span>Admin Console</span>
                       </Link>
                     )}
 
                     <button
                       onClick={logout}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors text-left"
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors text-left"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Sign Out</span>
@@ -305,30 +174,38 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <Link
-                to="/login"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0d1527] text-white font-semibold text-sm hover:bg-[#1c2948] transition-all shadow-md transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <LogIn className="w-4 h-4" />
-                <span>Login</span>
-              </Link>
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-xs font-semibold text-[#111315] hover:text-[#D99B26] transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/membership"
+                  className="btn-charcoal text-xs py-2 px-4 rounded-full"
+                >
+                  <span>Request an Invitation</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#D99B26]" />
+                </Link>
+              </div>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex xl:hidden items-center gap-3">
+          {/* Mobile Menu Hamburger */}
+          <div className="flex lg:hidden items-center gap-2">
             {!isAuthenticated && (
               <Link
-                to="/login"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0d1527] text-white text-xs font-semibold"
+                to="/membership"
+                className="px-3 py-1.5 rounded-full bg-[#111315] text-white text-[11px] font-semibold"
               >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Login</span>
+                Request Invite
               </Link>
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none"
+              className="p-2 rounded-lg text-[#111315] hover:bg-white/80 focus:outline-none"
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -337,92 +214,64 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Sliding Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-2 max-h-[80vh] overflow-y-auto animate-fade-in shadow-xl">
-          <Link
-            to="/"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            About Us
-          </Link>
-          <Link
-            to="/events"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            Events & Summits
-          </Link>
-          <Link
-            to="/knowledge-hub"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            Knowledge Hub
-          </Link>
-          <Link
-            to="/quiz"
-            className="block px-3 py-2 rounded-md font-medium text-blue-600 bg-blue-50/50"
-          >
-            CXO Decision Quiz
-          </Link>
-          <Link
-            to="/membership"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            Membership
-          </Link>
-          <Link
-            to="/partners"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            Partners & Sponsors
-          </Link>
-          <Link
-            to="/contact"
-            className="block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-          >
-            Contact Us
-          </Link>
+        <div className="lg:hidden bg-[#F7F7F4] border-t border-[#E2E8F0] px-4 pt-3 pb-8 space-y-1 shadow-xl animate-fade-in max-h-[85vh] overflow-y-auto">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`block px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                isActive(item.path)
+                  ? 'bg-white text-[#D99B26] shadow-sm border border-[#E2E8F0]'
+                  : 'text-[#111315] hover:bg-white/60 hover:text-[#D99B26]'
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
 
-          {isAuthenticated ? (
-            <div className="pt-4 border-t border-slate-100 space-y-2">
-              <Link
-                to="/profile"
-                className="block px-3 py-2 rounded-md font-semibold text-slate-900 bg-slate-100"
-              >
-                Dashboard / Profile
-              </Link>
-              {isAdmin && (
+          <div className="pt-4 border-t border-[#E2E8F0] space-y-2">
+            {isAuthenticated ? (
+              <>
                 <Link
-                  to="/admin"
-                  className="block px-3 py-2 rounded-md font-semibold text-blue-700 bg-blue-50"
+                  to="/profile"
+                  className="block px-3 py-2.5 rounded-xl text-sm font-bold text-[#111315] bg-white border border-[#E2E8F0]"
                 >
-                  Admin Console
+                  My Dashboard
                 </Link>
-              )}
-              <button
-                onClick={logout}
-                className="w-full text-left px-3 py-2 rounded-md font-medium text-rose-600 hover:bg-rose-50"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <div className="pt-4 border-t border-slate-100">
-              <Link
-                to="/login"
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-[#0d1527] text-white font-semibold text-sm"
-              >
-                <LogIn className="w-4 h-4" />
-                <span>Executive Login</span>
-              </Link>
-            </div>
-          )}
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="block px-3 py-2.5 rounded-xl text-sm font-bold text-[#D99B26] bg-white border border-[#E2E8F0]"
+                  >
+                    Admin Console
+                  </Link>
+                )}
+                <button
+                  onClick={logout}
+                  className="w-full text-left px-3 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded-xl"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <div className="grid grid-cols-2 gap-2 pt-2">
+                <Link
+                  to="/login"
+                  className="py-2.5 text-center rounded-xl bg-white border border-[#E2E8F0] text-xs font-bold text-[#111315]"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/membership"
+                  className="py-2.5 text-center rounded-xl bg-[#111315] text-white text-xs font-bold"
+                >
+                  Request Invite
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </header>

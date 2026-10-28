@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import MentorCards from '../components/MentorCards';
 import { committeeService, mentorService, chapterService } from '../services/api';
-import { Shield, Target, Compass, Award, Linkedin, Mail, MapPin, Users } from 'lucide-react';
+import { Shield, Target, Award, ArrowRight, MapPin, Users } from 'lucide-react';
 
 const About = () => {
   const [committee, setCommittee] = useState([]);
@@ -18,8 +19,8 @@ const About = () => {
           mentorService.getMentors(),
           chapterService.getChapters()
         ]);
-        if (commRes.data.success) setCommittee(commRes.data.data);
-        if (mentRes.data.success) setMentors(mentRes.data.data);
+        if (commRes.data.success) setCommittee(commRes.data.data.slice(0, 4));
+        if (mentRes.data.success) setMentors(mentRes.data.data.slice(0, 4));
         if (chapRes.data.success) setChapters(chapRes.data.data);
       } catch (err) {
         console.error('About data load error:', err);
@@ -31,7 +32,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F7F7F4]">
       <PageHeader
         title="About CXO Connect"
         subtitle="Empowering top-tier C-Suite executives, Founders, and VPs with high-trust peer advisory, strategic foresight, and boardroom governance."
@@ -40,17 +41,17 @@ const About = () => {
       />
 
       {/* Mission & Purpose */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+              <span className="category-subtitle">
                 Our Foundation
               </span>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-4 mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-3 mb-6 leading-tight font-heading tracking-tight">
                 Where Visionary Executives Forge Tomorrow's Enterprise Realities
               </h2>
-              <div className="space-y-4 text-slate-600 text-base leading-relaxed">
+              <div className="space-y-4 text-[#64748B] text-sm sm:text-base leading-relaxed">
                 <p>
                   CXO Connect was established to solve an undeniable modern leadership dilemma: the higher one rises in corporate governance, the more isolated executive decision-making becomes.
                 </p>
@@ -62,41 +63,41 @@ const About = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-6 mt-8 pt-6 border-t border-slate-100">
+              <div className="grid grid-cols-2 gap-6 mt-8 pt-6 border-t border-[#E2E8F0]">
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600">
+                  <div className="p-2.5 rounded-xl bg-[#F7F7F4] border border-[#E2E8F0] text-[#D99B26]">
                     <Shield className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-900">Chatham House Rule</h4>
-                    <p className="text-xs text-slate-500 mt-0.5">Strictly confidential discussions.</p>
+                    <h4 className="text-sm font-bold text-[#111315]">Chatham House Rule</h4>
+                    <p className="text-xs text-[#64748B] mt-0.5">Strictly confidential discussions.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600">
+                  <div className="p-2.5 rounded-xl bg-[#F7F7F4] border border-[#E2E8F0] text-[#D99B26]">
                     <Award className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-900">Vetted Pedigree</h4>
-                    <p className="text-xs text-slate-500 mt-0.5">Peer-reviewed executive membership.</p>
+                    <h4 className="text-sm font-bold text-[#111315]">Vetted Pedigree</h4>
+                    <p className="text-xs text-[#64748B] mt-0.5">Peer-reviewed executive membership.</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+              <div className="relative rounded-3xl overflow-hidden shadow-xl border border-[#E2E8F0]">
                 <img
                   src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1000&q=80"
                   alt="Executive Boardroom Session"
                   className="w-full h-[460px] object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/90 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <span className="text-xs font-semibold text-blue-300 uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#D99B26] uppercase tracking-widest">
                     Core Mandate
                   </span>
-                  <p className="text-lg font-serif font-bold text-white mt-1">
+                  <p className="text-lg font-bold text-white mt-1 font-heading">
                     "Uniting leadership wisdom to steer resilient, human-centered enterprises."
                   </p>
                 </div>
@@ -106,55 +107,64 @@ const About = () => {
         </div>
       </section>
 
-      {/* Advisory Board & Executive Committee */}
-      <section id="committee" className="py-20 bg-slate-50 border-t border-slate-200">
+      {/* Advisory Board Preview Section */}
+      <section className="py-20 bg-[#F7F7F4] border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100/70 px-3 py-1 rounded-full">
-              Governance & Stewardship
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-4 mb-4">
-              Advisory Board & Executive Committee
-            </h2>
-            <p className="text-slate-600 text-base">
-              Distinguished corporate titans and board chairpersons guiding the strategic roadmap of CXO Connect.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+            <div>
+              <span className="category-subtitle">
+                Governance & Stewardship
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
+                Advisory Board & Executive Committee
+              </h2>
+            </div>
+            <Link
+              to="/committee"
+              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D99B26] hover:text-[#C2871E] transition-colors"
+            >
+              <span>View All Advisory Leaders</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {committee.map((member) => (
-              <div key={member._id} className="premium-card p-6 flex flex-col items-center text-center">
-                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500/30 mb-4 shadow-md">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+              <div key={member._id} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] shadow-sm flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#D99B26] p-0.5 mb-4 shadow-sm">
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover rounded-full" />
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#F7F7F4] text-[#D99B26] border border-[#E2E8F0] mb-2">
                   {member.category}
                 </span>
-                <h3 className="text-lg font-bold font-serif text-slate-900 leading-tight">{member.name}</h3>
-                <p className="text-xs font-semibold text-blue-600 mt-0.5">{member.designation}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{member.company}</p>
-                <p className="text-xs text-slate-600 mt-3 leading-relaxed line-clamp-3">
-                  {member.bio}
-                </p>
+                <h3 className="text-base font-bold text-[#111315] leading-tight">{member.name}</h3>
+                <p className="text-xs font-semibold text-[#D99B26] mt-0.5">{member.designation}</p>
+                <p className="text-xs text-[#64748B] mt-0.5">{member.company}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* C-Suite Mentors */}
-      <section id="mentors" className="py-20 bg-white border-t border-slate-200">
+      {/* C-Suite Mentors Preview Section */}
+      <section className="py-20 bg-white border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-              One-on-One Advisory
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-4 mb-4">
-              C-Suite Faculty & Mentors
-            </h2>
-            <p className="text-slate-600 text-base">
-              Connect 1-on-1 with accomplished leaders for focused strategic consultation on growth, governance, and technology pivots.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+            <div>
+              <span className="category-subtitle">
+                Boardroom Faculty
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
+                One-on-One C-Suite Mentors
+              </h2>
+            </div>
+            <Link
+              to="/mentors"
+              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D99B26] hover:text-[#C2871E] transition-colors"
+            >
+              <span>Explore All Mentors</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
 
           <MentorCards mentors={mentors} />
@@ -162,16 +172,16 @@ const About = () => {
       </section>
 
       {/* Regional Chapters */}
-      <section id="chapters" className="py-20 bg-slate-900 text-white">
+      <section className="py-20 bg-[#111315] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-500/20">
-              Global Presence
+            <span className="category-subtitle">
+              Global Footprint
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-4 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 mb-4 font-heading tracking-tight">
               Regional Executive Chapters
             </h2>
-            <p className="text-slate-400 text-base">
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
               Active metropolitan leadership councils organizing quarterly summits and confidential dinners.
             </p>
           </div>
@@ -180,29 +190,29 @@ const About = () => {
             {chapters.map((chap) => (
               <div
                 key={chap._id}
-                className="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-800/50 p-6 flex flex-col justify-between hover:border-blue-500/40 transition-colors"
+                className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 p-6 flex flex-col justify-between hover:border-[#D99B26]/50 transition-colors"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-blue-400" />
-                      <h3 className="text-xl font-bold font-serif text-white">{chap.city}</h3>
+                      <MapPin className="w-5 h-5 text-[#D99B26]" />
+                      <h3 className="text-lg font-bold text-white font-heading">{chap.city}</h3>
                     </div>
                     <span className="text-xs text-slate-400 font-medium">{chap.country}</span>
                   </div>
 
-                  <div className="space-y-1.5 text-xs text-slate-300">
-                    <p><strong className="text-slate-200">Chapter Lead:</strong> {chap.leadName}</p>
-                    <p><strong className="text-slate-200">Secretariat:</strong> {chap.leadEmail}</p>
+                  <div className="space-y-1 text-xs text-slate-300">
+                    <p><strong className="text-white">Chapter Lead:</strong> {chap.leadName}</p>
+                    <p><strong className="text-white">Secretariat:</strong> {chap.leadEmail}</p>
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs text-blue-400 font-semibold">
+                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs text-[#D99B26] font-semibold">
                     <Users className="w-4 h-4" />
                     <span>{chap.activeMembersCount}+ Executives</span>
                   </div>
-                  <span className="text-[11px] uppercase tracking-wider text-emerald-400 font-semibold">Active</span>
+                  <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">Active</span>
                 </div>
               </div>
             ))}

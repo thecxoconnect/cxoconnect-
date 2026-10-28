@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
-import { Check, ShieldCheck, Star, Users, ArrowRight, HelpCircle } from 'lucide-react';
+import { Check, ShieldCheck, ArrowRight } from 'lucide-react';
 
 const tiers = [
   {
@@ -58,9 +58,9 @@ const Membership = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#F7F7F4] min-h-screen pb-20">
       <PageHeader
-        title="Executive Membership"
+        title="Executive Membership Privileges"
         subtitle="Step into the premier community connecting enterprise leaders. Membership is curated and peer-reviewed."
         badge="Invitation & Application"
         breadcrumbs={[{ label: 'Membership' }]}
@@ -75,33 +75,33 @@ const Membership = () => {
               key={idx}
               className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
                 tier.isPrimary
-                  ? 'bg-slate-900 text-white shadow-2xl border-2 border-blue-500 transform md:-translate-y-2'
-                  : 'bg-white text-slate-900 shadow-xl border border-slate-200'
+                  ? 'bg-[#0E1622] text-white shadow-2xl border-2 border-[#D99B26] transform md:-translate-y-2'
+                  : 'bg-white text-[#111315] shadow-sm border border-[#E2E8F0]'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                    tier.isPrimary ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+                    tier.isPrimary ? 'bg-[#D99B26] text-white' : 'bg-[#F7F7F4] text-[#111315] border border-[#E2E8F0]'
                   }`}>
                     {tier.badge}
                   </span>
-                  <ShieldCheck className={`w-5 h-5 ${tier.isPrimary ? 'text-blue-400' : 'text-slate-400'}`} />
+                  <ShieldCheck className={`w-5 h-5 ${tier.isPrimary ? 'text-[#D99B26]' : 'text-[#64748B]'}`} />
                 </div>
 
-                <h3 className="text-2xl font-serif font-bold mb-1">{tier.name}</h3>
-                <p className={`text-xs leading-relaxed mb-6 ${tier.isPrimary ? 'text-slate-300' : 'text-slate-500'}`}>
+                <h3 className="text-2xl font-bold font-heading mb-1">{tier.name}</h3>
+                <p className={`text-xs leading-relaxed mb-6 ${tier.isPrimary ? 'text-slate-300' : 'text-[#64748B]'}`}>
                   {tier.subtitle}
                 </p>
 
-                <div className={`pt-4 border-t mb-6 space-y-3 ${tier.isPrimary ? 'border-slate-800' : 'border-slate-100'}`}>
-                  <p className={`text-[11px] font-bold uppercase tracking-wider ${tier.isPrimary ? 'text-blue-400' : 'text-slate-400'}`}>
+                <div className={`pt-4 border-t mb-6 space-y-3 ${tier.isPrimary ? 'border-white/10' : 'border-[#E2E8F0]'}`}>
+                  <p className={`text-[11px] font-bold uppercase tracking-widest ${tier.isPrimary ? 'text-[#D99B26]' : 'text-[#64748B]'}`}>
                     Privileges Included
                   </p>
                   {tier.features.map((feat, fIdx) => (
                     <div key={fIdx} className="flex items-start gap-2.5 text-xs sm:text-sm">
-                      <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${tier.isPrimary ? 'text-blue-400' : 'text-emerald-600'}`} />
-                      <span className={tier.isPrimary ? 'text-slate-200' : 'text-slate-600'}>{feat}</span>
+                      <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${tier.isPrimary ? 'text-[#D99B26]' : 'text-emerald-600'}`} />
+                      <span className={tier.isPrimary ? 'text-slate-200' : 'text-[#64748B]'}>{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -109,10 +109,10 @@ const Membership = () => {
 
               <Link
                 to="/login"
-                className={`w-full py-3.5 rounded-full text-center text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                className={`w-full py-3.5 rounded-full text-center text-xs font-bold transition-all flex items-center justify-center gap-2 ${
                   tier.isPrimary
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30'
-                    : 'bg-slate-900 hover:bg-slate-800 text-white'
+                    ? 'btn-ochre shadow-lg'
+                    : 'btn-charcoal'
                 }`}
               >
                 <span>{tier.cta}</span>
@@ -122,37 +122,37 @@ const Membership = () => {
           ))}
         </div>
 
-        {/* Membership Process */}
-        <div className="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 text-center max-w-4xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+        {/* Membership Application Process */}
+        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#E2E8F0] text-center max-w-4xl mx-auto shadow-sm">
+          <span className="category-subtitle">
             Application Journey
           </span>
-          <h3 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-4 mb-4">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#111315] mt-3 mb-4 font-heading tracking-tight">
             How CXO Connect Membership Works
           </h3>
-          <p className="text-sm text-slate-600 max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#64748B] max-w-xl mx-auto mb-10 leading-relaxed">
             We maintain strict credential verification to safeguard confidential discussions and high-caliber peer exchanges.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="bg-white p-6 rounded-2xl border border-slate-200">
-              <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
-              <h4 className="text-base font-bold text-slate-900">Sign In with OTP</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+            <div className="bg-[#F7F7F4] p-6 rounded-2xl border border-[#E2E8F0]">
+              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3">1</div>
+              <h4 className="text-sm font-bold text-[#111315]">Sign In with OTP</h4>
+              <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
                 Provide your executive email or authenticate securely with LinkedIn.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-slate-200">
-              <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
-              <h4 className="text-base font-bold text-slate-900">Complete Profile</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+            <div className="bg-[#F7F7F4] p-6 rounded-2xl border border-[#E2E8F0]">
+              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3">2</div>
+              <h4 className="text-sm font-bold text-[#111315]">Complete Profile</h4>
+              <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
                 Input your corporate title, company, regional chapter, and LinkedIn credentials.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-slate-200">
-              <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
-              <h4 className="text-base font-bold text-slate-900">Peer Committee Review</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+            <div className="bg-[#F7F7F4] p-6 rounded-2xl border border-[#E2E8F0]">
+              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3">3</div>
+              <h4 className="text-sm font-bold text-[#111315]">Admissions Review</h4>
+              <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
                 Applications are reviewed within 24 hours for full voting and conclave access.
               </p>
             </div>

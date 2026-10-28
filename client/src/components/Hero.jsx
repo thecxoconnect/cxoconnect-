@@ -1,77 +1,156 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Calendar, Users, Sparkles, Building2, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Hero = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex items-center justify-center overflow-hidden bg-slate-100">
-      {/* Background Image: Grayscale Executive Team (matching screenshot aesthetic) */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80"
-          alt="C-Suite Executives in Strategy Discussion"
-          className="w-full h-full object-cover object-center filter grayscale opacity-35"
-        />
-        {/* Soft radial and linear overlay to maintain pristine contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/75 to-slate-50/95" />
-      </div>
-
-      {/* Content Container (Exact layout alignment with user image) */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center flex flex-col items-center">
-        
-        {/* Top Centered Pill Badge (matching "SOCIAL IMPACT THROUGH HR" geometry) */}
-        <div className="inline-flex items-center gap-2 px-5 py-1.5 rounded-full bg-blue-100/80 border border-blue-200/90 text-blue-900 text-xs sm:text-[0.8125rem] font-bold tracking-widest uppercase mb-6 shadow-sm backdrop-blur-sm">
-          <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-          <span>Executive Impact Through Leadership</span>
-        </div>
-
-        {/* Main Headline (Playfair Display serif styling from user image) */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-extrabold tracking-tight text-slate-900 leading-[1.05] sm:leading-none mb-6">
-          <span className="block text-slate-900 drop-shadow-sm font-semibold">Welcome to</span>
-          <span className="block text-blue-600 mt-1 sm:mt-2 tracking-tight drop-shadow-md">
-            CXO Connect
-          </span>
-        </h1>
-
-        {/* Executive Subtitle */}
-        <p className="max-w-2xl text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed mb-10 text-center">
-          Join a community of forward-thinking C-suite executives and senior leaders dedicated to meaningful strategic connections, peer advisory, and executive growth.
-        </p>
-
-        {/* 3 Horizontal Pill Action Buttons (Exact match to screenshot layout) */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-3xl">
+    <section className="relative w-full bg-[#F7F7F4] pt-12 pb-20 sm:pt-16 sm:pb-28 overflow-hidden border-b border-[#E2E8F0]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
-          {/* Button 1: Become CXO Member */}
-          <Link
-            to={isAuthenticated ? "/profile" : "/membership"}
-            className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#0d1527] text-white font-semibold text-sm sm:text-base hover:bg-[#1a2642] transition-all duration-200 shadow-lg shadow-slate-950/20 transform hover:-translate-y-0.5"
-          >
-            <span>Become CXO Member</span>
-          </Link>
+          {/* Left Column: Headline, Subtitle & Action Pills */}
+          <div className="lg:col-span-7 space-y-8 text-left">
+            
+            {/* Category Subtitle */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E2E8F0] shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse" />
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#D99B26]">
+                Invitation-Only Executive Community
+              </span>
+            </div>
 
-          {/* Button 2: Join CXO Executive Forum (Message icon) */}
-          <Link
-            to="/events#discussions"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-[#0d1527] text-white font-semibold text-sm sm:text-base hover:bg-[#1a2642] transition-all duration-200 shadow-lg shadow-slate-950/20 transform hover:-translate-y-0.5"
-          >
-            <MessageSquare className="w-4 h-4 text-emerald-400 fill-emerald-400/20" />
-            <span>Join CXO Executive Forum</span>
-          </Link>
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111315] tracking-tight leading-[1.08] font-heading">
+              Where enterprise leaders <span className="text-[#D99B26]">think together.</span>
+            </h1>
 
-          {/* Button 3: Explore Engagements -> */}
-          <Link
-            to="/events"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#0d1527] text-white font-semibold text-sm sm:text-base hover:bg-[#1a2642] transition-all duration-200 shadow-lg shadow-slate-950/20 transform hover:-translate-y-0.5"
-          >
-            <span>Explore Engagements</span>
-            <ArrowRight className="w-4 h-4 text-slate-300" />
-          </Link>
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg text-[#64748B] max-w-2xl leading-relaxed font-sans">
+              CXO Connect unites visionary C-Suite Executives, VPs, and Founders across industries for confidential peer advisory, board governance, and high-impact strategic alliances.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+              <Link
+                to={isAuthenticated ? "/profile" : "/membership"}
+                className="btn-charcoal px-8 py-4 text-sm font-semibold rounded-full shadow-lg shadow-black/10 group"
+              >
+                <span>Request an Invitation</span>
+                <ArrowRight className="w-4 h-4 text-[#D99B26] group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link
+                to="/events"
+                className="btn-outline-executive px-7 py-4 text-sm font-semibold rounded-full hover:border-[#D99B26] bg-white/60"
+              >
+                <Calendar className="w-4 h-4 text-[#64748B]" />
+                <span>Explore Conclaves</span>
+              </Link>
+            </div>
+
+            {/* Trust Markers */}
+            <div className="pt-6 border-t border-[#E2E8F0] flex flex-wrap items-center gap-6 text-xs text-[#64748B] font-medium">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#D99B26]" />
+                <span>Chatham House Rule Confidentiality</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-[#D99B26]" />
+                <span>2,500+ Verified C-Suite Members</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: High-Contrast Dark Card with Geometric Node Visuals */}
+          <div className="lg:col-span-5 relative">
+            
+            {/* Background Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-tr from-[#D99B26]/20 to-transparent rounded-3xl blur-2xl -z-10 pointer-events-none" />
+
+            {/* Main Card Container (Dark Navy #0E1622) */}
+            <div className="card-dark-navy p-6 sm:p-8 space-y-6">
+              
+              {/* Card Header with Gold Accent */}
+              <div className="flex items-center justify-between pb-5 border-b border-white/10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-[#D99B26]/40 flex items-center justify-center">
+                    <Building2 className="w-5 h-5 text-[#D99B26]" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#D99B26]">
+                      Spotlight Gathering
+                    </p>
+                    <h3 className="text-base font-bold text-white tracking-tight">
+                      Annual Leadership Conclave
+                    </h3>
+                  </div>
+                </div>
+
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 text-slate-300">
+                  Closed Door
+                </span>
+              </div>
+
+              {/* Geometric Node Visuals */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                    01. Strategic
+                  </span>
+                  <p className="text-xs font-semibold text-white">Boardroom AI & Sovereign Data</p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                    02. Capital
+                  </span>
+                  <p className="text-xs font-semibold text-white">Cross-Border Debt & M&A</p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                    03. Advisory
+                  </span>
+                  <p className="text-xs font-semibold text-white">1-on-1 Titan Consultations</p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                    04. Governance
+                  </span>
+                  <p className="text-xs font-semibold text-white">Directorship Certification</p>
+                </div>
+              </div>
+
+              {/* Quote / Endorsement Box */}
+              <div className="p-4 rounded-xl bg-black/30 border border-white/5 space-y-2">
+                <p className="text-xs text-slate-300 italic leading-relaxed">
+                  "CXO Connect removes the isolation of high-level decision making. It is the most candid boardroom you will enter."
+                </p>
+                <div className="flex items-center justify-between text-[11px] pt-1">
+                  <span className="font-bold text-white">Vikramaditya Mehta</span>
+                  <span className="text-[#D99B26]">Chairman, West Region</span>
+                </div>
+              </div>
+
+              {/* Bottom Quick Action */}
+              <Link
+                to="/events"
+                className="w-full py-3 rounded-xl bg-white/10 hover:bg-[#D99B26] hover:text-[#111315] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 group"
+              >
+                <span>View All 2026 Conclaves</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+            </div>
+
+          </div>
 
         </div>
-
       </div>
     </section>
   );

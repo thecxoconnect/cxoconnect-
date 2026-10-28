@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, ArrowRight, Shield, Linkedin, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Mail, ArrowRight, Shield, Linkedin, Sparkles } from 'lucide-react';
 import { authService } from '../services/api';
 import { useToast } from '../components/Toast';
 
@@ -24,7 +24,6 @@ const Login = () => {
       const res = await authService.manualAuth(email, role);
       if (res.data.success) {
         addToast(res.data.message, 'success');
-        // Store verification token temporarily for OTP step
         sessionStorage.setItem('cxo_temp_token', res.data.token);
         sessionStorage.setItem('cxo_verify_email', res.data.email);
         if (res.data.devOtp) {
@@ -45,47 +44,52 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-slate-200">
+    <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-[#F7F7F4]">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-[#E2E8F0]">
         
-        {/* Brand Header */}
+        {/* Brand Header with Gold Ring Icon */}
         <div className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-white font-serif font-black text-base shadow-md mb-3">
-            CXO
+          <div className="mx-auto w-12 h-12 rounded-full bg-[#111315] flex items-center justify-center shadow-sm mb-3">
+            <div className="w-8 h-8 rounded-full border-2 border-[#D99B26] flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-[#D99B26]" />
+            </div>
           </div>
-          <h2 className="text-3xl font-serif font-bold text-slate-900 tracking-tight">
-            Executive Login
+          <span className="category-subtitle">
+            Executive Portal
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] tracking-tight font-heading mt-1">
+            Sign In to CXO Connect
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-slate-500">
-            Access your CXO Connect member dashboard, private roundtables, and peer advisory.
+          <p className="mt-1 text-xs text-[#64748B]">
+            Access your member dashboard, private conclaves, and peer advisory.
           </p>
         </div>
 
         {/* Quick Testing Presets */}
-        <div className="p-3.5 bg-blue-50/70 border border-blue-200/80 rounded-2xl text-xs space-y-2">
-          <div className="flex items-center gap-1.5 font-bold text-blue-900">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+        <div className="p-3.5 bg-[#F7F7F4] border border-[#E2E8F0] rounded-2xl text-xs space-y-2">
+          <div className="flex items-center gap-1.5 font-bold text-[#111315]">
+            <Sparkles className="w-3.5 h-3.5 text-[#D99B26]" />
             <span>Fast-Track Credentials:</span>
           </div>
           <div className="flex flex-wrap gap-1.5">
             <button
               type="button"
               onClick={() => handlePresetSelect('theanvisharma@gmail.com', 'admin')}
-              className="px-2.5 py-1 rounded-lg bg-white border border-blue-200 text-blue-950 font-semibold hover:bg-blue-600 hover:text-white transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#111315] font-semibold hover:border-[#D99B26] hover:text-[#D99B26] transition-colors"
             >
               Super Admin
             </button>
             <button
               type="button"
               onClick={() => handlePresetSelect('admin@cxoconnect.com', 'admin')}
-              className="px-2.5 py-1 rounded-lg bg-white border border-blue-200 text-blue-950 font-semibold hover:bg-blue-600 hover:text-white transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#111315] font-semibold hover:border-[#D99B26] hover:text-[#D99B26] transition-colors"
             >
               Admin
             </button>
             <button
               type="button"
               onClick={() => handlePresetSelect('rajesh.singhania@apextech.com', 'member')}
-              className="px-2.5 py-1 rounded-lg bg-white border border-blue-200 text-blue-950 font-semibold hover:bg-blue-600 hover:text-white transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#111315] font-semibold hover:border-[#D99B26] hover:text-[#D99B26] transition-colors"
             >
               C-Suite Member
             </button>
@@ -95,7 +99,7 @@ const Login = () => {
         {/* Main Auth Form */}
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-2">
               Corporate / Executive Email
             </label>
             <div className="relative">
@@ -106,23 +110,23 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@company.com"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
-              Account Type
+            <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-2">
+              Account Role
             </label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => setRole('member')}
-                className={`py-2 px-3 text-xs font-semibold rounded-xl border transition-all ${
+                className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
                   role === 'member'
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-[#111315] text-[#D99B26] border-[#111315]'
+                    : 'bg-[#F7F7F4] text-[#64748B] border-[#E2E8F0] hover:bg-white'
                 }`}
               >
                 C-Suite Member
@@ -130,10 +134,10 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => setRole('admin')}
-                className={`py-2 px-3 text-xs font-semibold rounded-xl border transition-all ${
+                className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
                   role === 'admin'
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-[#111315] text-[#D99B26] border-[#111315]'
+                    : 'bg-[#F7F7F4] text-[#64748B] border-[#E2E8F0] hover:bg-white'
                 }`}
               >
                 Platform Admin
@@ -144,14 +148,14 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-full bg-[#0d1527] hover:bg-[#1a2642] text-white font-semibold text-sm transition-all shadow-lg shadow-slate-950/20 flex items-center justify-center gap-2 transform active:scale-[0.98]"
+            className="btn-charcoal w-full py-3.5 rounded-full text-xs font-bold"
           >
             {loading ? (
               <span>Dispatching Code...</span>
             ) : (
               <>
                 <span>Send 6-Digit Verification Code</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#D99B26]" />
               </>
             )}
           </button>
@@ -160,25 +164,25 @@ const Login = () => {
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200" />
+            <div className="w-full border-t border-[#E2E8F0]" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-slate-400 font-semibold">Or Connect With</span>
+            <span className="bg-white px-2 text-[#64748B] font-semibold">Or Connect With</span>
           </div>
         </div>
 
-        {/* LinkedIn OAuth Option */}
+        {/* LinkedIn OAuth */}
         <a
           href="/api/auth/linkedin"
-          className="w-full py-3 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors"
+          className="btn-outline-executive w-full py-3 rounded-full text-xs font-bold"
         >
           <Linkedin className="w-4 h-4 text-[#0077b5]" />
           <span>Authenticate with LinkedIn</span>
         </a>
 
         {/* Security Assurance */}
-        <div className="pt-2 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
-          <Shield className="w-3.5 h-3.5 text-emerald-500" />
+        <div className="pt-2 text-center text-xs text-[#64748B] flex items-center justify-center gap-1.5">
+          <Shield className="w-3.5 h-3.5 text-[#D99B26]" />
           <span>256-bit encrypted passwordless executive verification</span>
         </div>
 
