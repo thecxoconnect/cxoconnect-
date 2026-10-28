@@ -1,4 +1,7 @@
 import User from '../models/User.js';
+import Event from '../models/Event.js';
+import Mentor from '../models/Mentor.js';
+import Chapter from '../models/Chapter.js';
 
 /**
  * getMembers
@@ -243,6 +246,39 @@ export const deleteMember = async (req, res) => {
       success: false,
       message: 'Failed to delete member.',
       error: error.message
+    });
+  }
+};
+
+/**
+ * getPublicStats
+ * Public endpoint for Home page stats band
+ */
+export const getPublicStats = async (req, res) => {
+  try {
+    const [totalMembers, totalEvents, totalMentors, totalChapters] = await Promise.all([
+      User.countDocuments({ status: 'accepted' }),
+      Event.countDocuments(),
+      Mentor.countDocuments(),
+      Chapter.countDocuments()
+    ]);
+
+    const companies = await User.distinct('company', { status: 'accepted' });
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        totalMembers: totalMembers > 0 ? totalMembers : 2500,
+        annualConclaves: totalEvents > 0 ? totalEvents : 45,
+        boardroomInfluence: '98%',
+        globalChapters: totalChapters > 0 ? totalChapters : 8,
+        companiesCount: companies.length > 0 ? companies.length : 120
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message
     });
   }
 };

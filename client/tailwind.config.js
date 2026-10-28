@@ -9,12 +9,17 @@ export default {
       colors: {
         brand: {
           bg: '#F7F7F4',
-          charcoal: '#111315',
-          ochre: '#D99B26',
-          'ochre-hover': '#C2871E',
-          'card-navy': '#0E1622',
+          cream: '#F7F7F4',
+          charcoal: '#0F172A',
+          dark: '#111315',
+          blue: '#0066CC',
+          'blue-vibrant': '#0D6EFD',
+          'blue-hover': '#0052A3',
+          'blue-light': '#EBF5FF',
+          white: '#FFFFFF',
+          stroke: '#E2E8F0',
           muted: '#64748B',
-          stroke: '#E2E8F0'
+          card: '#FFFFFF'
         }
       },
       fontFamily: {
@@ -25,9 +30,9 @@ export default {
         'widest-xl': '0.2em',
       },
       boxShadow: {
-        'executive-card': '0 10px 30px -10px rgba(17, 19, 21, 0.08)',
-        'dark-card': '0 20px 40px -15px rgba(14, 22, 34, 0.35)',
-        'gold-glow': '0 0 25px rgba(217, 155, 38, 0.25)',
+        'executive-card': '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
+        'blue-glow': '0 0 25px rgba(0, 102, 204, 0.25)',
+        'soft-pill': '0 2px 8px rgba(0, 0, 0, 0.04)'
       }
     },
   },

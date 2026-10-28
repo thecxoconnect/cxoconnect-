@@ -127,14 +127,15 @@ export const imagekitService = {
 
 // 12. Full Administrative Hub Service
 export const adminService = {
-  // Module 1: Overview & Analytics
+  // Module 1: Overview & Directory
+  getOverview: () => api.get('/admin/overview'),
   getStats: () => api.get('/admin/stats'),
   exportReport: (status = 'accepted') =>
     api.get(`/admin/export?status=${status}`, { responseType: 'blob' }),
 
   // Module 2: Members & Secondary Admins
   getMembers: (params) => api.get('/admin/members', { params }),
-  updateMemberStatus: (id, status) => api.put(`/admin/members/${id}/status`, { status }),
+  updateMemberStatus: (id, status) => api.patch(`/admin/members/${id}/status`, { status }),
   toggleMemberRole: (id, role) => api.put(`/admin/members/${id}/role`, { role }),
   deleteMember: (id) => api.delete(`/admin/members/${id}`),
 
@@ -173,6 +174,13 @@ export const adminService = {
 
   // Module 8: Mass Mailer / Broadcast
   sendMassMail: (data) => api.post('/admin/mass-mail', data)
+};
+
+// 13. Knowledge Hub Resources & Public Stats
+export const resourceService = {
+  getFrameworks: () => api.get('/resources/frameworks'),
+  getCertifications: () => api.get('/resources/certifications'),
+  getPublicStats: () => api.get('/members/public-stats')
 };
 
 export default api;

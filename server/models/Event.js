@@ -60,6 +60,14 @@ const eventSchema = new mongoose.Schema(
         return this.bannerUrl;
       }
     },
+    gallery: {
+      type: [String],
+      default: []
+    },
+    registrationUrl: {
+      type: String,
+      default: ''
+    },
     rsvps: [
       {
         type: mongoose.Schema.Types.ObjectId,

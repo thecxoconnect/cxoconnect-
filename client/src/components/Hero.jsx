@@ -15,16 +15,16 @@ const Hero = () => {
           <div className="lg:col-span-7 space-y-8 text-left">
             
             {/* Category Subtitle */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E2E8F0] shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse" />
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#D99B26]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E2E8F0] shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#0066CC] animate-pulse" />
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#0066CC]">
                 Invitation-Only Executive Community
               </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111315] tracking-tight leading-[1.08] font-heading">
-              Where enterprise leaders <span className="text-[#D99B26]">think together.</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] tracking-tight leading-[1.08] font-heading">
+              Where enterprise leaders <span className="text-[#0066CC]">think together.</span>
             </h1>
 
             {/* Subtitle */}
@@ -36,17 +36,17 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
               <Link
                 to={isAuthenticated ? "/profile" : "/membership"}
-                className="btn-charcoal px-8 py-4 text-sm font-semibold rounded-full shadow-lg shadow-black/10 group"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-bold rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white shadow-md shadow-[#0066CC]/20 group transition-all"
               >
                 <span>Request an Invitation</span>
-                <ArrowRight className="w-4 h-4 text-[#D99B26] group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
                 to="/events"
-                className="btn-outline-executive px-7 py-4 text-sm font-semibold rounded-full hover:border-[#D99B26] bg-white/60"
+                className="btn-outline-executive px-7 py-4 text-sm font-semibold rounded-full bg-white hover:border-[#0066CC] hover:text-[#0066CC]"
               >
-                <Calendar className="w-4 h-4 text-[#64748B]" />
+                <Calendar className="w-4 h-4 text-[#0066CC]" />
                 <span>Explore Conclaves</span>
               </Link>
             </div>
@@ -54,11 +54,11 @@ const Hero = () => {
             {/* Trust Markers */}
             <div className="pt-6 border-t border-[#E2E8F0] flex flex-wrap items-center gap-6 text-xs text-[#64748B] font-medium">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#D99B26]" />
+                <ShieldCheck className="w-4 h-4 text-[#0066CC]" />
                 <span>Chatham House Rule Confidentiality</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-[#D99B26]" />
+                <Users className="w-4 h-4 text-[#0066CC]" />
                 <span>2,500+ Verified C-Suite Members</span>
               </div>
             </div>
@@ -69,19 +69,19 @@ const Hero = () => {
           <div className="lg:col-span-5 relative">
             
             {/* Background Glow */}
-            <div className="absolute -inset-4 bg-gradient-to-tr from-[#D99B26]/20 to-transparent rounded-3xl blur-2xl -z-10 pointer-events-none" />
+            <div className="absolute -inset-4 bg-gradient-to-tr from-[#0066CC]/20 to-transparent rounded-3xl blur-2xl -z-10 pointer-events-none" />
 
-            {/* Main Card Container (Dark Navy #0E1622) */}
-            <div className="card-dark-navy p-6 sm:p-8 space-y-6">
+            {/* Main Card Container (Dark Navy #0d1527) */}
+            <div className="bg-[#0d1527] rounded-3xl border border-white/10 shadow-2xl p-6 sm:p-8 space-y-6 text-white">
               
-              {/* Card Header with Gold Accent */}
+              {/* Card Header with Blue Accent */}
               <div className="flex items-center justify-between pb-5 border-b border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-[#D99B26]/40 flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-[#D99B26]" />
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-[#0066CC]/40 flex items-center justify-center">
+                    <Building2 className="w-5 h-5 text-[#0066CC]" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#D99B26]">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#0066CC]">
                       Spotlight Gathering
                     </p>
                     <h3 className="text-base font-bold text-white tracking-tight">
@@ -97,29 +97,29 @@ const Hero = () => {
 
               {/* Geometric Node Visuals */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
-                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#0066CC]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#0066CC] tracking-wider block mb-1">
                     01. Strategic
                   </span>
                   <p className="text-xs font-semibold text-white">Boardroom AI & Sovereign Data</p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
-                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#0066CC]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#0066CC] tracking-wider block mb-1">
                     02. Capital
                   </span>
                   <p className="text-xs font-semibold text-white">Cross-Border Debt & M&A</p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
-                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#0066CC]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#0066CC] tracking-wider block mb-1">
                     03. Advisory
                   </span>
                   <p className="text-xs font-semibold text-white">1-on-1 Titan Consultations</p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#D99B26]/40 transition-colors">
-                  <span className="text-[10px] uppercase font-bold text-[#D99B26] tracking-wider block mb-1">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 hover:border-[#0066CC]/40 transition-colors">
+                  <span className="text-[10px] uppercase font-bold text-[#0066CC] tracking-wider block mb-1">
                     04. Governance
                   </span>
                   <p className="text-xs font-semibold text-white">Directorship Certification</p>
@@ -133,14 +133,14 @@ const Hero = () => {
                 </p>
                 <div className="flex items-center justify-between text-[11px] pt-1">
                   <span className="font-bold text-white">Vikramaditya Mehta</span>
-                  <span className="text-[#D99B26]">Chairman, West Region</span>
+                  <span className="text-[#0066CC] font-semibold">Chairman, West Region</span>
                 </div>
               </div>
 
               {/* Bottom Quick Action */}
               <Link
                 to="/events"
-                className="w-full py-3 rounded-xl bg-white/10 hover:bg-[#D99B26] hover:text-[#111315] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 group"
+                className="w-full py-3 rounded-xl bg-white/10 hover:bg-[#0066CC] hover:text-white text-white text-xs font-bold transition-all flex items-center justify-center gap-2 group"
               >
                 <span>View All 2026 Conclaves</span>
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

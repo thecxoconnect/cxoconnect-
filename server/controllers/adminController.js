@@ -13,6 +13,42 @@ import { getMailerTransporter } from '../config/email.js';
 // MODULE 1: OVERVIEW & ANALYTICS
 // ==========================================
 
+export const getAdminOverview = async (req, res) => {
+  try {
+    const [approvedMembers, secondaryAdmins, stats] = await Promise.all([
+      User.find({ status: 'accepted' }).sort({ createdAt: -1 }),
+      User.find({ role: 'admin', isMainAdmin: { $ne: true } }).sort({ createdAt: -1 }),
+      User.aggregate([
+        {
+          $group: {
+            _id: '$status',
+            count: { $sum: 1 }
+          }
+        }
+      ])
+    ]);
+
+    const counts = {
+      approved: approvedMembers.length,
+      secondaryAdmins: secondaryAdmins.length,
+      pending: stats.find((s) => s._id === 'pending')?.count || 0,
+      rejected: stats.find((s) => s._id === 'rejected')?.count || 0
+    };
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        counts,
+        approvedMembers,
+        secondaryAdmins
+      }
+    });
+  } catch (error) {
+    console.error('[getAdminOverview Error]', error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const getAdminStats = async (req, res) => {
   try {
     // 1. Dynamic aggregation for real-time counts across approved members
@@ -288,8 +324,9 @@ export const createAdminMentor = async (req, res) => {
     let photoUrl = req.body.photoUrl || req.body.image || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80';
     let imageKitFileId = '';
 
-    if (req.file) {
-      const uploadResult = await uploadFileToImageKit(req.file.buffer, `mentor_${req.body.name || 'avatar'}`, '/cxoconnect/mentors/');
+    const imageFile = req.file || (req.files && (req.files.find(f => f.fieldname === 'image' || f.fieldname === 'photo' || f.fieldname === 'photoUrl') || req.files[0]));
+    if (imageFile) {
+      const uploadResult = await uploadFileToImageKit(imageFile.buffer, `mentor_${req.body.name || 'avatar'}`, '/cxoconnect/mentors/');
       photoUrl = uploadResult.url;
       imageKitFileId = uploadResult.fileId;
     }
@@ -304,7 +341,7 @@ export const createAdminMentor = async (req, res) => {
       imageKitFileId,
       image: photoUrl,
       linkedin: req.body.linkedinUrl || req.body.linkedin || '',
-      expertise: typeof req.body.expertise === 'string' ? req.body.expertise.split(',').map((s) => s.trim()) : req.body.expertise || [],
+      expertise: typeof req.body.expertise === 'string' ? req.body.expertise.split(',').map((s) => s.trim()) : req.body.expertise || ['Strategic Leadership', 'Executive Advisory'],
       bio: req.body.bio || ''
     });
 
@@ -322,9 +359,10 @@ export const updateAdminMentor = async (req, res) => {
     const mentor = await Mentor.findById(id);
     if (!mentor) return res.status(404).json({ success: false, message: 'Mentor not found.' });
 
-    if (req.file) {
+    const imageFile = req.file || (req.files && (req.files.find(f => f.fieldname === 'image' || f.fieldname === 'photo' || f.fieldname === 'photoUrl') || req.files[0]));
+    if (imageFile) {
       if (mentor.imageKitFileId) await deleteFileFromImageKit(mentor.imageKitFileId);
-      const uploadResult = await uploadFileToImageKit(req.file.buffer, `mentor_${req.body.name || mentor.name}`, '/cxoconnect/mentors/');
+      const uploadResult = await uploadFileToImageKit(imageFile.buffer, `mentor_${req.body.name || mentor.name}`, '/cxoconnect/mentors/');
       mentor.photoUrl = uploadResult.url;
       mentor.imageKitFileId = uploadResult.fileId;
       mentor.image = uploadResult.url;
@@ -610,19 +648,43 @@ export const createAdminEvent = async (req, res) => {
   try {
     let bannerUrl = req.body.bannerUrl || req.body.banner || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&q=80';
     let imageKitFileId = '';
+    const galleryUrls = [];
 
-    if (req.file) {
-      const uploadResult = await uploadFileToImageKit(req.file.buffer, `event_${req.body.title || 'banner'}`, '/cxoconnect/events/');
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        if (file.fieldname === 'banner' || file.fieldname === 'image') {
+          const uploadResult = await uploadFileToImageKit(file.buffer, `event_banner_${Date.now()}`, '/cxoconnect/events/');
+          bannerUrl = uploadResult.url;
+          imageKitFileId = uploadResult.fileId;
+        } else if (file.fieldname === 'gallery' || file.fieldname.startsWith('gallery[')) {
+          const uploadResult = await uploadFileToImageKit(file.buffer, `event_gallery_${Date.now()}`, '/cxoconnect/events/gallery/');
+          galleryUrls.push(uploadResult.url);
+        }
+      }
+    } else if (req.file) {
+      const uploadResult = await uploadFileToImageKit(req.file.buffer, `event_banner_${Date.now()}`, '/cxoconnect/events/');
       bannerUrl = uploadResult.url;
       imageKitFileId = uploadResult.fileId;
     }
 
-    const eventDate = req.body.eventDate ? new Date(req.body.eventDate) : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+    let bodyGallery = [];
+    if (Array.isArray(req.body.gallery)) {
+      bodyGallery = req.body.gallery;
+    } else if (typeof req.body.gallery === 'string') {
+      try {
+        bodyGallery = JSON.parse(req.body.gallery);
+      } catch (e) {
+        if (req.body.gallery.trim()) bodyGallery = [req.body.gallery.trim()];
+      }
+    }
+    const finalGallery = [...bodyGallery, ...galleryUrls];
+
+    const eventDate = req.body.eventDate ? new Date(req.body.eventDate) : (req.body.date ? new Date(req.body.date) : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000));
     const type = req.body.type ? req.body.type.toUpperCase() : eventDate > new Date() ? 'UPCOMING' : 'PAST';
 
     const event = new Event({
       title: req.body.title,
-      speakerMentor: req.body.speakerMentor || '',
+      speakerMentor: req.body.speakerMentor || req.body.mentorName || '',
       location: req.body.location || 'Mumbai, India',
       venue: req.body.venue || 'The Taj Mahal Palace',
       eventDate,
@@ -633,12 +695,15 @@ export const createAdminEvent = async (req, res) => {
       bannerUrl,
       imageKitFileId,
       banner: bannerUrl,
-      description: req.body.description || ''
+      gallery: finalGallery,
+      registrationUrl: req.body.registrationUrl || '',
+      description: req.body.description || 'Exclusive CXO Conclave and Networking Summit'
     });
 
     await event.save();
     return res.status(201).json({ success: true, message: 'Executive Conclave created.', data: event });
   } catch (error) {
+    console.error('[createAdminEvent Error]', error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -649,16 +714,44 @@ export const updateAdminEvent = async (req, res) => {
     const event = await Event.findById(id);
     if (!event) return res.status(404).json({ success: false, message: 'Event not found.' });
 
-    if (req.file) {
+    const galleryUrls = [];
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        if (file.fieldname === 'banner' || file.fieldname === 'image') {
+          if (event.imageKitFileId) await deleteFileFromImageKit(event.imageKitFileId);
+          const uploadResult = await uploadFileToImageKit(file.buffer, `event_banner_${Date.now()}`, '/cxoconnect/events/');
+          event.bannerUrl = uploadResult.url;
+          event.imageKitFileId = uploadResult.fileId;
+          event.banner = uploadResult.url;
+        } else if (file.fieldname === 'gallery' || file.fieldname.startsWith('gallery[')) {
+          const uploadResult = await uploadFileToImageKit(file.buffer, `event_gallery_${Date.now()}`, '/cxoconnect/events/gallery/');
+          galleryUrls.push(uploadResult.url);
+        }
+      }
+    } else if (req.file) {
       if (event.imageKitFileId) await deleteFileFromImageKit(event.imageKitFileId);
-      const uploadResult = await uploadFileToImageKit(req.file.buffer, `event_${req.body.title || event.title}`, '/cxoconnect/events/');
+      const uploadResult = await uploadFileToImageKit(req.file.buffer, `event_banner_${Date.now()}`, '/cxoconnect/events/');
       event.bannerUrl = uploadResult.url;
       event.imageKitFileId = uploadResult.fileId;
       event.banner = uploadResult.url;
     }
 
+    if (galleryUrls.length > 0) {
+      event.gallery = [...(event.gallery || []), ...galleryUrls];
+    }
+    if (req.body.gallery) {
+      let bodyGallery = [];
+      if (Array.isArray(req.body.gallery)) bodyGallery = req.body.gallery;
+      else if (typeof req.body.gallery === 'string') {
+        try { bodyGallery = JSON.parse(req.body.gallery); } catch (e) { if (req.body.gallery.trim()) bodyGallery = [req.body.gallery.trim()]; }
+      }
+      if (bodyGallery.length > 0) event.gallery = bodyGallery;
+    }
+
     if (req.body.title) event.title = req.body.title;
-    if (req.body.speakerMentor !== undefined) event.speakerMentor = req.body.speakerMentor;
+    if (req.body.speakerMentor !== undefined || req.body.mentorName !== undefined) {
+      event.speakerMentor = req.body.speakerMentor || req.body.mentorName || '';
+    }
     if (req.body.location) event.location = req.body.location;
     if (req.body.venue) event.venue = req.body.venue;
     if (req.body.eventDate) {
@@ -670,6 +763,7 @@ export const updateAdminEvent = async (req, res) => {
     if (req.body.type) event.type = req.body.type.toUpperCase();
     if (req.body.category) event.category = req.body.category;
     if (req.body.description) event.description = req.body.description;
+    if (req.body.registrationUrl !== undefined) event.registrationUrl = req.body.registrationUrl;
 
     await event.save();
     return res.status(200).json({ success: true, message: 'Event updated.', data: event });

@@ -5,11 +5,15 @@ import {
   getMemberById,
   updateMemberStatus,
   updateMemberRole,
-  deleteMember
+  deleteMember,
+  getPublicStats
 } from '../controllers/memberController.js';
 import { isAuth, isAdmin, isMainAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
+
+// Public Stats (For Landing Page Stats Band)
+router.get('/public-stats', getPublicStats);
 
 // Stats (Admin only)
 router.get('/stats', isAuth, isAdmin, getMemberStats);

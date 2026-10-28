@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Mail, ArrowRight, Shield, Linkedin, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Mail, ArrowRight, Shield, User, Sparkles } from 'lucide-react';
 import { authService } from '../services/api';
 import { useToast } from '../components/Toast';
 
@@ -8,14 +8,15 @@ const Login = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
 
-  const [email, setEmail] = useState('');
   const [role, setRole] = useState('member'); // 'member' | 'admin'
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showEmailInput, setShowEmailInput] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
-      addToast('Please enter your executive email address.', 'warning');
+      addToast('Please enter your corporate email address.', 'warning');
       return;
     }
 
@@ -41,148 +42,165 @@ const Login = () => {
   const handlePresetSelect = (presetEmail, presetRole) => {
     setEmail(presetEmail);
     setRole(presetRole);
+    setShowEmailInput(true);
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-[#F7F7F4]">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-[#E2E8F0]">
+    <div className="min-h-[85vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-[#F7F7F4]">
+      <div className="max-w-md w-full space-y-7 bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-[#E2E8F0]">
         
-        {/* Brand Header with Gold Ring Icon */}
-        <div className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-[#111315] flex items-center justify-center shadow-sm mb-3">
-            <div className="w-8 h-8 rounded-full border-2 border-[#D99B26] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-[#D99B26]" />
-            </div>
+        {/* Header: Shield Icon inside a soft blue pill + "Welcome to CXO Connect" (Serif) */}
+        <div className="text-center flex flex-col items-center">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#EBF5FF] border border-[#BFDBFE] text-[#0066CC] shadow-sm mb-3">
+            <Shield className="w-7 h-7 text-[#0066CC]" />
           </div>
-          <span className="category-subtitle">
-            Executive Portal
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] tracking-tight font-heading mt-1">
-            Sign In to CXO Connect
-          </h2>
-          <p className="mt-1 text-xs text-[#64748B]">
-            Access your member dashboard, private conclaves, and peer advisory.
+          
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight font-serif">
+            Welcome to CXO Connect
+          </h1>
+          <p className="mt-1.5 text-xs sm:text-sm text-[#64748B] font-medium">
+            Select your role and sign in
           </p>
         </div>
 
-        {/* Quick Testing Presets */}
-        <div className="p-3.5 bg-[#F7F7F4] border border-[#E2E8F0] rounded-2xl text-xs space-y-2">
-          <div className="flex items-center gap-1.5 font-bold text-[#111315]">
-            <Sparkles className="w-3.5 h-3.5 text-[#D99B26]" />
-            <span>Fast-Track Credentials:</span>
+        {/* Role Selector: Dual Pill Tabs [ 👤 Member ] vs [ 🛡️ Admin ] */}
+        <div className="bg-[#F1F5F9] p-1.5 rounded-full flex items-center border border-[#E2E8F0]">
+          <button
+            type="button"
+            onClick={() => setRole('member')}
+            className={`flex-1 py-2 px-4 rounded-full text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+              role === 'member'
+                ? 'bg-[#0066CC] text-white shadow-sm'
+                : 'bg-transparent text-[#64748B] hover:text-[#0F172A]'
+            }`}
+          >
+            <User className="w-3.5 h-3.5" />
+            <span>Member</span>
+          </button>
+          
+          <button
+            type="button"
+            onClick={() => setRole('admin')}
+            className={`flex-1 py-2 px-4 rounded-full text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+              role === 'admin'
+                ? 'bg-[#0066CC] text-white shadow-sm'
+                : 'bg-transparent text-[#64748B] hover:text-[#0F172A]'
+            }`}
+          >
+            <Shield className="w-3.5 h-3.5" />
+            <span>Admin</span>
+          </button>
+        </div>
+
+        {/* Fast-Track Testing Credentials */}
+        <div className="p-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl text-xs space-y-2">
+          <div className="flex items-center gap-1.5 font-bold text-[#0F172A]">
+            <Sparkles className="w-3.5 h-3.5 text-[#0066CC]" />
+            <span className="text-[11px] uppercase tracking-wider text-[#0066CC]">Verified Test Profiles</span>
           </div>
           <div className="flex flex-wrap gap-1.5">
             <button
               type="button"
               onClick={() => handlePresetSelect('theanvisharma@gmail.com', 'admin')}
-              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#111315] font-semibold hover:border-[#D99B26] hover:text-[#D99B26] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#0F172A] font-semibold text-[11px] hover:border-[#0066CC] hover:text-[#0066CC] transition-colors shadow-2xs"
             >
               Super Admin
             </button>
             <button
               type="button"
               onClick={() => handlePresetSelect('admin@cxoconnect.com', 'admin')}
-              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#111315] font-semibold hover:border-[#D99B26] hover:text-[#D99B26] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#0F172A] font-semibold text-[11px] hover:border-[#0066CC] hover:text-[#0066CC] transition-colors shadow-2xs"
             >
-              Admin
+              Secondary Admin
             </button>
             <button
               type="button"
               onClick={() => handlePresetSelect('rajesh.singhania@apextech.com', 'member')}
-              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#111315] font-semibold hover:border-[#D99B26] hover:text-[#D99B26] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-white border border-[#E2E8F0] text-[#0F172A] font-semibold text-[11px] hover:border-[#0066CC] hover:text-[#0066CC] transition-colors shadow-2xs"
             >
               C-Suite Member
             </button>
           </div>
         </div>
 
-        {/* Main Auth Form */}
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-          <div>
-            <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-2">
-              Corporate / Executive Email
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@company.com"
-                required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-2">
-              Account Role
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setRole('member')}
-                className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
-                  role === 'member'
-                    ? 'bg-[#111315] text-[#D99B26] border-[#111315]'
-                    : 'bg-[#F7F7F4] text-[#64748B] border-[#E2E8F0] hover:bg-white'
-                }`}
-              >
-                C-Suite Member
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('admin')}
-                className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
-                  role === 'admin'
-                    ? 'bg-[#111315] text-[#D99B26] border-[#111315]'
-                    : 'bg-[#F7F7F4] text-[#64748B] border-[#E2E8F0] hover:bg-white'
-                }`}
-              >
-                Platform Admin
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-charcoal w-full py-3.5 rounded-full text-xs font-bold"
+        {/* Authentication Options (Strictly ONLY TWO: Google & Email OTP) */}
+        <div className="space-y-3.5">
+          {/* Option 1: Continue with Google */}
+          <a
+            href="/api/auth/google"
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-full bg-white hover:bg-slate-50 border border-[#CBD5E1] text-[#0F172A] text-xs sm:text-sm font-semibold transition-all shadow-xs"
           >
-            {loading ? (
-              <span>Dispatching Code...</span>
-            ) : (
-              <>
-                <span>Send 6-Digit Verification Code</span>
-                <ArrowRight className="w-4 h-4 text-[#D99B26]" />
-              </>
-            )}
-          </button>
-        </form>
+            <svg className="w-4 h-4" viewBox="0 0 24 24">
+              <path
+                fill="#EA4335"
+                d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"
+              />
+              <path
+                fill="#4285F4"
+                d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z"
+              />
+              <path
+                fill="#34A853"
+                d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.4 7.5 23 12 23z"
+              />
+            </svg>
+            <span>Continue with Google</span>
+          </a>
 
-        {/* Divider */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#E2E8F0]" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-[#64748B] font-semibold">Or Connect With</span>
-          </div>
+          {/* Option 2: Continue with Email (Passwordless OTP) */}
+          {!showEmailInput ? (
+            <button
+              type="button"
+              onClick={() => setShowEmailInput(true)}
+              className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-full bg-[#0d1527] hover:bg-[#1a2744] text-white text-xs sm:text-sm font-semibold transition-all shadow-sm"
+            >
+              <Mail className="w-4 h-4 text-[#0066CC]" />
+              <span>Continue with Email</span>
+            </button>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-3 pt-1 animate-fade-in">
+              <div>
+                <label className="block text-[11px] font-bold text-[#0F172A] uppercase tracking-wider mb-1.5">
+                  Corporate / Executive Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="leader@enterprise.com"
+                    required
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#CBD5E1] text-xs sm:text-sm focus:ring-2 focus:ring-[#0066CC] focus:outline-none bg-[#F8FAFC]"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold transition-all shadow-sm"
+              >
+                {loading ? (
+                  <span>Dispatching Code...</span>
+                ) : (
+                  <>
+                    <span>Send 6-Digit OTP</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </form>
+          )}
         </div>
-
-        {/* LinkedIn OAuth */}
-        <a
-          href="/api/auth/linkedin"
-          className="btn-outline-executive w-full py-3 rounded-full text-xs font-bold"
-        >
-          <Linkedin className="w-4 h-4 text-[#0077b5]" />
-          <span>Authenticate with LinkedIn</span>
-        </a>
 
         {/* Security Assurance */}
         <div className="pt-2 text-center text-xs text-[#64748B] flex items-center justify-center gap-1.5">
-          <Shield className="w-3.5 h-3.5 text-[#D99B26]" />
+          <Shield className="w-3.5 h-3.5 text-[#0066CC]" />
           <span>256-bit encrypted passwordless executive verification</span>
         </div>
 

@@ -11,6 +11,7 @@ import contactRoutes from './contactRoutes.js';
 import imagekitRoutes from './imagekitRoutes.js';
 import chapterRoutes from './chapterRoutes.js';
 import adminRoutes from './adminRoutes.js';
+import resourceRoutes from './resourceRoutes.js';
 
 const router = express.Router();
 
@@ -28,6 +29,7 @@ router.use('/quiz', quizRoutes);
 router.use('/contact', contactRoutes);
 router.use('/imagekit', imagekitRoutes);
 router.use('/chapters', chapterRoutes);
+router.use('/resources', resourceRoutes);
 
 // Health check endpoint
 router.get('/health', (req, res) => {

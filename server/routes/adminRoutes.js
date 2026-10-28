@@ -2,6 +2,7 @@ import express from 'express';
 import { isAuth, isAdmin } from '../middleware/authMiddleware.js';
 import { upload } from '../middleware/uploadMiddleware.js';
 import {
+  getAdminOverview,
   getAdminStats,
   exportMembersReport,
   getAdminMembers,
@@ -40,19 +41,21 @@ const router = express.Router();
 router.use(isAuth, isAdmin);
 
 // 1. Overview & Analytics
+router.get('/overview', getAdminOverview);
 router.get('/stats', getAdminStats);
 router.get('/export', exportMembersReport);
 
 // 2. Members & Secondary Admins
 router.get('/members', getAdminMembers);
 router.put('/members/:id/status', updateMemberStatus);
+router.patch('/members/:id/status', updateMemberStatus);
 router.put('/members/:id/role', toggleMemberRole);
 router.delete('/members/:id', deleteMember);
 
 // 3. Mentors & Committee Management (with ImageKit upload)
 router.get('/mentors', getAdminMentors);
-router.post('/mentors', upload.single('image'), createAdminMentor);
-router.put('/mentors/:id', upload.single('image'), updateAdminMentor);
+router.post('/mentors', upload.any(), createAdminMentor);
+router.put('/mentors/:id', upload.any(), updateAdminMentor);
 router.delete('/mentors/:id', deleteAdminMentor);
 
 router.get('/committee', getAdminCommittee);
@@ -71,10 +74,10 @@ router.post('/testimonials', upload.single('avatar'), createAdminTestimonial);
 router.put('/testimonials/:id', upload.single('avatar'), updateAdminTestimonial);
 router.delete('/testimonials/:id', deleteAdminTestimonial);
 
-// 6. Events & Conclaves Management (with ImageKit upload)
+// 6. Events & Conclaves Management (with ImageKit upload & gallery)
 router.get('/events', getAdminEvents);
-router.post('/events', upload.single('banner'), createAdminEvent);
-router.put('/events/:id', upload.single('banner'), updateAdminEvent);
+router.post('/events', upload.any(), createAdminEvent);
+router.put('/events/:id', upload.any(), updateAdminEvent);
 router.delete('/events/:id', deleteAdminEvent);
 
 // 7. Quiz Management System

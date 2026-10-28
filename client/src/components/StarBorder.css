@@ -3,12 +3,12 @@
   padding: 1px;
   border-radius: 1.5rem;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(217, 155, 38, 0.4), rgba(226, 232, 240, 0.2), rgba(17, 19, 21, 0.6));
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.5), rgba(226, 232, 240, 0.2), rgba(13, 21, 39, 0.8));
 }
 
 .star-border-inner {
   position: relative;
-  background: #111315;
+  background: #0d1527;
   color: #ffffff;
   border-radius: calc(1.5rem - 1px);
   padding: 3rem 2rem;

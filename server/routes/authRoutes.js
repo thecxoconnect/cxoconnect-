@@ -6,34 +6,22 @@ import {
   resendOTP,
   completeProfile,
   getMe,
-  linkedinCallback,
   googleCallback
 } from '../controllers/authController.js';
 import { isAuth } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Email OTP Auth
+// Email Passwordless OTP Auth Flow
 router.post('/manual', manualAuth);
 router.post('/verify-otp', verifyOTP);
 router.post('/resend-otp', resendOTP);
 
-// Profile completion & current user
+// Profile completion & authenticated user
 router.post('/complete-profile', isAuth, completeProfile);
 router.get('/me', isAuth, getMe);
 
-// OAuth: LinkedIn
-router.get(
-  '/linkedin',
-  passport.authenticate('linkedin', { scope: ['openid', 'profile', 'email'] })
-);
-router.get(
-  '/linkedin/callback',
-  passport.authenticate('linkedin', { session: false, failureRedirect: '/login?error=linkedin_auth_failed' }),
-  linkedinCallback
-);
-
-// OAuth: Google
+// OAuth: Google (ONLY OAuth Provider Supported)
 router.get(
   '/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })

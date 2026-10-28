@@ -320,11 +320,11 @@ export const getMe = async (req, res) => {
 };
 
 /**
- * 6. OAuth Callbacks (LinkedIn & Google)
+ * 6. OAuth Callbacks (Google OAuth 2.0)
  */
 const handleOAuthCallback = async (req, res, provider, profile) => {
   try {
-    const { email, name, profileImage, linkedinId, googleId } = profile;
+    const { email, name, profileImage, googleId } = profile;
     const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
     if (!email) {
@@ -335,9 +335,7 @@ const handleOAuthCallback = async (req, res, provider, profile) => {
     const isSuperAdmin = isSuperAdminEmail(normalizedEmail);
 
     let query = { email: normalizedEmail };
-    if (provider === 'linkedin' && linkedinId) {
-      query = { $or: [{ linkedinId }, { email: normalizedEmail }] };
-    } else if (provider === 'google' && googleId) {
+    if (provider === 'google' && googleId) {
       query = { $or: [{ googleId }, { email: normalizedEmail }] };
     }
 
@@ -349,7 +347,6 @@ const handleOAuthCallback = async (req, res, provider, profile) => {
         user.status = 'accepted';
         user.isMainAdmin = true;
       }
-      if (provider === 'linkedin' && linkedinId) user.linkedinId = linkedinId;
       if (provider === 'google' && googleId) user.googleId = googleId;
       if (name && !user.name) user.name = name;
       if (profileImage && !user.profileImage) user.profileImage = profileImage;
@@ -358,7 +355,6 @@ const handleOAuthCallback = async (req, res, provider, profile) => {
         email: normalizedEmail,
         name: name || '',
         profileImage: profileImage || '',
-        linkedinId: provider === 'linkedin' ? linkedinId : undefined,
         googleId: provider === 'google' ? googleId : undefined,
         role: isSuperAdmin ? 'admin' : 'member',
         status: isSuperAdmin ? 'accepted' : 'pending',
@@ -391,11 +387,6 @@ const handleOAuthCallback = async (req, res, provider, profile) => {
     const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
     return res.redirect(`${clientUrl}/login?error=${encodeURIComponent(error.message)}`);
   }
-};
-
-export const linkedinCallback = async (req, res) => {
-  const profile = req.linkedinProfile || req.user;
-  return handleOAuthCallback(req, res, 'linkedin', profile);
 };
 
 export const googleCallback = async (req, res) => {

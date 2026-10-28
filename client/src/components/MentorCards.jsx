@@ -45,7 +45,7 @@ const MentorCards = ({ mentors = [] }) => {
         {mentors.map((mentor) => (
           <div
             key={mentor._id || mentor.name}
-            className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-[#D99B26]/50 transition-all flex flex-col justify-between overflow-hidden group"
+            className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-[#0066CC]/50 transition-all flex flex-col justify-between overflow-hidden group"
           >
             <div>
               <div className="relative h-64 overflow-hidden bg-slate-100">
@@ -54,11 +54,11 @@ const MentorCards = ({ mentors = [] }) => {
                   alt={mentor.name}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/90 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1527]/90 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-4 right-4 text-white">
                   <h4 className="text-lg font-bold font-heading leading-tight">{mentor.name}</h4>
-                  <p className="text-xs text-[#D99B26] font-semibold">{mentor.designation}</p>
-                  <p className="text-xs text-slate-300 truncate">{mentor.company}</p>
+                  <p className="text-xs text-[#0066CC] font-bold bg-white/90 px-2 py-0.5 rounded-full inline-block mt-0.5">{mentor.designation}</p>
+                  <p className="text-xs text-slate-300 truncate mt-0.5">{mentor.company}</p>
                 </div>
               </div>
 
@@ -72,7 +72,7 @@ const MentorCards = ({ mentors = [] }) => {
                   {mentor.expertise?.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded-md bg-[#F7F7F4] text-[#111315] text-[10px] font-semibold border border-[#E2E8F0]"
+                      className="px-2 py-0.5 rounded-md bg-[#F7F7F4] text-[#0F172A] text-[10px] font-semibold border border-[#E2E8F0]"
                     >
                       {tag}
                     </span>
@@ -88,7 +88,7 @@ const MentorCards = ({ mentors = [] }) => {
               </span>
               <button
                 onClick={() => setSelectedMentor(mentor)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#111315] hover:bg-[#D99B26] text-white text-xs font-semibold transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-semibold transition-colors shadow-sm"
               >
                 <Calendar className="w-3.5 h-3.5" />
                 <span>Book 1-on-1</span>
@@ -130,7 +130,7 @@ const MentorCards = ({ mentors = [] }) => {
                 <select
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#0066CC] focus:outline-none bg-[#F7F7F4]"
                 >
                   <option value="Strategic Leadership & Growth">Strategic Leadership & Growth</option>
                   <option value="Enterprise AI & Disruption">Enterprise AI & Disruption</option>
@@ -149,7 +149,7 @@ const MentorCards = ({ mentors = [] }) => {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Outline key strategic questions or business context for this consultation..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-[#F7F7F4]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm focus:ring-2 focus:ring-[#0066CC] focus:outline-none bg-[#F7F7F4]"
                   required
                 />
               </div>
@@ -165,7 +165,7 @@ const MentorCards = ({ mentors = [] }) => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn-charcoal px-6 py-2.5 text-xs rounded-full"
+                  className="inline-flex items-center gap-1.5 px-6 py-2.5 text-xs font-bold rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white shadow-sm transition-all"
                 >
                   {submitting ? 'Submitting...' : 'Confirm Advisory Request'}
                 </button>
