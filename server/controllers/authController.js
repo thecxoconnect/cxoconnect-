@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import mongoose from 'mongoose';
 import User from '../models/User.js';
 import { sendOtpEmail } from '../config/email.js';
+import { connectDB } from '../config/db.js';
 
 const SUPER_ADMINS = ['admin@cxoconnect.com', 'theanvisharma@gmail.com'];
 
@@ -27,6 +29,18 @@ export const manualAuth = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Please provide a valid executive email address.'
+      });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database connection is currently unavailable. Please check MongoDB Atlas credentials & IP access.',
+        error: 'Database offline'
       });
     }
 
@@ -130,6 +144,18 @@ export const verifyOTP = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Invalid token purpose. Expected otp_verification token.'
+      });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database connection is temporarily unavailable. Please try again shortly.',
+        error: 'Database offline'
       });
     }
 

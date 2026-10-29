@@ -8,7 +8,10 @@ export const ToastProvider = ({ children }) => {
 
   const addToast = useCallback((message, type = 'success', duration = 4000) => {
     const id = Math.random().toString(36).substring(2, 9);
-    setToasts((prev) => [...prev, { id, message, type }]);
+    const safeMessage = typeof message === 'object'
+      ? (message?.message || message?.code || JSON.stringify(message))
+      : String(message || '');
+    setToasts((prev) => [...prev, { id, message: safeMessage, type }]);
 
     if (duration > 0) {
       setTimeout(() => {

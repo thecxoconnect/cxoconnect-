@@ -46,7 +46,11 @@ export default function Login() {
         navigate(`/verify-otp?token=${encodeURIComponent(res.data.token)}&email=${encodeURIComponent(res.data.email || email)}`);
       }
     } catch (err) {
-      setError(err.response?.data?.error || err.response?.data?.message || 'Failed to dispatch verification email');
+      const raw = err.response?.data?.error || err.response?.data?.message || err.message;
+      const msg = typeof raw === 'object'
+        ? (raw?.message || raw?.code || JSON.stringify(raw))
+        : (raw || 'Failed to dispatch verification email');
+      setError(String(msg));
     } finally {
       setLoading(false);
     }
@@ -96,7 +100,7 @@ export default function Login() {
 
           {error && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-xs font-medium">
-              {error}
+              {typeof error === 'object' ? (error?.message || error?.code || JSON.stringify(error)) : String(error)}
             </div>
           )}
 

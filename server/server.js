@@ -54,6 +54,17 @@ app.use(
 );
 app.options('*', cors());
 
+// Database connection middleware for serverless invocations
+app.use(async (req, res, next) => {
+  if (req.path === '/api/health') return next();
+  try {
+    await connectDB();
+  } catch (err) {
+    console.warn('[DB Middleware]', err.message);
+  }
+  next();
+});
+
 // Initialize Passport
 app.use(passport.initialize());
 
@@ -86,9 +97,11 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log(`[CXO Connect Server] Running on http://localhost:${PORT}`);
-  console.log(`[Environment] ${process.env.NODE_ENV || 'development'}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[CXO Connect Server] Running on http://localhost:${PORT}`);
+    console.log(`[Environment] ${process.env.NODE_ENV || 'development'}`);
+  });
+}
 
 export default app;
