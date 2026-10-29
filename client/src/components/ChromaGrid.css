@@ -7,14 +7,14 @@
 
 .chroma-card {
   position: relative;
-  background-color: #0d1527;
+  background-color: #0E1622;
   color: #ffffff;
   border-radius: 1.25rem;
   padding: 2.25rem 1.75rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
-  box-shadow: 0 10px 30px -10px rgba(13, 21, 39, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(14, 22, 34, 0.5);
 }
 
 .chroma-card::before {
@@ -24,15 +24,15 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #0066CC, #0D6EFD, #0066CC);
+  background: linear-gradient(90deg, #D99B26, #F5BA42, #D99B26);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .chroma-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(0, 102, 204, 0.6);
-  box-shadow: 0 20px 35px -10px rgba(0, 102, 204, 0.25);
+  border-color: rgba(217, 155, 38, 0.6);
+  box-shadow: 0 20px 35px -10px rgba(217, 155, 38, 0.2);
 }
 
 .chroma-card:hover::before {

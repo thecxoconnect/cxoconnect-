@@ -136,21 +136,21 @@ const Membership = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             <div className="bg-[#F7F7F4] p-6 rounded-2xl border border-[#E2E8F0]">
-              <div className="w-8 h-8 rounded-full bg-[#0d1527] text-[#0066CC] flex items-center justify-center font-bold text-sm mb-3">1</div>
-              <h4 className="text-sm font-bold text-[#0F172A]">Sign In with OTP</h4>
+              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3 border border-[#D99B26]/30">1</div>
+              <h4 className="text-sm font-bold text-[#111315]">Sign In with OTP</h4>
               <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
                 Provide your executive email or authenticate securely with Google OAuth.
               </p>
             </div>
             <div className="bg-[#F7F7F4] p-6 rounded-2xl border border-[#E2E8F0]">
-              <div className="w-8 h-8 rounded-full bg-[#0d1527] text-[#0066CC] flex items-center justify-center font-bold text-sm mb-3">2</div>
-              <h4 className="text-sm font-bold text-[#0F172A]">Complete Profile</h4>
+              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3 border border-[#D99B26]/30">2</div>
+              <h4 className="text-sm font-bold text-[#111315]">Complete Profile</h4>
               <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
                 Input your corporate title, enterprise affiliation, regional chapter, and professional bio.
               </p>
             </div>
             <div className="bg-[#F7F7F4] p-6 rounded-2xl border border-[#E2E8F0]">
-              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3">3</div>
+              <div className="w-8 h-8 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center font-bold text-sm mb-3 border border-[#D99B26]/30">3</div>
               <h4 className="text-sm font-bold text-[#111315]">Admissions Review</h4>
               <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
                 Applications are reviewed within 24 hours for full voting and conclave access.

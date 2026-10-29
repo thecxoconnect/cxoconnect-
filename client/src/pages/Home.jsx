@@ -6,7 +6,7 @@ import DomeGallery from '../components/DomeGallery';
 import MentorCards from '../components/MentorCards';
 import StarBorder from '../components/StarBorder';
 import { eventService, mentorService, resourceService } from '../services/api';
-import { Calendar, MapPin, ArrowRight, Users, ShieldCheck, Globe, Trophy } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
@@ -50,29 +50,29 @@ const Home = () => {
       <Hero />
 
       {/* 2. Dynamic Executive Stats Band (Fetched directly from MongoDB) */}
-      <section className="bg-[#0d1527] text-white py-12 border-y border-[#E2E8F0]/10 shadow-inner">
+      <section className="bg-[#0E1622] text-white py-12 border-y border-white/10 shadow-inner">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-[#0066CC] font-heading">
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">
                 {stats.totalMembers?.toLocaleString()}+
               </p>
               <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">C-Suite Leaders</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-[#0066CC] font-heading">
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">
                 {stats.annualConclaves}+
               </p>
               <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Annual Conclaves</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-[#0066CC] font-heading">
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">
                 {stats.boardroomInfluence}
               </p>
               <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Boardroom Influence</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl sm:text-4xl font-extrabold text-[#0066CC] font-heading">
+              <p className="text-3xl sm:text-4xl font-extrabold text-[#D99B26] font-heading">
                 {stats.globalChapters}
               </p>
               <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Global Chapters</p>
@@ -88,7 +88,7 @@ const Home = () => {
             <span className="category-subtitle">
               The CXO Connect Advantage
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0F172A] mt-3 mb-4 tracking-tight font-heading">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111315] mt-3 mb-4 tracking-tight font-heading">
               Designed for C-Suite Decision Makers
             </h2>
             <p className="text-[#64748B] text-sm sm:text-base leading-relaxed">
@@ -108,13 +108,13 @@ const Home = () => {
               <span className="category-subtitle">
                 Curated Engagements
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] mt-2 font-heading tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
                 Upcoming Executive Conclaves
               </h2>
             </div>
             <Link
               to="/events"
-              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0066CC] hover:text-[#0052A3] transition-colors"
+              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D99B26] hover:text-[#C2871E] transition-colors"
             >
               <span>View All Summits</span>
               <ArrowRight className="w-4 h-4" />
@@ -125,7 +125,7 @@ const Home = () => {
             {events.map((evt) => (
               <div
                 key={evt._id}
-                className="bg-[#F7F7F4] rounded-2xl border border-[#E2E8F0] hover:border-[#0066CC]/50 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
+                className="bg-[#F7F7F4] rounded-2xl border border-[#E2E8F0] hover:border-[#D99B26]/50 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
               >
                 <div>
                   <div className="relative h-48 overflow-hidden bg-slate-200">
@@ -134,18 +134,18 @@ const Home = () => {
                       alt={evt.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#0d1527]/85 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#111315]/85 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
                       {evt.category || 'Leadership Summit'}
                     </span>
                   </div>
 
                   <div className="p-6">
-                    <div className="flex items-center gap-2 text-xs font-bold text-[#0066CC] mb-2">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#D99B26] mb-2">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{evt.date} • {evt.time}</span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-[#0F172A] mb-2 font-heading leading-snug">
+                    <h3 className="text-lg font-bold text-[#111315] mb-2 font-heading leading-snug">
                       {evt.title}
                     </h3>
 
@@ -154,7 +154,7 @@ const Home = () => {
                     </p>
 
                     <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
-                      <MapPin className="w-3.5 h-3.5 text-[#0066CC]" />
+                      <MapPin className="w-3.5 h-3.5 text-[#D99B26]" />
                       <span>{evt.venue}, {evt.location}</span>
                     </div>
                   </div>
@@ -166,10 +166,10 @@ const Home = () => {
                   </span>
                   <Link
                     to={`/events?highlight=${evt._id}`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0d1527] hover:bg-[#1a2744] text-white text-xs font-bold transition-all shadow-xs"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#111315] hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs"
                   >
                     <span>Reserve Seat</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#0066CC]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#D99B26]" />
                   </Link>
                 </div>
               </div>
@@ -179,7 +179,7 @@ const Home = () => {
       </section>
 
       {/* 5. Interactive Dome Gallery (Dynamic Real Conclave Moments) */}
-      <section className="py-20 bg-[#0d1527] text-white border-t border-[#E2E8F0]/10">
+      <section className="py-20 bg-[#0E1622] text-white border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
           <span className="category-subtitle">
             Executive Retrospectives
@@ -203,13 +203,13 @@ const Home = () => {
               <span className="category-subtitle">
                 Boardroom Faculty
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] mt-2 font-heading tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111315] mt-2 font-heading tracking-tight">
                 Learn from Proven Leaders
               </h2>
             </div>
             <Link
               to="/mentors"
-              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0066CC] hover:text-[#0052A3] transition-colors"
+              className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#D99B26] hover:text-[#C2871E] transition-colors"
             >
               <span>View Full Faculty</span>
               <ArrowRight className="w-4 h-4" />
@@ -237,7 +237,7 @@ const Home = () => {
               <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   to={isAuthenticated ? "/profile" : "/membership"}
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-sm font-bold transition-all shadow-md"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#D99B26] hover:bg-[#C2871E] text-[#111315] text-sm font-bold transition-all shadow-md"
                 >
                   Request an Invitation
                 </Link>

@@ -515,14 +515,14 @@ const Dashboard = () => {
           
           {/* Left: Shield Icon + "ADMINISTRATIVE HUB" (Bold Serif) */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#EBF5FF] border border-[#BFDBFE] flex items-center justify-center text-[#0066CC] shadow-xs">
-              <Shield className="w-5 h-5 text-[#0066CC]" />
+            <div className="w-10 h-10 rounded-full bg-[#111315] border border-[#111315] flex items-center justify-center text-[#D99B26] shadow-xs">
+              <Shield className="w-5 h-5 text-[#D99B26]" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight font-serif uppercase">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-[#111315] tracking-tight font-serif uppercase">
                 Administrative Hub
               </h1>
-              <p className="text-[10px] uppercase font-bold tracking-widest text-[#0066CC]">
+              <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D99B26]">
                 CXO Connect Governance System
               </p>
             </div>
@@ -544,10 +544,10 @@ const Dashboard = () => {
             <button
               onClick={() => fetchAllData(true)}
               disabled={syncing}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#F1F5F9] text-[#0F172A] hover:bg-[#E2E8F0] text-xs font-bold tracking-wide transition-all shadow-xs border border-[#E2E8F0]"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#F1F5F9] text-[#111315] hover:bg-[#E2E8F0] text-xs font-bold tracking-wide transition-all shadow-xs border border-[#E2E8F0]"
               title="Re-trigger Axios fetch for fresh MongoDB data"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin text-[#0066CC]' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin text-[#D99B26]' : ''}`} />
               <span>REFRESH SYNC</span>
             </button>
           </div>
@@ -574,8 +574,8 @@ const Dashboard = () => {
               onClick={() => setActiveModule('overview')}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                 activeModule === 'overview'
-                  ? 'bg-[#0066CC] text-white shadow-sm'
-                  : 'text-[#0F172A] hover:bg-[#F8FAFC]'
+                  ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                  : 'text-[#111315] hover:bg-[#F8FAFC]'
               }`}
             >
               <span className="flex items-center gap-2.5">
@@ -583,7 +583,7 @@ const Dashboard = () => {
                 <span>Overview</span>
               </span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                activeModule === 'overview' ? 'bg-white/20 text-white' : 'bg-[#F1F5F9] text-[#64748B]'
+                activeModule === 'overview' ? 'bg-[#D99B26]/20 text-[#D99B26]' : 'bg-[#F1F5F9] text-[#64748B]'
               }`}>
                 {approvedMembers.length + secondaryAdminsList.length}
               </span>
@@ -594,8 +594,8 @@ const Dashboard = () => {
               onClick={() => setActiveModule('members')}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                 activeModule === 'members'
-                  ? 'bg-[#0066CC] text-white shadow-sm'
-                  : 'text-[#0F172A] hover:bg-[#F8FAFC]'
+                  ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                  : 'text-[#111315] hover:bg-[#F8FAFC]'
               }`}
             >
               <span className="flex items-center gap-2.5">
@@ -603,7 +603,7 @@ const Dashboard = () => {
                 <span>Members</span>
               </span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                activeModule === 'members' ? 'bg-white/20 text-white' : 'bg-[#F1F5F9] text-[#64748B]'
+                activeModule === 'members' ? 'bg-[#D99B26]/20 text-[#D99B26]' : 'bg-[#F1F5F9] text-[#64748B]'
               }`}>
                 {membersList.length}
               </span>
@@ -614,8 +614,8 @@ const Dashboard = () => {
               onClick={() => setActiveModule('secondary_admins')}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                 activeModule === 'secondary_admins'
-                  ? 'bg-[#0066CC] text-white shadow-sm'
-                  : 'text-[#0F172A] hover:bg-[#F8FAFC]'
+                  ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                  : 'text-[#111315] hover:bg-[#F8FAFC]'
               }`}
             >
               <span className="flex items-center gap-2.5">
@@ -623,7 +623,7 @@ const Dashboard = () => {
                 <span>Secondary Admins</span>
               </span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                activeModule === 'secondary_admins' ? 'bg-white/20 text-white' : 'bg-[#F1F5F9] text-[#64748B]'
+                activeModule === 'secondary_admins' ? 'bg-[#D99B26]/20 text-[#D99B26]' : 'bg-[#F1F5F9] text-[#64748B]'
               }`}>
                 {secondaryAdminsList.length}
               </span>
@@ -634,8 +634,8 @@ const Dashboard = () => {
               onClick={() => setActiveModule('mentors')}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                 activeModule === 'mentors'
-                  ? 'bg-[#0066CC] text-white shadow-sm'
-                  : 'text-[#0F172A] hover:bg-[#F8FAFC]'
+                  ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                  : 'text-[#111315] hover:bg-[#F8FAFC]'
               }`}
             >
               <span className="flex items-center gap-2.5">
@@ -643,7 +643,7 @@ const Dashboard = () => {
                 <span>Mentors</span>
               </span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                activeModule === 'mentors' ? 'bg-white/20 text-white' : 'bg-[#F1F5F9] text-[#64748B]'
+                activeModule === 'mentors' ? 'bg-[#D99B26]/20 text-[#D99B26]' : 'bg-[#F1F5F9] text-[#64748B]'
               }`}>
                 {mentors.length}
               </span>
@@ -654,8 +654,8 @@ const Dashboard = () => {
               onClick={() => setActiveModule('events')}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                 activeModule === 'events'
-                  ? 'bg-[#0066CC] text-white shadow-sm'
-                  : 'text-[#0F172A] hover:bg-[#F8FAFC]'
+                  ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                  : 'text-[#111315] hover:bg-[#F8FAFC]'
               }`}
             >
               <span className="flex items-center gap-2.5">
@@ -663,7 +663,7 @@ const Dashboard = () => {
                 <span>Events</span>
               </span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                activeModule === 'events' ? 'bg-white/20 text-white' : 'bg-[#F1F5F9] text-[#64748B]'
+                activeModule === 'events' ? 'bg-[#D99B26]/20 text-[#D99B26]' : 'bg-[#F1F5F9] text-[#64748B]'
               }`}>
                 {events.length}
               </span>
@@ -698,8 +698,8 @@ const Dashboard = () => {
                     onClick={() => setOverviewTab('approved')}
                     className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       overviewTab === 'approved'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     APPROVED MEMBERS ({approvedMembers.length})
@@ -708,8 +708,8 @@ const Dashboard = () => {
                     onClick={() => setOverviewTab('admins')}
                     className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       overviewTab === 'admins'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     SECONDARY ADMINS ({secondaryAdminsList.length})
@@ -720,7 +720,7 @@ const Dashboard = () => {
               {/* Member Grid: 3-column white rounded cards with names & (+) expand trigger */}
               {loading ? (
                 <div className="py-20 text-center text-[#64748B]">
-                  <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#0066CC] mb-2" />
+                  <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#D99B26] mb-2" />
                   <p className="text-sm font-semibold">Loading real executive directory from MongoDB...</p>
                 </div>
               ) : (
@@ -738,12 +738,12 @@ const Dashboard = () => {
                             className="w-11 h-11 rounded-full object-cover border border-[#E2E8F0]"
                           />
                         ) : (
-                          <div className="w-11 h-11 rounded-full bg-[#EBF5FF] text-[#0066CC] flex items-center justify-center font-bold text-sm">
+                          <div className="w-11 h-11 rounded-full bg-[#0E1622] text-[#D99B26] flex items-center justify-center font-bold text-sm">
                             {person.name ? person.name.charAt(0).toUpperCase() : 'U'}
                           </div>
                         )}
                         <div className="min-w-0">
-                          <p className="text-sm font-bold text-[#0F172A] truncate">
+                          <p className="text-sm font-bold text-[#111315] truncate">
                             {person.name || person.email}
                           </p>
                           <p className="text-xs text-[#64748B] truncate">
@@ -755,7 +755,7 @@ const Dashboard = () => {
                       {/* (+) Expand Trigger Button */}
                       <button
                         onClick={() => setSelectedMemberModal(person)}
-                        className="w-8 h-8 rounded-full bg-[#F1F5F9] group-hover:bg-[#0066CC] group-hover:text-white text-[#0F172A] flex items-center justify-center transition-all flex-shrink-0"
+                        className="w-8 h-8 rounded-full bg-[#F1F5F9] group-hover:bg-[#111315] group-hover:text-[#D99B26] text-[#111315] flex items-center justify-center transition-all flex-shrink-0"
                         title="View Executive Dossier"
                       >
                         <Plus className="w-4 h-4" />
@@ -766,7 +766,7 @@ const Dashboard = () => {
                   {(overviewTab === 'approved' ? approvedMembers : secondaryAdminsList).length === 0 && (
                     <div className="col-span-3 py-16 bg-white rounded-3xl border border-[#E2E8F0] text-center text-[#64748B]">
                       <Users className="w-8 h-8 mx-auto text-[#94A3B8] mb-2" />
-                      <p className="text-sm font-bold text-[#0F172A]">No records found</p>
+                      <p className="text-sm font-bold text-[#111315]">No records found</p>
                       <p className="text-xs">No active {overviewTab === 'approved' ? 'approved members' : 'secondary admins'} currently in database.</p>
                     </div>
                   )}
@@ -779,7 +779,7 @@ const Dashboard = () => {
                   <div className="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] space-y-6 relative">
                     <button
                       onClick={() => setSelectedMemberModal(null)}
-                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9]"
+                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#111315] hover:bg-[#F1F5F9]"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -794,7 +794,7 @@ const Dashboard = () => {
                             className="w-24 h-24 rounded-full object-cover border-4 border-[#E2E8F0] shadow-sm"
                           />
                         ) : (
-                          <div className="w-24 h-24 rounded-full bg-[#0066CC] text-white flex items-center justify-center text-2xl font-bold">
+                          <div className="w-24 h-24 rounded-full bg-[#0E1622] text-[#D99B26] flex items-center justify-center text-2xl font-bold">
                             {selectedMemberModal.name ? selectedMemberModal.name.charAt(0).toUpperCase() : 'U'}
                           </div>
                         )}
@@ -803,10 +803,10 @@ const Dashboard = () => {
                         </span>
                       </div>
 
-                      <h3 className="text-xl font-extrabold text-[#0F172A] font-serif mt-3">
+                      <h3 className="text-xl font-extrabold text-[#111315] font-serif mt-3">
                         {selectedMemberModal.name || 'Executive Member'}
                       </h3>
-                      <p className="text-xs uppercase font-bold tracking-wider text-[#0066CC]">
+                      <p className="text-xs uppercase font-bold tracking-[0.2em] text-[#D99B26]">
                         {selectedMemberModal.role === 'admin' ? 'SECONDARY ADMIN' : 'MEMBER'}
                       </p>
                     </div>
@@ -817,8 +817,8 @@ const Dashboard = () => {
                         <span className="text-[10px] uppercase font-bold text-[#64748B] tracking-wider block mb-1">
                           CONTACT METHOD
                         </span>
-                        <div className="flex items-center gap-1.5 text-[#0F172A] font-semibold truncate" title={selectedMemberModal.email}>
-                          <Mail className="w-3.5 h-3.5 text-[#0066CC] flex-shrink-0" />
+                        <div className="flex items-center gap-1.5 text-[#111315] font-semibold truncate" title={selectedMemberModal.email}>
+                          <Mail className="w-3.5 h-3.5 text-[#D99B26] flex-shrink-0" />
                           <span className="truncate">{selectedMemberModal.email}</span>
                         </div>
                       </div>
@@ -827,20 +827,20 @@ const Dashboard = () => {
                         <span className="text-[10px] uppercase font-bold text-[#64748B] tracking-wider block mb-1">
                           PRIMARY LOCATION
                         </span>
-                        <div className="flex items-center gap-1.5 text-[#0F172A] font-semibold">
-                          <MapPin className="w-3.5 h-3.5 text-[#0066CC] flex-shrink-0" />
+                        <div className="flex items-center gap-1.5 text-[#111315] font-semibold">
+                          <MapPin className="w-3.5 h-3.5 text-[#D99B26] flex-shrink-0" />
                           <span>{selectedMemberModal.city || 'Mumbai'}, {selectedMemberModal.pincode || '400001'}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Blue Pill Action Button: [ View Professional Network ] */}
+                    {/* Main Action Button: [ View Professional Network ] */}
                     <div>
                       <a
                         href={selectedMemberModal.linkedin || 'https://linkedin.com'}
                         target="_blank"
                         rel="noreferrer"
-                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold transition-all shadow-sm"
+                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold transition-all shadow-sm"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                         <span>View Professional Network</span>
@@ -896,8 +896,8 @@ const Dashboard = () => {
                     onClick={() => setMemberStatusTab('waitlist')}
                     className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       memberStatusTab === 'waitlist'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     WAITLIST ({membersList.filter((m) => m.status === 'pending').length})
@@ -906,8 +906,8 @@ const Dashboard = () => {
                     onClick={() => setMemberStatusTab('accepted')}
                     className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       memberStatusTab === 'accepted'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     APPROVED ({membersList.filter((m) => m.status === 'accepted').length})
@@ -916,8 +916,8 @@ const Dashboard = () => {
                     onClick={() => setMemberStatusTab('rejected')}
                     className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       memberStatusTab === 'rejected'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     REJECTED ({membersList.filter((m) => m.status === 'rejected').length})
@@ -931,7 +931,7 @@ const Dashboard = () => {
                     value={memberSearch}
                     onChange={(e) => setMemberSearch(e.target.value)}
                     placeholder="Search by name, email, status..."
-                    className="w-full pl-9 pr-4 py-2 rounded-full border border-[#E2E8F0] bg-white text-xs focus:ring-2 focus:ring-[#0066CC] focus:outline-none shadow-xs"
+                    className="w-full pl-9 pr-4 py-2 rounded-full border border-[#E2E8F0] bg-white text-xs focus:ring-2 focus:ring-[#D99B26] focus:outline-none shadow-xs"
                   />
                 </div>
               </div>
@@ -953,7 +953,7 @@ const Dashboard = () => {
                             className="w-12 h-12 rounded-full object-cover border border-[#E2E8F0]"
                           />
                         ) : (
-                          <div className="w-12 h-12 rounded-full bg-[#EBF5FF] text-[#0066CC] flex items-center justify-center font-bold text-base">
+                          <div className="w-12 h-12 rounded-full bg-[#0E1622] text-[#D99B26] flex items-center justify-center font-bold text-base">
                             {m.name ? m.name.charAt(0).toUpperCase() : 'U'}
                           </div>
                         )}
@@ -968,10 +968,10 @@ const Dashboard = () => {
                         </span>
                       </div>
 
-                      <h4 className="text-base font-extrabold text-[#0F172A] truncate">
+                      <h4 className="text-base font-extrabold text-[#111315] truncate">
                         {m.name || 'Anonymous Leader'}
                       </h4>
-                      <p className="text-xs text-[#0066CC] font-semibold truncate">
+                      <p className="text-xs text-[#D99B26] font-semibold truncate">
                         {m.position || 'C-Suite Executive'}
                       </p>
                       <p className="text-xs text-[#64748B] truncate mt-0.5">
@@ -981,7 +981,7 @@ const Dashboard = () => {
 
                     <div className="pt-4 border-t border-[#E2E8F0] mt-4 flex items-center justify-between text-xs text-[#64748B]">
                       <span>{m.city || 'India'}</span>
-                      <span className="font-semibold text-[#0066CC]">Review &rarr;</span>
+                      <span className="font-semibold text-[#D99B26]">Review &rarr;</span>
                     </div>
                   </div>
                 ))}
@@ -989,7 +989,7 @@ const Dashboard = () => {
                 {filteredMembers.length === 0 && (
                   <div className="col-span-3 py-16 bg-white rounded-3xl border border-[#E2E8F0] text-center text-[#64748B]">
                     <Users className="w-8 h-8 mx-auto text-[#94A3B8] mb-2" />
-                    <p className="text-sm font-bold text-[#0F172A]">No members found</p>
+                    <p className="text-sm font-bold text-[#111315]">No members found</p>
                     <p className="text-xs">No records matching the selected status and search query.</p>
                   </div>
                 )}
@@ -1001,7 +1001,7 @@ const Dashboard = () => {
                   <div className="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] space-y-6 relative">
                     <button
                       onClick={() => setSelectedMemberDrawer(null)}
-                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9]"
+                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#111315] hover:bg-[#F1F5F9]"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -1011,18 +1011,18 @@ const Dashboard = () => {
                         <img
                           src={selectedMemberDrawer.profileImage}
                           alt={selectedMemberDrawer.name}
-                          className="w-16 h-16 rounded-full object-cover border-2 border-[#0066CC]"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-[#D99B26]"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-[#0066CC] text-white flex items-center justify-center text-xl font-bold">
+                        <div className="w-16 h-16 rounded-full bg-[#0E1622] text-[#D99B26] flex items-center justify-center text-xl font-bold">
                           {selectedMemberDrawer.name ? selectedMemberDrawer.name.charAt(0).toUpperCase() : 'U'}
                         </div>
                       )}
                       <div>
-                        <h3 className="text-lg font-extrabold text-[#0F172A] font-serif">
+                        <h3 className="text-lg font-extrabold text-[#111315] font-serif">
                           {selectedMemberDrawer.name}
                         </h3>
-                        <p className="text-xs text-[#0066CC] font-semibold">
+                        <p className="text-xs text-[#D99B26] font-semibold">
                           {selectedMemberDrawer.position} • {selectedMemberDrawer.company}
                         </p>
                         <p className="text-xs text-[#64748B] mt-0.5">
@@ -1034,19 +1034,19 @@ const Dashboard = () => {
                     <div className="grid grid-cols-2 gap-3 text-xs bg-[#F8FAFC] p-4 rounded-2xl border border-[#E2E8F0]">
                       <div>
                         <span className="text-[10px] font-bold text-[#64748B] uppercase block">Phone:</span>
-                        <span className="font-semibold text-[#0F172A]">{selectedMemberDrawer.phone || 'N/A'}</span>
+                        <span className="font-semibold text-[#111315]">{selectedMemberDrawer.phone || 'N/A'}</span>
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-[#64748B] uppercase block">Location:</span>
-                        <span className="font-semibold text-[#0F172A]">{selectedMemberDrawer.city || 'Mumbai'}, {selectedMemberDrawer.pincode || '400001'}</span>
+                        <span className="font-semibold text-[#111315]">{selectedMemberDrawer.city || 'Mumbai'}, {selectedMemberDrawer.pincode || '400001'}</span>
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-[#64748B] uppercase block">Current Status:</span>
-                        <span className="font-extrabold uppercase text-[#0066CC]">{selectedMemberDrawer.status}</span>
+                        <span className="font-extrabold uppercase text-[#D99B26]">{selectedMemberDrawer.status}</span>
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-[#64748B] uppercase block">Role:</span>
-                        <span className="font-extrabold uppercase text-[#0F172A]">{selectedMemberDrawer.role}</span>
+                        <span className="font-extrabold uppercase text-[#111315]">{selectedMemberDrawer.role}</span>
                       </div>
                     </div>
 
@@ -1098,8 +1098,8 @@ const Dashboard = () => {
                     onClick={() => setAdminStatusTab('waitlist')}
                     className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       adminStatusTab === 'waitlist'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     WAITLIST ({membersList.filter((m) => m.status === 'pending').length})
@@ -1108,8 +1108,8 @@ const Dashboard = () => {
                     onClick={() => setAdminStatusTab('accepted')}
                     className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       adminStatusTab === 'accepted'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     APPROVED ({secondaryAdminsList.length})
@@ -1118,8 +1118,8 @@ const Dashboard = () => {
                     onClick={() => setAdminStatusTab('rejected')}
                     className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       adminStatusTab === 'rejected'
-                        ? 'bg-[#0066CC] text-white shadow-xs'
-                        : 'text-[#64748B] hover:text-[#0F172A]'
+                        ? 'bg-[#111315] text-[#D99B26] shadow-xs'
+                        : 'text-[#64748B] hover:text-[#111315]'
                     }`}
                   >
                     REJECTED ({membersList.filter((m) => m.status === 'rejected').length})
@@ -1133,7 +1133,7 @@ const Dashboard = () => {
                     value={adminSearch}
                     onChange={(e) => setAdminSearch(e.target.value)}
                     placeholder="Search administrators..."
-                    className="w-full pl-9 pr-4 py-2 rounded-full border border-[#E2E8F0] bg-white text-xs focus:ring-2 focus:ring-[#0066CC] focus:outline-none shadow-xs"
+                    className="w-full pl-9 pr-4 py-2 rounded-full border border-[#E2E8F0] bg-white text-xs focus:ring-2 focus:ring-[#D99B26] focus:outline-none shadow-xs"
                   />
                 </div>
               </div>
@@ -1151,26 +1151,26 @@ const Dashboard = () => {
                           <img
                             src={adm.profileImage}
                             alt={adm.name}
-                            className="w-12 h-12 rounded-full object-cover border-2 border-[#0066CC]"
+                            className="w-12 h-12 rounded-full object-cover border-2 border-[#D99B26]"
                           />
                         ) : (
-                          <div className="w-12 h-12 rounded-full bg-[#EBF5FF] text-[#0066CC] flex items-center justify-center font-bold text-base">
+                          <div className="w-12 h-12 rounded-full bg-[#0E1622] text-[#D99B26] flex items-center justify-center font-bold text-base">
                             {adm.name ? adm.name.charAt(0).toUpperCase() : 'A'}
                           </div>
                         )}
                         <span className={`text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full ${
                           adm.role === 'admin'
-                            ? 'bg-[#EBF5FF] text-[#0066CC]'
+                            ? 'bg-[#111315] text-[#D99B26]'
                             : 'bg-[#F1F5F9] text-[#64748B]'
                         }`}>
                           {adm.role === 'admin' ? 'ACTIVE ADMIN' : 'MEMBER'}
                         </span>
                       </div>
 
-                      <h4 className="text-base font-extrabold text-[#0F172A] truncate">
+                      <h4 className="text-base font-extrabold text-[#111315] truncate">
                         {adm.name || 'Staff Member'}
                       </h4>
-                      <p className="text-xs text-[#0066CC] font-semibold truncate">
+                      <p className="text-xs text-[#D99B26] font-semibold truncate">
                         {adm.position || 'Executive Operations'}
                       </p>
                       <p className="text-xs text-[#64748B] truncate mt-0.5">
@@ -1183,7 +1183,7 @@ const Dashboard = () => {
                       {adm.role !== 'admin' ? (
                         <button
                           onClick={() => handleToggleAdminRole(adm._id, 'admin')}
-                          className="w-full py-2 px-3 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold transition-all"
+                          className="w-full py-2 px-3 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold transition-all"
                         >
                           PROMOTE TO ADMIN
                         </button>
@@ -1207,7 +1207,7 @@ const Dashboard = () => {
                 {filteredAdmins.length === 0 && (
                   <div className="col-span-3 py-16 bg-white rounded-3xl border border-[#E2E8F0] text-center text-[#64748B]">
                     <UserCheck className="w-8 h-8 mx-auto text-[#94A3B8] mb-2" />
-                    <p className="text-sm font-bold text-[#0F172A]">No administrators found</p>
+                    <p className="text-sm font-bold text-[#111315]">No administrators found</p>
                     <p className="text-xs">No records currently match this filter.</p>
                   </div>
                 )}
@@ -1230,10 +1230,10 @@ const Dashboard = () => {
                   </p>
                 </div>
 
-                {/* Top Right Primary Blue Pill Button [ + NEW MENTOR ] */}
+                {/* Top Right Primary Pill Button [ + NEW MENTOR ] */}
                 <button
                   onClick={() => handleOpenMentorDrawer()}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold tracking-wide transition-all shadow-xs"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold tracking-wide transition-all shadow-xs"
                 >
                   <Plus className="w-4 h-4" />
                   <span>NEW MENTOR</span>
@@ -1261,19 +1261,19 @@ const Dashboard = () => {
                               className="w-10 h-10 rounded-full object-cover border border-[#E2E8F0]"
                             />
                             <div>
-                              <p className="text-sm font-bold text-[#0F172A]">{m.name}</p>
+                              <p className="text-sm font-bold text-[#111315]">{m.name}</p>
                               <p className="text-xs text-[#64748B]">{m.designation || 'C-Suite Advisor'}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="py-4 px-6 font-semibold text-[#0F172A]">
+                        <td className="py-4 px-6 font-semibold text-[#111315]">
                           {m.city || 'Mumbai'}
                         </td>
                         <td className="py-4 px-6 text-right">
                           <div className="inline-flex items-center gap-2">
                             <button
                               onClick={() => handleOpenMentorDrawer(m)}
-                              className="p-1.5 rounded-lg text-[#64748B] hover:text-[#0066CC] hover:bg-[#EBF5FF]"
+                              className="p-1.5 rounded-lg text-[#64748B] hover:text-[#D99B26] hover:bg-[#F8FAFC]"
                               title="Edit Mentor"
                             >
                               <Edit2 className="w-4 h-4" />
@@ -1307,13 +1307,13 @@ const Dashboard = () => {
                   <div className="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] space-y-5 relative">
                     <button
                       onClick={() => setMentorDrawerOpen(false)}
-                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9]"
+                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#111315] hover:bg-[#F1F5F9]"
                     >
                       <X className="w-5 h-5" />
                     </button>
 
                     <div>
-                      <h3 className="text-xl font-extrabold text-[#0F172A] font-serif">
+                      <h3 className="text-xl font-extrabold text-[#111315] font-serif">
                         {editingMentorId ? 'Edit Mentor Profile' : 'Add New Mentor'}
                       </h3>
                       <p className="text-xs text-[#64748B] mt-0.5">
@@ -1324,7 +1324,7 @@ const Dashboard = () => {
                     <form onSubmit={handleSaveMentor} className="space-y-4 text-xs">
                       {/* Name */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           NAME *
                         </label>
                         <input
@@ -1333,13 +1333,13 @@ const Dashboard = () => {
                           onChange={(e) => setMentorFormData({ ...mentorFormData, name: e.target.value })}
                           required
                           placeholder="e.g. Arun M. Parameswaran"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                         />
                       </div>
 
                       {/* City */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           CITY
                         </label>
                         <input
@@ -1347,13 +1347,13 @@ const Dashboard = () => {
                           value={mentorFormData.city}
                           onChange={(e) => setMentorFormData({ ...mentorFormData, city: e.target.value })}
                           placeholder="e.g. Mumbai, Bengaluru, Delhi NCR"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                         />
                       </div>
 
                       {/* LinkedIn URL */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           LINKEDIN URL
                         </label>
                         <input
@@ -1361,16 +1361,16 @@ const Dashboard = () => {
                           value={mentorFormData.linkedinUrl}
                           onChange={(e) => setMentorFormData({ ...mentorFormData, linkedinUrl: e.target.value })}
                           placeholder="https://linkedin.com/in/username"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                         />
                       </div>
 
                       {/* Image Upload Dropzone */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           MENTOR PHOTO
                         </label>
-                        <div className="border-2 border-dashed border-[#CBD5E1] hover:border-[#0066CC] rounded-2xl p-4 text-center cursor-pointer transition-colors relative bg-[#F8FAFC]">
+                        <div className="border-2 border-dashed border-[#CBD5E1] hover:border-[#D99B26] rounded-2xl p-4 text-center cursor-pointer transition-colors relative bg-[#F8FAFC]">
                           <input
                             type="file"
                             accept="image/*"
@@ -1382,28 +1382,28 @@ const Dashboard = () => {
                               <img
                                 src={mentorFilePreview}
                                 alt="Preview"
-                                className="w-12 h-12 rounded-full object-cover border border-[#0066CC]"
+                                className="w-12 h-12 rounded-full object-cover border border-[#D99B26]"
                               />
                               <div className="text-left">
-                                <p className="font-bold text-[#0F172A]">Photo Selected</p>
+                                <p className="font-bold text-[#111315]">Photo Selected</p>
                                 <p className="text-[10px] text-[#64748B]">Click to change file</p>
                               </div>
                             </div>
                           ) : (
                             <div className="space-y-1">
-                              <UploadCloud className="w-6 h-6 mx-auto text-[#0066CC]" />
-                              <p className="font-bold text-[#0F172A]">Upload photo</p>
+                              <UploadCloud className="w-6 h-6 mx-auto text-[#D99B26]" />
+                              <p className="font-bold text-[#111315]">Upload photo</p>
                               <p className="text-[10px] text-[#64748B]">PNG, JPG, WEBP up to 5MB</p>
                             </div>
                           )}
                         </div>
                       </div>
 
-                      {/* Full-width blue pill [ SAVE MENTOR ] */}
+                      {/* Full-width pill [ SAVE MENTOR ] */}
                       <button
                         type="submit"
                         disabled={savingMentor}
-                        className="w-full py-3 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                        className="w-full py-3 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2"
                       >
                         {savingMentor ? (
                           <>
@@ -1436,10 +1436,10 @@ const Dashboard = () => {
                   </p>
                 </div>
 
-                {/* Top Right Primary Blue Pill Button [ + NEW EVENT ] */}
+                {/* Top Right Primary Pill Button [ + NEW EVENT ] */}
                 <button
                   onClick={() => handleOpenEventDrawer()}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold tracking-wide transition-all shadow-xs"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold tracking-wide transition-all shadow-xs"
                 >
                   <Plus className="w-4 h-4" />
                   <span>NEW EVENT</span>
@@ -1448,7 +1448,7 @@ const Dashboard = () => {
 
               {/* Sub-Header Stream: Horizontal scroll list of ARCHIVE STREAM past event badges */}
               <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 shadow-xs">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#0066CC] block mb-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#D99B26] block mb-2">
                   ARCHIVE STREAM (PAST EVENTS)
                 </span>
                 <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-thin">
@@ -1458,7 +1458,7 @@ const Dashboard = () => {
                       className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F1F5F9] border border-[#E2E8F0] text-xs flex-shrink-0"
                     >
                       <Clock className="w-3.5 h-3.5 text-[#64748B]" />
-                      <span className="font-bold text-[#0F172A] truncate max-w-[200px]">{pe.title}</span>
+                      <span className="font-bold text-[#111315] truncate max-w-[200px]">{pe.title}</span>
                       <span className="text-[10px] text-[#64748B]">• {pe.date}</span>
                     </div>
                   ))}
@@ -1486,11 +1486,11 @@ const Dashboard = () => {
                       const isUpcoming = (ev.type || '').toUpperCase() === 'UPCOMING';
                       return (
                         <tr key={ev._id} className="hover:bg-[#F8FAFC] transition-colors">
-                          <td className="py-4 px-6 font-bold text-[#0F172A]">
+                          <td className="py-4 px-6 font-bold text-[#111315]">
                             <p className="truncate max-w-[240px]">{ev.title}</p>
                             <p className="text-[10px] text-[#64748B] font-normal">{ev.date}</p>
                           </td>
-                          <td className="py-4 px-6 text-[#0F172A] font-semibold">
+                          <td className="py-4 px-6 text-[#111315] font-semibold">
                             {ev.speakerMentor || 'Advisory Board'}
                           </td>
                           <td className="py-4 px-6 text-[#64748B]">
@@ -1499,7 +1499,7 @@ const Dashboard = () => {
                           <td className="py-4 px-6">
                             <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase ${
                               isUpcoming
-                                ? 'bg-[#EBF5FF] text-[#0066CC] border border-[#BFDBFE]'
+                                ? 'bg-[#0E1622] text-[#D99B26] border border-[#D99B26]/30'
                                 : 'bg-[#F1F5F9] text-[#64748B] border border-[#E2E8F0]'
                             }`}>
                               {isUpcoming ? 'UPCOMING' : 'PAST'}
@@ -1509,7 +1509,7 @@ const Dashboard = () => {
                             <div className="inline-flex items-center gap-2">
                               <button
                                 onClick={() => handleOpenEventDrawer(ev)}
-                                className="p-1.5 rounded-lg text-[#64748B] hover:text-[#0066CC] hover:bg-[#EBF5FF]"
+                                className="p-1.5 rounded-lg text-[#64748B] hover:text-[#D99B26] hover:bg-[#F8FAFC]"
                                 title="Edit Event"
                               >
                                 <Edit2 className="w-4 h-4" />
@@ -1544,13 +1544,13 @@ const Dashboard = () => {
                   <div className="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] space-y-4 my-8 relative max-h-[90vh] overflow-y-auto">
                     <button
                       onClick={() => setEventDrawerOpen(false)}
-                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9]"
+                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#111315] hover:bg-[#F1F5F9]"
                     >
                       <X className="w-5 h-5" />
                     </button>
 
                     <div>
-                      <h3 className="text-xl font-extrabold text-[#0F172A] font-serif">
+                      <h3 className="text-xl font-extrabold text-[#111315] font-serif">
                         {editingEventId ? 'Edit Event Conclave' : 'Create New Conclave'}
                       </h3>
                       <p className="text-xs text-[#64748B] mt-0.5">
@@ -1561,7 +1561,7 @@ const Dashboard = () => {
                     <form onSubmit={handleSaveEvent} className="space-y-4 text-xs">
                       {/* Event Title */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           EVENT TITLE *
                         </label>
                         <input
@@ -1570,13 +1570,13 @@ const Dashboard = () => {
                           onChange={(e) => setEventFormData({ ...eventFormData, title: e.target.value })}
                           required
                           placeholder="e.g. CXO Connect Annual Leadership Conclave"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                         />
                       </div>
 
                       {/* Mentor Name */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           MENTOR NAME
                         </label>
                         <input
@@ -1584,14 +1584,14 @@ const Dashboard = () => {
                           value={eventFormData.speakerMentor}
                           onChange={(e) => setEventFormData({ ...eventFormData, speakerMentor: e.target.value })}
                           placeholder="e.g. Arun M. Parameswaran"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                         />
                       </div>
 
                       {/* Location & Date */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                          <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                          <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                             LOCATION
                           </label>
                           <input
@@ -1599,12 +1599,12 @@ const Dashboard = () => {
                             value={eventFormData.location}
                             onChange={(e) => setEventFormData({ ...eventFormData, location: e.target.value })}
                             placeholder="e.g. Mumbai, India"
-                            className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                           />
                         </div>
 
                         <div>
-                          <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                          <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                             DATE
                           </label>
                           <input
@@ -1612,14 +1612,14 @@ const Dashboard = () => {
                             value={eventFormData.date}
                             onChange={(e) => setEventFormData({ ...eventFormData, date: e.target.value })}
                             placeholder="e.g. November 14, 2026"
-                            className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                           />
                         </div>
                       </div>
 
                       {/* Type (Upcoming / Past) */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           TYPE
                         </label>
                         <div className="grid grid-cols-2 gap-2">
@@ -1628,7 +1628,7 @@ const Dashboard = () => {
                             onClick={() => setEventFormData({ ...eventFormData, type: 'UPCOMING' })}
                             className={`py-2 px-3 rounded-xl font-bold border transition-all ${
                               eventFormData.type === 'UPCOMING'
-                                ? 'bg-[#0066CC] text-white border-[#0066CC]'
+                                ? 'bg-[#111315] text-[#D99B26] border-[#111315]'
                                 : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0]'
                             }`}
                           >
@@ -1639,7 +1639,7 @@ const Dashboard = () => {
                             onClick={() => setEventFormData({ ...eventFormData, type: 'PAST' })}
                             className={`py-2 px-3 rounded-xl font-bold border transition-all ${
                               eventFormData.type === 'PAST'
-                                ? 'bg-[#0F172A] text-white border-[#0F172A]'
+                                ? 'bg-[#0E1622] text-white border-[#0E1622]'
                                 : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0]'
                             }`}
                           >
@@ -1650,7 +1650,7 @@ const Dashboard = () => {
 
                       {/* Registration URL */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           REGISTRATION URL
                         </label>
                         <input
@@ -1658,16 +1658,16 @@ const Dashboard = () => {
                           value={eventFormData.registrationUrl}
                           onChange={(e) => setEventFormData({ ...eventFormData, registrationUrl: e.target.value })}
                           placeholder="https://cxoconnect.com/register/event-id"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#0066CC] focus:outline-none"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
                         />
                       </div>
 
-                      {/* Event Gallery Dropzone: CLICK OR DRAG IMAGES TO UPLOAD (MAX 10 IMAGES ALLOWED) */}
+                      {/* Event Gallery Dropzone */}
                       <div>
-                        <label className="block font-bold text-[#0F172A] uppercase tracking-wider mb-1">
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
                           CLICK OR DRAG IMAGES TO UPLOAD (MAX 10 IMAGES ALLOWED)
                         </label>
-                        <div className="border-2 border-dashed border-[#CBD5E1] hover:border-[#0066CC] rounded-2xl p-4 text-center cursor-pointer transition-colors relative bg-[#F8FAFC]">
+                        <div className="border-2 border-dashed border-[#CBD5E1] hover:border-[#D99B26] rounded-2xl p-4 text-center cursor-pointer transition-colors relative bg-[#F8FAFC]">
                           <input
                             type="file"
                             multiple
@@ -1675,8 +1675,8 @@ const Dashboard = () => {
                             onChange={handleGalleryFilesChange}
                             className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                           />
-                          <UploadCloud className="w-6 h-6 mx-auto text-[#0066CC] mb-1" />
-                          <p className="font-bold text-[#0F172A]">Drag & drop event gallery photos</p>
+                          <UploadCloud className="w-6 h-6 mx-auto text-[#D99B26] mb-1" />
+                          <p className="font-bold text-[#111315]">Drag & drop event gallery photos</p>
                           <p className="text-[10px] text-[#64748B]">Batch uploads to ImageKit.io CDN</p>
                         </div>
 
@@ -1692,11 +1692,11 @@ const Dashboard = () => {
                         )}
                       </div>
 
-                      {/* Full-width blue pill [ SAVE EVENT ] */}
+                      {/* Full-width pill [ SAVE EVENT ] */}
                       <button
                         type="submit"
                         disabled={savingEvent}
-                        className="w-full py-3 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                        className="w-full py-3 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2"
                       >
                         {savingEvent ? (
                           <>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, Mail, UserCheck, Lock } from 'lucide-react';
+import { Mail, UserCheck, Lock, Shield } from 'lucide-react';
 import api from '../services/api';
+import { BrandLogo } from '../components/BrandLogo';
 
 export default function Login() {
   const [role, setRole] = useState('member'); // 'member' | 'admin'
@@ -54,16 +55,11 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-[#F7F7F4] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <div className="w-14 h-14 rounded-full bg-[#111315] flex items-center justify-center text-white shadow-lg border border-[#D99B26]/30">
-            <Shield className="w-8 h-8 text-[#D99B26]" />
-          </div>
+        <div className="flex justify-center mb-2">
+          <BrandLogo size="md" variant="connect" />
         </div>
-        <h2 className="mt-6 text-center text-3xl font-serif font-extrabold text-[#111315]">
-          Welcome to CXO Connect
-        </h2>
-        <p className="mt-2 text-center text-sm text-[#64748B]">
-          Select your role and sign in to continue
+        <p className="mt-1 text-center text-xs sm:text-sm text-[#64748B]">
+          Select your role and authenticate your executive session
         </p>
       </div>
 

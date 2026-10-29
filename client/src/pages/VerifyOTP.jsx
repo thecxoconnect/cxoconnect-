@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { ShieldCheck, ArrowRight, RotateCw, ArrowLeft } from 'lucide-react';
+import { ArrowRight, RotateCw, ArrowLeft } from 'lucide-react';
 import { authService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
+import { ConcentricEmblem } from '../components/BrandLogo';
 
 export default function VerifyOTP() {
   const [searchParams] = useSearchParams();
@@ -135,9 +136,7 @@ export default function VerifyOTP() {
           </Link>
 
           <div className="flex justify-center mb-4">
-            <div className="w-14 h-14 rounded-full bg-[#111315] flex items-center justify-center text-white shadow-md border border-[#D99B26]/30">
-              <ShieldCheck className="w-8 h-8 text-[#D99B26]" />
-            </div>
+            <ConcentricEmblem size={52} />
           </div>
 
           <h2 className="text-center text-2xl sm:text-3xl font-serif font-extrabold text-[#111315]">
