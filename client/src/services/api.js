@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const rawBaseURL = import.meta.env.VITE_API_URL || 'https://cxoconnect-2bui.vercel.app/api';
+const baseURL = rawBaseURL.replace(/\/+$/, '');
+
+axios.defaults.baseURL = baseURL;
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },

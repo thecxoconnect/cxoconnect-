@@ -10,16 +10,19 @@ export default {
         brand: {
           bg: '#F7F7F4',
           cream: '#F7F7F4',
-          charcoal: '#0F172A',
+          charcoal: '#111315',
           dark: '#111315',
-          blue: '#0066CC',
-          'blue-vibrant': '#0D6EFD',
-          'blue-hover': '#0052A3',
-          'blue-light': '#EBF5FF',
+          gold: '#D99B26',
+          accent: '#D99B26',
+          'gold-hover': '#C2871E',
+          'gold-light': '#FDF6E9',
+          navy: '#0E1622',
+          container: '#0E1622',
           white: '#FFFFFF',
           stroke: '#E2E8F0',
           muted: '#64748B',
-          card: '#FFFFFF'
+          card: '#FFFFFF',
+          blue: '#0066CC'
         }
       },
       fontFamily: {
@@ -30,8 +33,8 @@ export default {
         'widest-xl': '0.2em',
       },
       boxShadow: {
-        'executive-card': '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
-        'blue-glow': '0 0 25px rgba(0, 102, 204, 0.25)',
+        'executive-card': '0 4px 20px -2px rgba(17, 19, 21, 0.06)',
+        'gold-glow': '0 0 25px rgba(217, 155, 38, 0.25)',
         'soft-pill': '0 2px 8px rgba(0, 0, 0, 0.04)'
       }
     },

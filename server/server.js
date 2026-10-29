@@ -2,12 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import passport from 'passport';
+import passport from './config/passport.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 import connectDB from './config/db.js';
-import './config/passport.js'; // initialize passport strategies
 import apiRoutes from './routes/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,21 +27,25 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // CORS configuration
 const allowedOrigins = [
-  process.env.CLIENT_URL,
+  'https://cxoconnect.vercel.app',
   'http://localhost:5173',
+  'http://127.0.0.1:5173',
   'http://localhost:3000',
-  'http://localhost:5000',
-  'http://127.0.0.1:5173'
+  process.env.CLIENT_URL
 ].filter(Boolean);
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl, or same-origin)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) return callback(null, true);
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+      if (
+        allowedOrigins.some(o => o && o.replace(/\/+$/, '') === normalizedOrigin) ||
+        normalizedOrigin.endsWith('.vercel.app')
+      ) {
         return callback(null, true);
       }
-      return callback(null, true); // Allow all during development
+      return callback(null, true);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

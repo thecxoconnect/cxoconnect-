@@ -6,7 +6,7 @@
   html {
     scroll-behavior: smooth;
     background-color: #F7F7F4;
-    color: #0F172A;
+    color: #111315;
     font-family: 'Inter', sans-serif;
   }
   
@@ -23,51 +23,51 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: #0066CC;
+    color: #D99B26;
   }
 
-  /* Primary Royal Blue Button */
-  .btn-blue, .btn-primary {
+  /* Primary Ochre Gold Button */
+  .btn-gold, .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.65rem 1.6rem;
-    background-color: #0066CC;
-    color: #ffffff;
+    background-color: #D99B26;
+    color: #111315;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 9999px;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
+    box-shadow: 0 4px 12px rgba(217, 155, 38, 0.25);
   }
 
-  .btn-blue:hover, .btn-primary:hover {
-    background-color: #0052A3;
+  .btn-gold:hover, .btn-primary:hover {
+    background-color: #C2871E;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(0, 102, 204, 0.35);
+    box-shadow: 0 6px 18px rgba(217, 155, 38, 0.35);
   }
 
-  /* Solid Charcoal Button */
+  /* Solid Charcoal Black Button */
   .btn-charcoal {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.65rem 1.6rem;
-    background-color: #0d1527;
+    background-color: #111315;
     color: #ffffff;
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: 9999px;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 12px rgba(13, 21, 39, 0.2);
+    box-shadow: 0 4px 12px rgba(17, 19, 21, 0.2);
   }
 
   .btn-charcoal:hover {
-    background-color: #1a2744;
+    background-color: #23272B;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(13, 21, 39, 0.3);
+    box-shadow: 0 6px 18px rgba(17, 19, 21, 0.3);
   }
 
   /* Outline Button */
@@ -76,87 +76,84 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.65rem 1.4rem;
-    background-color: #ffffff;
-    color: #0F172A;
+    padding: 0.65rem 1.6rem;
+    background-color: transparent;
+    color: #111315;
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: 9999px;
     border: 1px solid #E2E8F0;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   .btn-outline-executive:hover {
-    background-color: #F8FAFC;
-    border-color: #0066CC;
-    color: #0066CC;
+    background-color: #FFFFFF;
+    border-color: #D99B26;
+    color: #D99B26;
   }
 
-  /* Crisp White Executive Card */
+  /* Premium Card Containers */
+  .card-executive {
+    background-color: #0E1622;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+
   .card-light-executive {
-    background-color: #ffffff;
-    color: #0F172A;
-    border-radius: 1.25rem;
+    background-color: #FFFFFF;
     border: 1px solid #E2E8F0;
-    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.04);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px -2px rgba(17, 19, 21, 0.04);
   }
 
-  .card-light-executive:hover {
-    transform: translateY(-3px);
-    border-color: #cbd5e1;
-    box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08);
+  .card-cream {
+    background-color: #F7F7F4;
+    border: 1px solid #E2E8F0;
+    border-radius: 1rem;
   }
 
-  /* Pill Segmented Controls */
+  /* Pill Navigation Tabs */
   .pill-tab {
-    padding: 0.5rem 1.25rem;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1.1rem;
     border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
     transition: all 0.2s ease;
   }
 
   .pill-tab-active {
-    background-color: #0066CC;
-    color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.25);
+    background-color: #D99B26;
+    color: #111315;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(217, 155, 38, 0.3);
   }
 
   .pill-tab-inactive {
-    background-color: transparent;
     color: #64748B;
   }
 
   .pill-tab-inactive:hover {
-    color: #0F172A;
-    background-color: #F1F5F9;
+    color: #111315;
+    background-color: rgba(226, 232, 240, 0.6);
   }
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.35s ease-out forwards;
-}
-
-/* Custom Scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #F7F7F4;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: #CBD5E1;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #94A3B8;
 }

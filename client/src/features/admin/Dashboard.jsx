@@ -31,8 +31,25 @@ import {
 import ConfirmationModal from '../../components/ConfirmationModal';
 
 const Dashboard = () => {
-  const { user, isAdmin, isMainAdmin } = useAuth();
+  const { user, isAdmin, isMainAdmin, isAuthenticated, loading: authLoading } = useAuth();
   const { addToast } = useToast();
+
+  // Guard: Strictly restrict Administrative Hub access to authenticated accepted admins
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#F7F7F4] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D99B26]"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/profile" replace />;
+  }
 
   // Active module: strictly 5 scoped modules
   // 'overview' | 'members' | 'secondary_admins' | 'mentors' | 'events'

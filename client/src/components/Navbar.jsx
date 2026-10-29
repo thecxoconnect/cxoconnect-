@@ -1,164 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Shield, Menu, X, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import {
-  Menu,
-  X,
-  ChevronDown,
-  LayoutDashboard,
-  LogOut,
-  ArrowRight,
-  Shield
-} from 'lucide-react';
 
-const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'About Us', path: '/about', hasDropdown: true },
-  { label: 'Events', path: '/events', hasDropdown: true },
-  { label: 'Knowledge Hub', path: '/knowledge-hub', hasDropdown: true },
-  { label: 'Membership', path: '/membership' },
-  { label: 'Partners & Sponsors', path: '/partners' },
-  { label: 'Contact Us', path: '/contact' }
-];
-
-const Navbar = () => {
-  const { user, isAuthenticated, isAdmin, logout } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
+export default function Navbar({ user: propUser, onLogout: propLogout }) {
+  const auth = useAuth?.() || {};
+  const user = propUser !== undefined ? propUser : auth.user;
+  const onLogout = propLogout || auth.logout;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const isActive = (path) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
-  };
-
-  const handleDashboardClick = () => {
-    if (isAdmin || user?.role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/profile');
+  const handleSignOut = () => {
+    if (onLogout) {
+      onLogout();
     }
-  };
-
-  const handleLogout = () => {
-    logout();
     navigate('/');
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#F7F7F4]/95 backdrop-blur-md border-b border-[#E2E8F0] transition-all">
+    <nav className="bg-[#F7F7F4] border-b border-[#E2E8F0] sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Brand Header: Circular Emblem + "STRONGER RELATIONSHIPS | STRONGER LEADERSHIP" */}
-          <Link to="/" className="flex items-center gap-3.5 group focus:outline-none flex-shrink-0">
-            <div className="relative w-11 h-11 rounded-full bg-[#0d1527] flex items-center justify-center shadow-md border border-[#0066CC]/30 group-hover:border-[#0066CC] transition-colors">
-              <div className="w-8 h-8 rounded-full border-2 border-[#0066CC] flex items-center justify-center bg-gradient-to-tr from-[#0d1527] to-[#1e293b]">
-                <Shield className="w-4 h-4 text-[#0066CC]" />
-              </div>
+          {/* Brand Emblem & Title */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-11 h-11 rounded-full bg-[#111315] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform flex-shrink-0 border border-[#D99B26]/30">
+              <Shield className="w-6 h-6 text-[#D99B26]" />
             </div>
-
             <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xl font-extrabold text-[#0F172A] tracking-tight leading-none font-heading">
-                  CXO Connect
-                </span>
-                <span className="w-2 h-2 rounded-full bg-[#0066CC]" />
-              </div>
-              <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0066CC] mt-1">
+              <span className="font-serif text-xl sm:text-2xl font-bold text-[#111315] tracking-tight">
+                CXO Connect<span className="text-[#D99B26] ml-0.5">•</span>
+              </span>
+              <span className="text-[9px] sm:text-[10px] font-bold text-[#D99B26] tracking-[0.2em] uppercase">
                 STRONGER RELATIONSHIPS | STRONGER LEADERSHIP
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2 text-[0.875rem] font-medium text-[#0F172A]">
-            {navItems.map((item) => {
-              const active = isActive(item.path);
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`inline-flex items-center gap-1 px-3.5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-150 ${
-                    active
-                      ? 'text-[#0066CC] font-bold bg-white shadow-sm border border-[#E2E8F0]'
-                      : 'text-[#0F172A] hover:text-[#0066CC] hover:bg-white/60'
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  {item.hasDropdown && (
-                    <ChevronDown className={`w-3 h-3 transition-transform ${active ? 'text-[#0066CC]' : 'text-[#64748B]'}`} />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+          <div className="hidden lg:flex items-center space-x-6 text-sm font-medium text-[#111315]">
+            <Link to="/" className="hover:text-[#D99B26] transition-colors">Home</Link>
+            <Link to="/about" className="hover:text-[#D99B26] transition-colors">About Us</Link>
+            <Link to="/events" className="hover:text-[#D99B26] transition-colors">Events</Link>
+            <Link to="/knowledge-hub" className="hover:text-[#D99B26] transition-colors">Knowledge Hub</Link>
+            <Link to="/membership" className="hover:text-[#D99B26] transition-colors">Membership</Link>
+            <Link to="/partners" className="hover:text-[#D99B26] transition-colors">Partners & Sponsors</Link>
+            <Link to="/contact" className="hover:text-[#D99B26] transition-colors">Contact Us</Link>
+          </div>
 
-          {/* Right Action Corner: Conditional Auth State Switcher */}
-          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
-            {isAuthenticated ? (
-              /* Exact Pill Dashboard Control: [ (Avatar) ⊞ Dashboard ] [ -> Logout ] */
-              <div className="flex items-center bg-white border border-[#E2E8F0] rounded-full p-1 shadow-sm">
+          {/* Right Action Section (Auth State) */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {user ? (
+              <div className="flex items-center space-x-3">
                 <button
-                  onClick={handleDashboardClick}
-                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0d1527] text-white hover:bg-[#1a2744] transition-all shadow-sm text-xs font-bold"
-                  title={`Open ${isAdmin ? 'Admin Console' : 'Member Profile'}`}
+                  onClick={() => navigate(user.role === 'admin' ? '/admin' : '/profile')}
+                  className="flex items-center space-x-2 bg-[#111315] text-white px-4 py-2 rounded-full hover:bg-slate-800 transition-all text-sm font-semibold shadow-sm border border-slate-700"
                 >
-                  {user?.profileImage ? (
-                    <img
-                      src={user.profileImage}
-                      alt={user.name || 'User'}
-                      className="w-5 h-5 rounded-full object-cover border border-[#0066CC]"
-                    />
+                  {user.profileImage ? (
+                    <img src={user.profileImage} alt={user.name || 'User'} className="w-6 h-6 rounded-full object-cover" />
                   ) : (
-                    <div className="w-5 h-5 rounded-full bg-[#0066CC] flex items-center justify-center text-[10px] font-bold text-white">
-                      {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}
+                    <div className="w-6 h-6 rounded-full bg-[#D99B26] text-[#111315] text-xs flex items-center justify-center font-bold">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                     </div>
                   )}
-                  <LayoutDashboard className="w-3.5 h-3.5 text-[#0066CC]" />
+                  <LayoutDashboard className="w-4 h-4 text-[#D99B26]" />
                   <span>Dashboard</span>
                 </button>
 
                 <button
-                  onClick={handleLogout}
-                  className="p-1.5 ml-1 rounded-full text-[#64748B] hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                  title="Logout from session"
-                  aria-label="Logout"
+                  onClick={handleSignOut}
+                  title="Sign Out"
+                  className="p-2 text-slate-500 hover:text-red-600 rounded-full hover:bg-slate-100 transition-colors"
                 >
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-5 h-5" />
                 </button>
               </div>
             ) : (
-              /* IF GUEST: Exact dark rounded pill button [ -> Sign In ] (#0d1527) */
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0d1527] hover:bg-[#1a2744] text-white text-xs font-bold tracking-wide transition-all shadow-sm border border-[#0d1527]"
+                className="inline-flex items-center space-x-2 bg-[#111315] text-white px-5 py-2.5 rounded-full hover:bg-slate-800 transition-all text-sm font-semibold shadow-sm border border-slate-800"
               >
-                <ArrowRight className="w-3.5 h-3.5 text-[#0066CC]" />
                 <span>Sign In</span>
+                <span className="text-[#D99B26] font-bold">→</span>
               </Link>
             )}
           </div>
 
-          {/* Mobile Menu Toggle Button */}
-          <div className="flex lg:hidden items-center gap-2">
-            {!isAuthenticated && (
-              <Link
-                to="/login"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0d1527] text-white text-xs font-bold"
-              >
-                <ArrowRight className="w-3 h-3 text-[#0066CC]" />
-                <span>Sign In</span>
-              </Link>
-            )}
+          {/* Mobile Menu Trigger */}
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-[#0F172A] hover:bg-white/80 focus:outline-none"
-              aria-label="Toggle navigation menu"
+              className="p-2 rounded-md text-[#111315] hover:text-[#D99B26] focus:outline-none"
+              aria-label="Toggle Navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -167,61 +100,47 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Sliding Drawer Menu */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#F7F7F4] border-t border-[#E2E8F0] px-4 pt-3 pb-8 space-y-1 shadow-xl animate-fade-in max-h-[85vh] overflow-y-auto">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
-                isActive(item.path)
-                  ? 'bg-white text-[#0066CC] shadow-sm border border-[#E2E8F0]'
-                  : 'text-[#0F172A] hover:bg-white/60 hover:text-[#0066CC]'
-              }`}
-            >
-              <span>{item.label}</span>
-              {item.hasDropdown && <ChevronDown className="w-3.5 h-3.5 opacity-60" />}
-            </Link>
-          ))}
-
-          <div className="pt-4 border-t border-[#E2E8F0] space-y-2">
-            {isAuthenticated ? (
+        <div className="lg:hidden bg-white border-b border-[#E2E8F0] px-4 pt-2 pb-6 space-y-3 shadow-lg">
+          <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">Home</Link>
+          <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">About Us</Link>
+          <Link to="/events" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">Events</Link>
+          <Link to="/knowledge-hub" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">Knowledge Hub</Link>
+          <Link to="/membership" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">Membership</Link>
+          <Link to="/partners" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">Partners & Sponsors</Link>
+          <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-[#111315] font-medium hover:bg-[#F7F7F4] rounded-md">Contact Us</Link>
+          
+          <div className="pt-4 border-t border-[#E2E8F0]">
+            {user ? (
               <div className="space-y-2">
                 <button
-                  onClick={handleDashboardClick}
-                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-[#0d1527]"
+                  onClick={() => { setMobileMenuOpen(false); navigate(user.role === 'admin' ? '/admin' : '/profile'); }}
+                  className="w-full text-left bg-[#111315] text-white px-4 py-2.5 rounded-xl font-medium flex items-center justify-between"
                 >
-                  <span className="flex items-center gap-2">
-                    <LayoutDashboard className="w-4 h-4 text-[#0066CC]" />
-                    <span>{isAdmin ? 'Admin Console' : 'Member Dashboard'}</span>
-                  </span>
-                  <span className="text-xs font-normal text-[#64748B]">{user?.email}</span>
+                  <span>Go to Dashboard</span>
+                  <LayoutDashboard className="w-5 h-5 text-[#D99B26]" />
                 </button>
                 <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-xl"
+                  onClick={() => { setMobileMenuOpen(false); handleSignOut(); }}
+                  className="w-full text-left text-red-600 bg-red-50 hover:bg-red-100 px-4 py-2.5 rounded-xl font-medium flex items-center justify-between transition-colors"
                 >
-                  <LogOut className="w-4 h-4" />
-                  <span>Logout</span>
+                  <span>Sign Out</span>
+                  <LogOut className="w-5 h-5" />
                 </button>
               </div>
             ) : (
-              <div className="pt-2">
-                <Link
-                  to="/login"
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#0d1527] text-white text-xs font-bold"
-                >
-                  <ArrowRight className="w-4 h-4 text-[#0066CC]" />
-                  <span>Sign In</span>
-                </Link>
-              </div>
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-center bg-[#111315] text-white px-4 py-2.5 rounded-xl font-medium hover:bg-slate-800"
+              >
+                Sign In →
+              </Link>
             )}
           </div>
         </div>
       )}
-    </header>
+    </nav>
   );
-};
-
-export default Navbar;
+}

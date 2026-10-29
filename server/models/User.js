@@ -126,6 +126,6 @@ userSchema.methods.toSafeJSON = function () {
   delete userObj.__v;
   return userObj;
 };
-
 const User = mongoose.model('User', userSchema);
+export { User };
 export default User;

@@ -1,31 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { ShieldCheck, ArrowRight, RotateCw, Mail, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, ArrowRight, RotateCw, ArrowLeft } from 'lucide-react';
 import { authService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
 
-const VerifyOTP = () => {
+export default function VerifyOTP() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { loginWithToken } = useAuth();
   const { addToast } = useToast();
 
+  const tokenParam = searchParams.get('token') || sessionStorage.getItem('cxo_temp_token') || '';
   const emailParam = searchParams.get('email') || sessionStorage.getItem('cxo_verify_email') || '';
-  const tempToken = sessionStorage.getItem('cxo_temp_token') || '';
 
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
 
   const inputRefs = useRef([]);
 
   useEffect(() => {
-    if (!emailParam) {
+    if (!tokenParam && !emailParam) {
       navigate('/login');
     }
-  }, [emailParam, navigate]);
+  }, [tokenParam, emailParam, navigate]);
 
   // Countdown timer
   useEffect(() => {
@@ -69,20 +69,19 @@ const VerifyOTP = () => {
     e.preventDefault();
     const otpCode = otp.join('');
     if (otpCode.length !== 6) {
-      addToast('Please enter the complete 6-digit numeric verification code.', 'warning');
+      addToast('Please enter the complete 6-digit verification code.', 'warning');
       return;
     }
 
     try {
       setLoading(true);
-      const res = await authService.verifyOTP(emailParam, otpCode, tempToken);
+      const res = await authService.verifyOTP(emailParam, otpCode, tokenParam);
       if (res.data.success) {
         addToast('Verification successful. Welcome to CXO Connect!', 'success');
         loginWithToken(res.data.token, res.data.user);
 
         sessionStorage.removeItem('cxo_temp_token');
         sessionStorage.removeItem('cxo_verify_email');
-        sessionStorage.removeItem('cxo_dev_otp');
 
         if (!res.data.user.profileComplete) {
           navigate('/complete-profile');
@@ -104,12 +103,9 @@ const VerifyOTP = () => {
       setResending(true);
       const res = await authService.resendOTP(emailParam);
       if (res.data.success) {
-        addToast('New 6-digit verification code dispatched.', 'success');
+        addToast('New 6-digit verification code sent to your email.', 'success');
         setTimeLeft(600);
         setOtp(['', '', '', '', '', '']);
-        if (res.data.devOtp) {
-          sessionStorage.setItem('cxo_dev_otp', res.data.devOtp);
-        }
         inputRefs.current[0]?.focus();
       }
     } catch (err) {
@@ -126,114 +122,91 @@ const VerifyOTP = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-[#F7F7F4]">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-[#E2E8F0]">
-        
-        <div>
+    <div className="min-h-screen bg-[#F7F7F4] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md px-4">
+        <div className="bg-white py-8 px-6 shadow-xl rounded-2xl border border-[#E2E8F0] sm:px-10">
+          
           <Link
             to="/login"
-            className="inline-flex items-center gap-1.5 text-xs text-[#64748B] hover:text-[#111315] transition-colors mb-4"
+            className="inline-flex items-center gap-1.5 text-xs text-[#64748B] hover:text-[#111315] transition-colors mb-6"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Login</span>
           </Link>
 
-          <div className="w-12 h-12 rounded-full bg-[#111315] text-[#D99B26] flex items-center justify-center mb-3">
-            <ShieldCheck className="w-6 h-6" />
+          <div className="flex justify-center mb-4">
+            <div className="w-14 h-14 rounded-full bg-[#111315] flex items-center justify-center text-white shadow-md border border-[#D99B26]/30">
+              <ShieldCheck className="w-8 h-8 text-[#D99B26]" />
+            </div>
           </div>
 
-          <span className="category-subtitle">
-            One-Time Password
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111315] tracking-tight font-heading mt-1">
+          <h2 className="text-center text-2xl sm:text-3xl font-serif font-extrabold text-[#111315]">
             Verify Your Email
           </h2>
-          <p className="mt-1 text-xs text-[#64748B] leading-relaxed">
+          <p className="mt-2 text-center text-xs text-[#64748B] leading-relaxed">
             We sent a 6-digit verification code to{' '}
-            <strong className="text-[#111315]">{emailParam}</strong>.
+            <strong className="text-[#111315]">{emailParam || 'your registered email'}</strong>.
           </p>
-        </div>
 
-        <form onSubmit={handleVerify} className="space-y-6">
-          {/* 6 Digit Input Group */}
-          <div>
-            <label className="block text-xs font-bold text-[#111315] uppercase tracking-wider mb-3">
-              Enter 6-Digit Code
-            </label>
-            <div className="flex items-center justify-between gap-2" onPaste={handlePaste}>
-              {otp.map((digit, idx) => (
-                <input
-                  key={idx}
-                  ref={(el) => (inputRefs.current[idx] = el)}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(idx, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(idx, e)}
-                  className="w-12 h-14 text-center text-xl font-bold rounded-xl border border-[#E2E8F0] focus:border-[#D99B26] focus:ring-2 focus:ring-[#D99B26]/20 focus:outline-none transition-all bg-[#F7F7F4]"
-                />
-              ))}
+          <form onSubmit={handleVerify} className="mt-8 space-y-6">
+            <div>
+              <label className="block text-xs font-semibold uppercase text-[#64748B] mb-3 text-center">
+                Enter 6-Digit Code
+              </label>
+              <div className="flex items-center justify-between gap-2" onPaste={handlePaste}>
+                {otp.map((digit, idx) => (
+                  <input
+                    key={idx}
+                    ref={(el) => (inputRefs.current[idx] = el)}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleChange(idx, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(idx, e)}
+                    className="w-11 h-13 sm:w-12 sm:h-14 text-center text-xl font-bold rounded-xl border border-[#E2E8F0] focus:border-[#D99B26] focus:ring-2 focus:ring-[#D99B26]/20 focus:outline-none transition-all bg-[#F7F7F4]/50"
+                  />
+                ))}
+              </div>
             </div>
 
-            {sessionStorage.getItem('cxo_dev_otp') && (
-              <div className="mt-3 text-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const devCode = sessionStorage.getItem('cxo_dev_otp');
-                    if (devCode && devCode.length === 6) {
-                      setOtp(devCode.split(''));
-                    }
-                  }}
-                  className="px-3 py-1 rounded-full bg-[#F7F7F4] hover:bg-slate-200 text-[#111315] text-xs font-semibold border border-[#E2E8F0] transition-colors inline-flex items-center gap-1.5"
-                >
-                  <span>Quick-fill test code:</span>
-                  <strong className="tracking-widest font-mono text-[#D99B26]">{sessionStorage.getItem('cxo_dev_otp')}</strong>
-                </button>
-              </div>
-            )}
-          </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-[#64748B]">
+                Expires in: <strong className="text-[#111315] font-mono">{formatTime(timeLeft)}</strong>
+              </span>
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resending || timeLeft > 540}
+                className="text-[#D99B26] hover:text-[#C2871E] font-semibold flex items-center gap-1 disabled:opacity-40 transition-colors"
+              >
+                <RotateCw className={`w-3.5 h-3.5 ${resending ? 'animate-spin' : ''}`} />
+                <span>Resend Code</span>
+              </button>
+            </div>
 
-          {/* Countdown & Resend */}
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-[#64748B]">
-              Expires in: <strong className="text-[#111315]">{formatTime(timeLeft)}</strong>
-            </span>
             <button
-              type="button"
-              onClick={handleResend}
-              disabled={resending || timeLeft > 540}
-              className="text-[#D99B26] hover:text-[#C2871E] font-bold flex items-center gap-1 disabled:opacity-40"
+              type="submit"
+              disabled={loading || otp.join('').length !== 6}
+              className="w-full py-3 px-4 bg-[#111315] hover:bg-slate-800 text-white font-semibold text-sm rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 disabled:opacity-50 border border-slate-700"
             >
-              <RotateCw className={`w-3.5 h-3.5 ${resending ? 'animate-spin' : ''}`} />
-              <span>Resend Code</span>
+              {loading ? (
+                <span>Authenticating...</span>
+              ) : (
+                <>
+                  <span>Complete Verification</span>
+                  <ArrowRight className="w-4 h-4 text-[#D99B26]" />
+                </>
+              )}
             </button>
+          </form>
+
+          <div className="mt-6 text-center text-xs text-[#64748B]">
+            Check your spam folder or verify email accuracy if code isn't in your inbox.
           </div>
 
-          <button
-            type="submit"
-            disabled={loading || otp.join('').length !== 6}
-            className="btn-charcoal w-full py-3.5 rounded-full text-xs font-bold disabled:opacity-50"
-          >
-            {loading ? (
-              <span>Authenticating...</span>
-            ) : (
-              <>
-                <span>Complete Verification</span>
-                <ArrowRight className="w-4 h-4 text-[#D99B26]" />
-              </>
-            )}
-          </button>
-        </form>
-
-        <div className="pt-2 text-center text-[11px] text-[#64748B]">
-          Didn't receive an email? Check your spam folder or verify email accuracy.
         </div>
-
       </div>
     </div>
   );
-};
-
-export default VerifyOTP;
+}

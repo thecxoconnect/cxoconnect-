@@ -324,7 +324,11 @@ export const getMe = async (req, res) => {
  */
 const handleOAuthCallback = async (req, res, provider, profile) => {
   try {
-    const { email, name, profileImage, googleId } = profile;
+    const email = profile.email || (profile.emails && profile.emails[0]?.value);
+    const name = profile.name || profile.displayName || '';
+    const profileImage = profile.profileImage || profile.photo || (profile.photos && profile.photos[0]?.value) || '';
+    const googleId = profile.googleId || profile.id;
+    const intendedRole = profile.intendedRole || req.query.state || 'member';
     const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
     if (!email) {
@@ -356,7 +360,7 @@ const handleOAuthCallback = async (req, res, provider, profile) => {
         name: name || '',
         profileImage: profileImage || '',
         googleId: provider === 'google' ? googleId : undefined,
-        role: isSuperAdmin ? 'admin' : 'member',
+        role: isSuperAdmin ? 'admin' : (intendedRole === 'admin' ? 'admin' : 'member'),
         status: isSuperAdmin ? 'accepted' : 'pending',
         isMainAdmin: isSuperAdmin
       });

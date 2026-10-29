@@ -24,7 +24,13 @@ router.get('/me', isAuth, getMe);
 // OAuth: Google (ONLY OAuth Provider Supported)
 router.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  (req, res, next) => {
+    const state = req.query.state || 'member';
+    passport.authenticate('google', {
+      scope: ['profile', 'email'],
+      state
+    })(req, res, next);
+  }
 );
 router.get(
   '/google/callback',
