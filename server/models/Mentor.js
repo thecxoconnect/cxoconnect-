@@ -25,7 +25,7 @@ const mentorSchema = new mongoose.Schema(
     },
     photoUrl: {
       type: String,
-      default: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80'
+      default: ''
     },
     imageKitFileId: {
       type: String,
@@ -42,15 +42,11 @@ const mentorSchema = new mongoose.Schema(
     // Backwards compatibility aliases
     image: {
       type: String,
-      default: function () {
-        return this.photoUrl;
-      }
+      default: ''
     },
     linkedin: {
       type: String,
-      default: function () {
-        return this.linkedinUrl;
-      }
+      default: ''
     },
     availableForMentorship: {
       type: Boolean,
@@ -60,8 +56,18 @@ const mentorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Sync photoUrl with image
+// String sanitization pre-save hook to prevent object casting errors
 mentorSchema.pre('save', function (next) {
+  if (typeof this.photoUrl !== 'string') this.photoUrl = '';
+  if (typeof this.image !== 'string') this.image = '';
+  if (typeof this.linkedinUrl !== 'string') this.linkedinUrl = '';
+  if (typeof this.linkedin !== 'string') this.linkedin = '';
+  if (typeof this.imageKitFileId !== 'string') this.imageKitFileId = '';
+  if (typeof this.designation !== 'string') this.designation = 'C-Suite Advisor';
+  if (typeof this.company !== 'string') this.company = 'Enterprise';
+  if (typeof this.city !== 'string') this.city = 'Mumbai';
+  if (typeof this.bio !== 'string') this.bio = '';
+
   if (this.photoUrl && !this.image) this.image = this.photoUrl;
   if (this.image && !this.photoUrl) this.photoUrl = this.image;
   if (this.linkedinUrl && !this.linkedin) this.linkedin = this.linkedinUrl;
@@ -69,4 +75,5 @@ mentorSchema.pre('save', function (next) {
   next();
 });
 
-export default mongoose.model('Mentor', mentorSchema);
+export const Mentor = mongoose.model('Mentor', mentorSchema);
+export default Mentor;

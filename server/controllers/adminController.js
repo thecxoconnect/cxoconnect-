@@ -321,28 +321,28 @@ export const getAdminMentors = async (req, res) => {
 
 export const createAdminMentor = async (req, res) => {
   try {
-    let photoUrl = req.body.photoUrl || req.body.image || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80';
+    let photoUrl = typeof req.body.photoUrl === 'string' ? req.body.photoUrl : (typeof req.body.image === 'string' ? req.body.image : '');
     let imageKitFileId = '';
 
     const imageFile = req.file || (req.files && (req.files.find(f => f.fieldname === 'image' || f.fieldname === 'photo' || f.fieldname === 'photoUrl') || req.files[0]));
-    if (imageFile) {
+    if (imageFile && imageFile.buffer) {
       const uploadResult = await uploadFileToImageKit(imageFile.buffer, `mentor_${req.body.name || 'avatar'}`, '/cxoconnect/mentors/');
-      photoUrl = uploadResult.url;
-      imageKitFileId = uploadResult.fileId;
+      photoUrl = uploadResult.url || '';
+      imageKitFileId = uploadResult.fileId || '';
     }
 
     const mentor = new Mentor({
-      name: req.body.name,
-      designation: req.body.designation || 'C-Suite Advisor',
-      company: req.body.company || 'Enterprise',
-      city: req.body.city || 'Mumbai',
-      linkedinUrl: req.body.linkedinUrl || req.body.linkedin || '',
-      photoUrl,
-      imageKitFileId,
-      image: photoUrl,
-      linkedin: req.body.linkedinUrl || req.body.linkedin || '',
+      name: String(req.body.name || '').trim(),
+      designation: String(req.body.designation || 'C-Suite Advisor').trim(),
+      company: String(req.body.company || 'Enterprise').trim(),
+      city: String(req.body.city || 'Mumbai').trim(),
+      linkedinUrl: String(req.body.linkedinUrl || req.body.linkedin || '').trim(),
+      photoUrl: String(photoUrl),
+      imageKitFileId: String(imageKitFileId),
+      image: String(photoUrl),
+      linkedin: String(req.body.linkedinUrl || req.body.linkedin || '').trim(),
       expertise: typeof req.body.expertise === 'string' ? req.body.expertise.split(',').map((s) => s.trim()) : req.body.expertise || ['Strategic Leadership', 'Executive Advisory'],
-      bio: req.body.bio || ''
+      bio: String(req.body.bio || '').trim()
     });
 
     await mentor.save();
@@ -359,27 +359,36 @@ export const updateAdminMentor = async (req, res) => {
     const mentor = await Mentor.findById(id);
     if (!mentor) return res.status(404).json({ success: false, message: 'Mentor not found.' });
 
+    let photoUrl = mentor.photoUrl || mentor.image || '';
+    let imageKitFileId = mentor.imageKitFileId || '';
+
     const imageFile = req.file || (req.files && (req.files.find(f => f.fieldname === 'image' || f.fieldname === 'photo' || f.fieldname === 'photoUrl') || req.files[0]));
-    if (imageFile) {
+    if (imageFile && imageFile.buffer) {
       if (mentor.imageKitFileId) await deleteFileFromImageKit(mentor.imageKitFileId);
       const uploadResult = await uploadFileToImageKit(imageFile.buffer, `mentor_${req.body.name || mentor.name}`, '/cxoconnect/mentors/');
-      mentor.photoUrl = uploadResult.url;
-      mentor.imageKitFileId = uploadResult.fileId;
-      mentor.image = uploadResult.url;
+      photoUrl = uploadResult.url || '';
+      imageKitFileId = uploadResult.fileId || '';
+    } else if (typeof req.body.photoUrl === 'string') {
+      photoUrl = req.body.photoUrl;
+    } else if (typeof req.body.image === 'string') {
+      photoUrl = req.body.image;
     }
 
-    if (req.body.name) mentor.name = req.body.name;
-    if (req.body.designation) mentor.designation = req.body.designation;
-    if (req.body.company) mentor.company = req.body.company;
-    if (req.body.city) mentor.city = req.body.city;
-    if (req.body.linkedinUrl || req.body.linkedin) {
-      mentor.linkedinUrl = req.body.linkedinUrl || req.body.linkedin;
+    if (req.body.name !== undefined) mentor.name = String(req.body.name || '').trim();
+    if (req.body.designation !== undefined) mentor.designation = String(req.body.designation || '').trim();
+    if (req.body.company !== undefined) mentor.company = String(req.body.company || '').trim();
+    if (req.body.city !== undefined) mentor.city = String(req.body.city || '').trim();
+    if (req.body.linkedinUrl !== undefined || req.body.linkedin !== undefined) {
+      mentor.linkedinUrl = String(req.body.linkedinUrl || req.body.linkedin || '').trim();
       mentor.linkedin = mentor.linkedinUrl;
     }
-    if (req.body.bio !== undefined) mentor.bio = req.body.bio;
+    if (req.body.bio !== undefined) mentor.bio = String(req.body.bio || '').trim();
     if (req.body.expertise) {
       mentor.expertise = typeof req.body.expertise === 'string' ? req.body.expertise.split(',').map((s) => s.trim()) : req.body.expertise;
     }
+    mentor.photoUrl = String(photoUrl);
+    mentor.image = String(photoUrl);
+    mentor.imageKitFileId = String(imageKitFileId);
 
     await mentor.save();
     return res.status(200).json({ success: true, message: 'Mentor updated successfully.', data: mentor });

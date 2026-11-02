@@ -556,7 +556,7 @@ const Dashboard = () => {
     setModalConfig({
       isOpen: true,
       title: 'Delete Event',
-      message: 'Are you sure you want to cancel and remove this conclave? Associated ImageKit files will be cleaned up.',
+      message: 'Are you sure you want to cancel and remove this conclave? All associated event media will be permanently removed.',
       isDanger: true,
       onConfirm: async () => {
         try {
@@ -1448,7 +1448,7 @@ const Dashboard = () => {
                         {editingMentorId ? 'Edit Mentor Profile' : 'Add New Mentor'}
                       </h3>
                       <p className="text-xs text-[#64748B] mt-0.5">
-                        ImageKit.io CDN integration enabled
+                        Secure cloud photo upload enabled
                       </p>
                     </div>
 
@@ -1539,7 +1539,7 @@ const Dashboard = () => {
                         {savingMentor ? (
                           <>
                             <RefreshCw className="w-4 h-4 animate-spin" />
-                            <span>UPLOADING TO IMAGEKIT...</span>
+                            <span>UPLOADING PHOTO...</span>
                           </>
                         ) : (
                           <span>SAVE MENTOR</span>
@@ -1671,7 +1671,7 @@ const Dashboard = () => {
                         {editingSponsorId ? 'Edit Sponsor Partner' : 'Add New Sponsor'}
                       </h3>
                       <p className="text-xs text-[#64748B] mt-0.5">
-                        ImageKit.io CDN logo integration enabled
+                        Secure cloud logo upload enabled
                       </p>
                     </div>
 
@@ -1775,7 +1775,7 @@ const Dashboard = () => {
                         {savingSponsor ? (
                           <>
                             <RefreshCw className="w-4 h-4 animate-spin" />
-                            <span>UPLOADING TO IMAGEKIT...</span>
+                            <span>UPLOADING LOGO...</span>
                           </>
                         ) : (
                           <span>SAVE SPONSOR</span>
@@ -1921,7 +1921,7 @@ const Dashboard = () => {
                         {editingEventId ? 'Edit Event Conclave' : 'Create New Conclave'}
                       </h3>
                       <p className="text-xs text-[#64748B] mt-0.5">
-                        ImageKit.io CDN multi-image gallery enabled
+                        High-resolution event gallery upload enabled
                       </p>
                     </div>
 
@@ -2044,7 +2044,7 @@ const Dashboard = () => {
                           />
                           <UploadCloud className="w-6 h-6 mx-auto text-[#D99B26] mb-1" />
                           <p className="font-bold text-[#111315]">Drag & drop event gallery photos</p>
-                          <p className="text-[10px] text-[#64748B]">Batch uploads to ImageKit.io CDN</p>
+                          <p className="text-[10px] text-[#64748B]">Batch uploads supported (PNG, JPG up to 5MB each)</p>
                         </div>
 
                         {/* Previews */}
@@ -2068,7 +2068,7 @@ const Dashboard = () => {
                         {savingEvent ? (
                           <>
                             <RefreshCw className="w-4 h-4 animate-spin" />
-                            <span>UPLOADING TO IMAGEKIT...</span>
+                            <span>UPLOADING EVENT & MEDIA...</span>
                           </>
                         ) : (
                           <span>SAVE EVENT</span>

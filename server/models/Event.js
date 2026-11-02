@@ -25,9 +25,7 @@ const eventSchema = new mongoose.Schema(
     },
     date: {
       type: String,
-      default: function () {
-        return this.eventDate ? this.eventDate.toDateString() : 'November 24, 2026';
-      }
+      default: ''
     },
     time: {
       type: String,
@@ -48,7 +46,7 @@ const eventSchema = new mongoose.Schema(
     },
     bannerUrl: {
       type: String,
-      default: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&q=80'
+      default: ''
     },
     imageKitFileId: {
       type: String,
@@ -56,9 +54,7 @@ const eventSchema = new mongoose.Schema(
     },
     banner: {
       type: String,
-      default: function () {
-        return this.bannerUrl;
-      }
+      default: ''
     },
     gallery: {
       type: [String],
@@ -89,7 +85,18 @@ const eventSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// String sanitization pre-save hook
 eventSchema.pre('save', function (next) {
+  if (typeof this.bannerUrl !== 'string') this.bannerUrl = '';
+  if (typeof this.banner !== 'string') this.banner = '';
+  if (typeof this.imageKitFileId !== 'string') this.imageKitFileId = '';
+  if (typeof this.speakerMentor !== 'string') this.speakerMentor = '';
+  if (typeof this.location !== 'string') this.location = 'Mumbai, India';
+  if (typeof this.venue !== 'string') this.venue = 'The Taj Mahal Palace';
+  if (typeof this.time !== 'string') this.time = '09:30 AM - 04:30 PM IST';
+  if (typeof this.category !== 'string') this.category = 'Leadership Summit';
+  if (typeof this.registrationUrl !== 'string') this.registrationUrl = '';
+
   if (this.bannerUrl && !this.banner) this.banner = this.bannerUrl;
   if (this.banner && !this.bannerUrl) this.bannerUrl = this.banner;
   if (this.rsvps && this.rsvps.length > 0 && (!this.attendees || this.attendees.length === 0)) {
@@ -101,4 +108,5 @@ eventSchema.pre('save', function (next) {
   next();
 });
 
-export default mongoose.model('Event', eventSchema);
+export const Event = mongoose.model('Event', eventSchema);
+export default Event;
