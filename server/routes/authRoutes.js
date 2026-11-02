@@ -25,6 +25,10 @@ router.get('/me', isAuth, getMe);
 router.get(
   '/google',
   (req, res, next) => {
+    const clientUrl = process.env.CLIENT_URL || 'https://cxoconnect.vercel.app';
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+      return res.redirect(`${clientUrl}/login?error=${encodeURIComponent('Google OAuth credentials not configured on server.')}`);
+    }
     const state = req.query.state || 'member';
     passport.authenticate('google', {
       scope: ['profile', 'email'],
@@ -34,7 +38,16 @@ router.get(
 );
 router.get(
   '/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: '/login?error=google_auth_failed' }),
+  (req, res, next) => {
+    const clientUrl = process.env.CLIENT_URL || 'https://cxoconnect.vercel.app';
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+      return res.redirect(`${clientUrl}/login?error=${encodeURIComponent('Google OAuth credentials not configured on server.')}`);
+    }
+    passport.authenticate('google', {
+      session: false,
+      failureRedirect: `${clientUrl}/login?error=google_auth_failed`
+    })(req, res, next);
+  },
   googleCallback
 );
 

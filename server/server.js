@@ -15,8 +15,10 @@ const __dirname = path.dirname(__filename);
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB if running locally
+if (!process.env.VERCEL) {
+  connectDB().catch(err => console.warn('[MongoDB Startup]', err.message));
+}
 
 const app = express();
 
@@ -54,22 +56,18 @@ app.use(
 );
 app.options('*', cors());
 
-// Database connection middleware for serverless invocations
-app.use(async (req, res, next) => {
-  if (req.path === '/api/health') return next();
-  try {
-    await connectDB();
-  } catch (err) {
-    console.warn('[DB Middleware]', err.message);
-  }
-  next();
-});
-
 // Initialize Passport
 app.use(passport.initialize());
 
-// Mount API routes
-app.use('/api', apiRoutes);
+// Database connection middleware before API routes
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Database Connection Failed', message: err.message });
+  }
+}, apiRoutes);
 
 // Root informational endpoint
 app.get('/', (req, res) => {

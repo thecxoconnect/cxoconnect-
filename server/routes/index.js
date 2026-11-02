@@ -12,6 +12,7 @@ import imagekitRoutes from './imagekitRoutes.js';
 import chapterRoutes from './chapterRoutes.js';
 import adminRoutes from './adminRoutes.js';
 import resourceRoutes from './resourceRoutes.js';
+import healthRoutes from './healthRoutes.js';
 
 const router = express.Router();
 
@@ -30,15 +31,6 @@ router.use('/contact', contactRoutes);
 router.use('/imagekit', imagekitRoutes);
 router.use('/chapters', chapterRoutes);
 router.use('/resources', resourceRoutes);
-
-// Health check endpoint
-router.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'online',
-    platform: 'CXO Connect REST API',
-    version: '1.0.0',
-    timestamp: new Date().toISOString()
-  });
-});
+router.use('/health', healthRoutes);
 
 export default router;
