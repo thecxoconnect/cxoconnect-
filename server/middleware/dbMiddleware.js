@@ -1,13 +1,18 @@
 import { connectDB } from '../config/db.js';
 
-export const dbMiddleware = async (req, res, next) => {
+export const ensureDbConnected = async (req, res, next) => {
   try {
     await connectDB();
     next();
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Database Connection Failed', message: err.message });
+  } catch (error) {
+    console.error('Database connection middleware error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'Database Connection Failed',
+      message: error.message
+    });
   }
 };
 
-export default dbMiddleware;
-
+export const dbMiddleware = ensureDbConnected;
+export default ensureDbConnected;

@@ -32,8 +32,15 @@ const Home = () => {
 
         if (eventsRes.data?.success) setEvents(eventsRes.data.data.slice(0, 3));
         if (mentorsRes.data?.success) setMentors(mentorsRes.data.data.slice(0, 4));
-        if (statsRes.data?.success && statsRes.data.data) {
-          setStats(statsRes.data.data);
+        if (statsRes.data?.data) {
+          setStats(prev => ({ ...prev, ...statsRes.data.data }));
+        } else if (statsRes.data?.totalMembers !== undefined && statsRes.data.totalMembers > 0) {
+          setStats(prev => ({
+            ...prev,
+            totalMembers: statsRes.data.totalMembers,
+            globalChapters: statsRes.data.totalCities || prev.globalChapters,
+            companiesCount: statsRes.data.totalCompanies || prev.companiesCount
+          }));
         }
       } catch (err) {
         console.error('Home data load error:', err);

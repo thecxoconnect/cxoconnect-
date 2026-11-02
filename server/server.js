@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import connectDB from './config/db.js';
+import { ensureDbConnected } from './middleware/dbMiddleware.js';
 import apiRoutes from './routes/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -59,15 +60,8 @@ app.options('*', cors());
 // Initialize Passport
 app.use(passport.initialize());
 
-// Database connection middleware before API routes
-app.use('/api', async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Database Connection Failed', message: err.message });
-  }
-}, apiRoutes);
+// Mount DB check middleware prior to mounting API routes
+app.use('/api', ensureDbConnected, apiRoutes);
 
 // Root informational endpoint
 app.get('/', (req, res) => {

@@ -291,48 +291,51 @@ export const deleteMember = async (req, res) => {
  */
 export const getPublicStats = async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(200).json({
-        success: true,
-        data: {
-          totalMembers: 2500,
-          annualConclaves: 45,
-          boardroomInfluence: '98%',
-          globalChapters: 8,
-          companiesCount: 120
+    const stats = await User.aggregate([
+      { $match: { status: 'accepted' } },
+      {
+        $group: {
+          _id: null,
+          totalMembers: { $sum: 1 },
+          cities: { $addToSet: '$city' },
+          companies: { $addToSet: '$company' },
+          pincodes: { $addToSet: '$pincode' }
         }
+      }
+    ]);
+
+    if (!stats || stats.length === 0) {
+      return res.json({
+        totalMembers: 0,
+        totalCities: 0,
+        totalCompanies: 0,
+        totalPincodes: 0,
+        success: true,
+        data: { totalMembers: 0, totalCities: 0, totalCompanies: 0, totalPincodes: 0 }
       });
     }
 
-    const [totalMembers, totalEvents, totalMentors, totalChapters] = await Promise.all([
-      User.countDocuments({ status: 'accepted' }),
-      Event.countDocuments(),
-      Mentor.countDocuments(),
-      Chapter.countDocuments()
-    ]);
+    const payload = {
+      totalMembers: stats[0].totalMembers || 0,
+      totalCities: stats[0].cities?.length || 0,
+      totalCompanies: stats[0].companies?.length || 0,
+      totalPincodes: stats[0].pincodes?.length || 0
+    };
 
-    const companies = await User.distinct('company', { status: 'accepted' });
-
-    return res.status(200).json({
+    res.json({
+      ...payload,
       success: true,
-      data: {
-        totalMembers: totalMembers > 0 ? totalMembers : 2500,
-        annualConclaves: totalEvents > 0 ? totalEvents : 45,
-        boardroomInfluence: '98%',
-        globalChapters: totalChapters > 0 ? totalChapters : 8,
-        companiesCount: companies.length > 0 ? companies.length : 120
-      }
+      data: payload
     });
-  } catch (error) {
-    return res.status(200).json({
+  } catch (err) {
+    console.error('getPublicStats error:', err.message);
+    res.json({
+      totalMembers: 0,
+      totalCities: 0,
+      totalCompanies: 0,
+      totalPincodes: 0,
       success: true,
-      data: {
-        totalMembers: 2500,
-        annualConclaves: 45,
-        boardroomInfluence: '98%',
-        globalChapters: 8,
-        companiesCount: 120
-      }
+      data: { totalMembers: 0, totalCities: 0, totalCompanies: 0, totalPincodes: 0 }
     });
   }
 };

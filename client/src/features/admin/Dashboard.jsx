@@ -26,7 +26,8 @@ import {
   ChevronRight,
   Sparkles,
   Clock,
-  RotateCcw
+  RotateCcw,
+  Award
 } from 'lucide-react';
 import ConfirmationModal from '../../components/ConfirmationModal';
 
@@ -51,8 +52,8 @@ const Dashboard = () => {
     return <Navigate to="/profile" replace />;
   }
 
-  // Active module: strictly 5 scoped modules
-  // 'overview' | 'members' | 'secondary_admins' | 'mentors' | 'events'
+  // Active module: strictly scoped administrative modules
+  // 'overview' | 'members' | 'secondary_admins' | 'mentors' | 'sponsors' | 'events'
   const [activeModule, setActiveModule] = useState('overview');
 
   // Loading & Sync state
@@ -115,7 +116,23 @@ const Dashboard = () => {
   const [savingMentor, setSavingMentor] = useState(false);
 
   // ==========================================
-  // MODULE 5: EVENTS STATE
+  // MODULE 5: SPONSORS STATE
+  // ==========================================
+  const [sponsors, setSponsors] = useState([]);
+  const [sponsorDrawerOpen, setSponsorDrawerOpen] = useState(false);
+  const [editingSponsorId, setEditingSponsorId] = useState(null);
+  const [sponsorFormData, setSponsorFormData] = useState({
+    name: '',
+    tier: 'Platinum',
+    website: '',
+    category: 'Corporate Partner'
+  });
+  const [sponsorFile, setSponsorFile] = useState(null);
+  const [sponsorFilePreview, setSponsorFilePreview] = useState('');
+  const [savingSponsor, setSavingSponsor] = useState(false);
+
+  // ==========================================
+  // MODULE 6: EVENTS STATE
   // ==========================================
   const [events, setEvents] = useState([]);
   const [eventDrawerOpen, setEventDrawerOpen] = useState(false);
@@ -141,11 +158,12 @@ const Dashboard = () => {
       if (isSync) setSyncing(true);
       else setLoading(true);
 
-      const [overviewRes, membersRes, mentorsRes, eventsRes] = await Promise.all([
+      const [overviewRes, membersRes, mentorsRes, eventsRes, sponsorsRes] = await Promise.all([
         adminService.getOverview().catch(() => ({ data: { data: { counts: {}, approvedMembers: [], secondaryAdmins: [] } } })),
         adminService.getMembers().catch(() => ({ data: { data: [] } })),
         adminService.getMentors().catch(() => ({ data: { data: [] } })),
-        adminService.getEvents().catch(() => ({ data: { data: [] } }))
+        adminService.getEvents().catch(() => ({ data: { data: [] } })),
+        adminService.getSponsors().catch(() => ({ data: { data: [] } }))
       ]);
 
       // Overview
@@ -163,6 +181,11 @@ const Dashboard = () => {
       // Mentors
       if (mentorsRes.data?.data) {
         setMentors(mentorsRes.data.data);
+      }
+
+      // Sponsors
+      if (sponsorsRes.data?.data) {
+        setSponsors(sponsorsRes.data.data);
       }
 
       // Events
@@ -349,6 +372,94 @@ const Dashboard = () => {
           fetchAllData();
         } catch (err) {
           addToast('Failed to delete mentor.', 'error');
+        }
+      }
+    });
+  };
+
+  // ==========================================
+  // ACTIONS: SPONSORS MODULE
+  // ==========================================
+  const handleOpenSponsorDrawer = (sponsor = null) => {
+    if (sponsor) {
+      setEditingSponsorId(sponsor._id);
+      setSponsorFormData({
+        name: sponsor.name || '',
+        tier: sponsor.tier || 'Platinum',
+        website: sponsor.websiteUrl || sponsor.website || '',
+        category: sponsor.category || 'Corporate Partner'
+      });
+      setSponsorFilePreview(sponsor.logoUrl || sponsor.logo || '');
+    } else {
+      setEditingSponsorId(null);
+      setSponsorFormData({
+        name: '',
+        tier: 'Platinum',
+        website: '',
+        category: 'Corporate Partner'
+      });
+      setSponsorFilePreview('');
+    }
+    setSponsorFile(null);
+    setSponsorDrawerOpen(true);
+  };
+
+  const handleSponsorFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSponsorFile(file);
+      setSponsorFilePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSaveSponsor = async (e) => {
+    e.preventDefault();
+    if (!sponsorFormData.name) {
+      addToast('Please enter the sponsor name.', 'warning');
+      return;
+    }
+
+    try {
+      setSavingSponsor(true);
+      const fd = new FormData();
+      fd.append('name', sponsorFormData.name);
+      fd.append('tier', sponsorFormData.tier);
+      fd.append('website', sponsorFormData.website);
+      fd.append('category', sponsorFormData.category);
+      if (sponsorFile) {
+        fd.append('logo', sponsorFile);
+      }
+
+      if (editingSponsorId) {
+        await adminService.updateSponsor(editingSponsorId, fd);
+        addToast('Sponsor updated successfully.', 'success');
+      } else {
+        await adminService.createSponsor(fd);
+        addToast('New sponsor added to CXO Connect.', 'success');
+      }
+      setSponsorDrawerOpen(false);
+      fetchAllData();
+    } catch (err) {
+      console.error('[Save Sponsor Error]', err);
+      addToast(err.response?.data?.message || 'Failed to save sponsor.', 'error');
+    } finally {
+      setSavingSponsor(false);
+    }
+  };
+
+  const handleDeleteSponsor = (sponsorId) => {
+    setModalConfig({
+      isOpen: true,
+      title: 'Remove Sponsor Partner',
+      message: 'Are you sure you want to remove this corporate sponsor? This action is permanent.',
+      isDanger: true,
+      onConfirm: async () => {
+        try {
+          await adminService.deleteSponsor(sponsorId);
+          addToast('Sponsor removed successfully.', 'success');
+          setSponsors(prev => prev.filter(s => s._id !== sponsorId));
+        } catch (err) {
+          addToast('Failed to delete sponsor.', 'error');
         }
       }
     });
@@ -649,7 +760,27 @@ const Dashboard = () => {
               </span>
             </button>
 
-            {/* 5. Events */}
+            {/* 5. Sponsors */}
+            <button
+              onClick={() => setActiveModule('sponsors')}
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
+                activeModule === 'sponsors'
+                  ? 'bg-[#111315] text-[#D99B26] shadow-sm'
+                  : 'text-[#111315] hover:bg-[#F8FAFC]'
+              }`}
+            >
+              <span className="flex items-center gap-2.5">
+                <Award className="w-4 h-4" />
+                <span>Sponsors</span>
+              </span>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                activeModule === 'sponsors' ? 'bg-[#D99B26]/20 text-[#D99B26]' : 'bg-[#F1F5F9] text-[#64748B]'
+              }`}>
+                {sponsors.length}
+              </span>
+            </button>
+
+            {/* 6. Events */}
             <button
               onClick={() => setActiveModule('events')}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
@@ -1422,7 +1553,243 @@ const Dashboard = () => {
           )}
 
           {/* ==========================================
-              MODULE 5: EVENTS
+              MODULE 5: SPONSORS & PARTNERS
+              ========================================== */}
+          {activeModule === 'sponsors' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-3xl border border-[#E2E8F0] shadow-xs">
+                <div>
+                  <h2 className="text-2xl font-extrabold text-[#0F172A] font-serif">
+                    Sponsors & Partners
+                  </h2>
+                  <p className="text-xs uppercase font-bold tracking-wider text-[#64748B] mt-1">
+                    STRATEGIC CORPORATE PARTNERS DIRECTORY
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => handleOpenSponsorDrawer()}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold tracking-wide transition-all shadow-xs"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>NEW SPONSOR</span>
+                </button>
+              </div>
+
+              {/* Table View */}
+              <div className="bg-white rounded-3xl border border-[#E2E8F0] overflow-hidden shadow-xs">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#F8FAFC] border-b border-[#E2E8F0] text-[#64748B] uppercase font-bold tracking-wider">
+                    <tr>
+                      <th className="py-3.5 px-6">Partner</th>
+                      <th className="py-3.5 px-6">Tier</th>
+                      <th className="py-3.5 px-6">Website</th>
+                      <th className="py-3.5 px-6 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E2E8F0]">
+                    {sponsors.map((s) => (
+                      <tr key={s._id} className="hover:bg-[#F8FAFC] transition-colors">
+                        <td className="py-4 px-6">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={s.logoUrl || s.logo || 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=300&q=80'}
+                              alt={s.name}
+                              className="w-10 h-10 rounded-xl object-contain bg-slate-50 border border-[#E2E8F0] p-1"
+                            />
+                            <div>
+                              <p className="text-sm font-bold text-[#111315]">{s.name}</p>
+                              <p className="text-xs text-[#64748B]">{s.category || 'Strategic Partner'}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#D99B26]/10 text-[#D99B26] border border-[#D99B26]/30">
+                            {s.tier || 'Platinum'}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6 text-[#64748B]">
+                          {s.websiteUrl || s.website ? (
+                            <a
+                              href={s.websiteUrl || s.website}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-[#D99B26] hover:underline inline-flex items-center gap-1 font-semibold"
+                            >
+                              <span>Visit Website</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          ) : (
+                            '—'
+                          )}
+                        </td>
+                        <td className="py-4 px-6 text-right">
+                          <div className="inline-flex items-center gap-2">
+                            <button
+                              onClick={() => handleOpenSponsorDrawer(s)}
+                              className="p-1.5 rounded-lg text-[#64748B] hover:text-[#D99B26] hover:bg-[#F8FAFC]"
+                              title="Edit Sponsor"
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteSponsor(s._id)}
+                              className="p-1.5 rounded-lg text-[#64748B] hover:text-[#DC2626] hover:bg-[#FEE2E2]"
+                              title="Delete Sponsor"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+
+                    {sponsors.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="py-12 text-center text-[#64748B]">
+                          No corporate sponsors currently registered in MongoDB.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Add/Edit Sponsor Drawer */}
+              {sponsorDrawerOpen && (
+                <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
+                  <div className="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] space-y-5 relative">
+                    <button
+                      onClick={() => setSponsorDrawerOpen(false)}
+                      className="absolute top-5 right-5 p-1.5 rounded-full text-[#64748B] hover:text-[#111315] hover:bg-[#F1F5F9]"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+
+                    <div>
+                      <h3 className="text-xl font-extrabold text-[#111315] font-serif">
+                        {editingSponsorId ? 'Edit Sponsor Partner' : 'Add New Sponsor'}
+                      </h3>
+                      <p className="text-xs text-[#64748B] mt-0.5">
+                        ImageKit.io CDN logo integration enabled
+                      </p>
+                    </div>
+
+                    <form onSubmit={handleSaveSponsor} className="space-y-4 text-xs">
+                      <div>
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
+                          PARTNER NAME *
+                        </label>
+                        <input
+                          type="text"
+                          value={sponsorFormData.name}
+                          onChange={(e) => setSponsorFormData({ ...sponsorFormData, name: e.target.value })}
+                          required
+                          placeholder="e.g. Google Cloud, AWS, Salesforce"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
+                            SPONSOR TIER
+                          </label>
+                          <select
+                            value={sponsorFormData.tier}
+                            onChange={(e) => setSponsorFormData({ ...sponsorFormData, tier: e.target.value })}
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none bg-white font-medium"
+                          >
+                            <option value="Title">Title Partner</option>
+                            <option value="Platinum">Platinum Partner</option>
+                            <option value="Gold">Gold Partner</option>
+                            <option value="Associate">Associate Partner</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
+                            CATEGORY
+                          </label>
+                          <input
+                            type="text"
+                            value={sponsorFormData.category}
+                            onChange={(e) => setSponsorFormData({ ...sponsorFormData, category: e.target.value })}
+                            placeholder="e.g. Cloud Infrastructure"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
+                          WEBSITE URL
+                        </label>
+                        <input
+                          type="url"
+                          value={sponsorFormData.website}
+                          onChange={(e) => setSponsorFormData({ ...sponsorFormData, website: e.target.value })}
+                          placeholder="https://example.com"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] focus:ring-2 focus:ring-[#D99B26] focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Logo Dropzone */}
+                      <div>
+                        <label className="block font-bold text-[#111315] uppercase tracking-wider mb-1">
+                          PARTNER LOGO
+                        </label>
+                        <div className="border-2 border-dashed border-[#CBD5E1] hover:border-[#D99B26] rounded-2xl p-4 text-center cursor-pointer transition-colors relative bg-[#F8FAFC]">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleSponsorFileChange}
+                            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                          />
+                          {sponsorFilePreview ? (
+                            <div className="flex items-center justify-center gap-3">
+                              <img
+                                src={sponsorFilePreview}
+                                alt="Preview"
+                                className="w-12 h-12 rounded-xl object-contain border border-[#D99B26] p-1 bg-white"
+                              />
+                              <div className="text-left">
+                                <p className="font-bold text-[#111315]">Logo Selected</p>
+                                <p className="text-[10px] text-[#64748B]">Click to change file</p>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-1">
+                              <UploadCloud className="w-6 h-6 mx-auto text-[#D99B26]" />
+                              <p className="font-bold text-[#111315]">Upload Partner Logo</p>
+                              <p className="text-[10px] text-[#64748B]">SVG, PNG, JPG up to 5MB</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={savingSponsor}
+                        className="w-full py-3 rounded-full bg-[#111315] hover:bg-[#1a1f24] text-[#D99B26] border border-[#D99B26]/30 text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                      >
+                        {savingSponsor ? (
+                          <>
+                            <RefreshCw className="w-4 h-4 animate-spin" />
+                            <span>UPLOADING TO IMAGEKIT...</span>
+                          </>
+                        ) : (
+                          <span>SAVE SPONSOR</span>
+                        )}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ==========================================
+              MODULE 6: EVENTS
               ========================================== */}
           {activeModule === 'events' && (
             <div className="space-y-6 animate-fade-in">
